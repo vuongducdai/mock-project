@@ -10,11 +10,6 @@ import Newitem from './Newitem';
 const Sidebar = () => {
       const [openAdd, setOpenAdd] = useState(false);
 
-      const handleOpen = () => {
-            // fix toggle later
-            setOpenAdd(!openAdd)
-      }
-
       return (
             <div className='flex'>
                   <div className='w-[240px] h-full bg-white flex flex-col shadow-md py-6 gap-6'>
@@ -27,7 +22,7 @@ const Sidebar = () => {
                               <button
                                     className='py-2 px-10 text-white bg-blue-dark rounded-3xl flex-center hover:bg-blue-dark-hover transition-all duration-300
 '
-                                    onClick={handleOpen}
+                                    onClick={() => setOpenAdd(!openAdd)}
                               >
                                     <AddIcon className='mr-2' />
                                     Add New Item
@@ -66,7 +61,7 @@ const Sidebar = () => {
                         </div>
 
                   </div>
-                  {openAdd && <Newitem />}
+                  {openAdd && <Newitem setOpenAdd={setOpenAdd} />}
             </div>
 
       )
