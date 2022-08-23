@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { Children } from 'react';
+import Navbar from '../../components/Admin/Navbar'
 
-const Layout = () => {
+const Layout = ({ children }) => {
       return (
-            <div>Layout</div>
+            <div>
+                  <Navbar />
+                  <div className='p-8'>
+                        {children}
+                  </div>
+            </div>
       )
 }
 

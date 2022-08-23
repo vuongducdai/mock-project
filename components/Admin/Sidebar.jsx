@@ -37,21 +37,21 @@ const Sidebar = () => {
                                     </div>
                               </Link>
 
-                              <Link href="/admin/products">
+                              <Link href="/admin/product">
                                     <div className='flex items-center gap-4 pl-12 cursor-pointer'>
                                           <div><LocalOfferIcon /></div>
                                           <span>Products</span>
                                     </div>
                               </Link>
 
-                              <Link href="/admin/users">
+                              <Link href="/admin/user">
                                     <div className='flex items-center gap-4 pl-12 cursor-pointer'>
                                           <div><PersonIcon /></div>
                                           <span>Users</span>
                                     </div>
                               </Link>
 
-                              <Link href="/admin/orders">
+                              <Link href="/admin/order">
                                     <div className='flex items-center gap-4 pl-12 cursor-pointer'>
                                           <div><ShoppingCartIcon /></div>
                                           <span>Orders</span>
