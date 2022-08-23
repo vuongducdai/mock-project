@@ -6,7 +6,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AddIcon from '@mui/icons-material/Add';
 import Link from 'next/link';
 import Newitem from './Newitem';
-
+import DataTable from './DataTable';
 const Sidebar = () => {
       const [openAdd, setOpenAdd] = useState(false);
 
@@ -39,6 +39,7 @@ const Sidebar = () => {
                                     <div className='flex items-center gap-4 pl-12 cursor-pointer'>
                                           <div><DashboardIcon /></div>
                                           <span>Dashboard</span>
+                                          
                                     </div>
                               </Link>
 

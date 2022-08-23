@@ -12,6 +12,7 @@ import Image from "next/image";
 import { FormControl, InputAdornment } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import SearchIcon from "@mui/icons-material/Search";
+import { render } from "react-dom";
 
 function createData(name, image, price, color, size, id) {
   return { name, image, price, color, size, id };
@@ -40,8 +41,9 @@ export default function DataTable({
   color,
   size,
 }) {
-  return (
-    <TableContainer
+  const render = () => {
+    return (
+      <TableContainer
       component={Paper}
       className="grid justify-items-center rounded-lg px-10"
     >
@@ -140,5 +142,11 @@ export default function DataTable({
         <h1>Pagination</h1>
       </div>
     </TableContainer>
+    )
+  }
+  return (
+    <>
+      {render()}
+    </>
   );
 }
