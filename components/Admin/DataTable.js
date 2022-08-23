@@ -34,13 +34,13 @@ export default function DataTable({product,name, image, price, color, size}) {
       </div>
       <Table sx={{ maxWidth: 1000 }} size="small" aria-label="a dense table">
         <TableHead>
-          <TableRow>
-            <TableCell className='text-slate-200 font-bold'>{name}</TableCell>
-            <TableCell className='text-slate-200 font-bold' align="center">{image}</TableCell>
-            <TableCell className='text-slate-200 font-bold' align="center">{price}</TableCell>
-            <TableCell className='text-slate-200 font-bold' align="center">{color}</TableCell>
-            <TableCell className='text-slate-200 font-bold' align="center">{size}</TableCell>
-            <TableCell className='text-slate-200 font-bold' align="center">Actions</TableCell>
+          <TableRow className='text-slate-200'>
+            <TableCell className='bg-red-300'>{name}</TableCell>
+            <TableCell  align="center">{image}</TableCell>
+            <TableCell  align="center">{price}</TableCell>
+            <TableCell  align="center">{color}</TableCell>
+            <TableCell  align="center">{size}</TableCell>
+            <TableCell  align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody sx={{borderTop:'none',height:300}}>
@@ -52,13 +52,13 @@ export default function DataTable({product,name, image, price, color, size}) {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.image}</TableCell>
-              <TableCell align="right">{row.color}</TableCell>
-              <TableCell align="right">{row.size}</TableCell>
-              <TableCell align="right">{row.price}</TableCell>
-              <TableCell align='right'>
-                <Button variant='contained' sx={{color:'success.main'}}>Edit</Button>
-                <Button variant='contained' sx={{color:'warning.main'}}>Delete</Button>
+              <TableCell align="center">{row.image}</TableCell>
+              <TableCell align="center">{row.color}</TableCell>
+              <TableCell align="center">{row.size}</TableCell>
+              <TableCell align="center">{row.price}</TableCell>
+              <TableCell align='center'>
+                <Button variant='contained' sx={{color:'success.main','&:hover':{color:'white',background:'green'}}}>Edit</Button>
+                <Button variant='contained' sx={{color:'warning.main','&:hover':{color:'white',background:'red'}}}>Delete</Button>
                
               </TableCell>
             </TableRow>

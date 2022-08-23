@@ -2,9 +2,9 @@ import DataTable from './DataTable'
 
 const Dashboard = () => {
   return (
-    <div>
+    <div className='p-2.5'>
       <h1>Dashboard</h1>
-      <DataTable product='Product' name='Name' image='Image' price='Price' color='Color' size='Size'/>
+      <DataTable product='Product' name='NAME' image='IMAGE' price='PRICE' color='COLOR' size='SIZE'/>
     </div>
   )
 }
