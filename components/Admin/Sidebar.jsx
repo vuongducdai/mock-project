@@ -64,7 +64,7 @@ const Sidebar = () => {
                               </Link>
 
                         </div>
-                        
+
                   </div>
                   {openAdd && <Newitem />}
             </div>

@@ -9,8 +9,11 @@ const Admin = () => {
                   <Sidebar />
                   <div className='flex flex-col w-full'>
                         <Navbar />
+
                         <div className='w-full h-full bg-fb'>
                               <Dashboard/>
+
+
                         </div>
                   </div>
             </div>
