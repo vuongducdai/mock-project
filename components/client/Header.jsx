@@ -32,17 +32,12 @@ function useScrollDirection() {
 
 const Header = () => {
   const scrollDirection = useScrollDirection();
-  console.log(
-    scrollDirection,
-    `"fixed ${scrollDirection === "down" ? "-top-24" : "inset-0"}`
-  );
-  // className={`fixed ${scrollDirection === "down" ? "-top-24" : "inset-0"}`}
-  //-top-24
+
   return (
     <header
       className={`fixed ${
-        scrollDirection === "down" ? "-top-24 inset-x-0" : "inset-0"
-      } transition-all duration-500 `}
+        scrollDirection === "down" ? "-top-28 inset-x-0" : "top-0 inset-x-0"
+      } transition-all duration-500`}
     >
       <div className="bg-black h-[30px] flex justify-around items-center text-white text-xs tracking-widest w-[100%]">
         <div>MIỄN PHÍ GIAO HÀNG TRÊN 1.300.000 VNĐ</div>
@@ -76,7 +71,6 @@ const Header = () => {
                 </IconButton>
               </div>
             </div>
-
             <div className="flex justify-center items-center w-[48px] h-[48px] cursor-pointer">
               <ShoppingBagOutlinedIcon />
             </div>
