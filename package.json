@@ -9,8 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
     "@hookform/resolvers": "^2.9.7",
     "@mui/material": "^5.10.1",
+    "@mui/x-data-grid": "^5.15.3",
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
     "next": "12.2.5",
