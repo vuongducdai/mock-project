@@ -10,7 +10,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <h1 className="s">Hello World</h1>
+      <div className="relative top-[5000px] bg-fuchsia-500">
+        <h1>Hello World</h1>
+      </div>
     </div>
   );
 }
