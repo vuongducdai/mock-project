@@ -9,7 +9,8 @@ import { colors } from "./../../constants/data";
 
 const Newitem = () => {
       const [file, setFile] = useState(null);
-      const [color, setColor] = useState(null);
+      const [color, setColor] = useState([]);
+      console.log(color)
       const { register, handleSubmit, formState: { errors } } = useForm({
             resolver: yupResolver(productSchema, userSchema)
       });
@@ -21,7 +22,7 @@ const Newitem = () => {
                               key={item.id}
                               style={{ backgroundColor: item.color }}
                               className='rounded-full w-8 h-8 cursor-pointer'
-                              onClick={() => setColor(item.color)}
+                              onClick={() => setColor(prev => [...prev, item.name])}
                         ></div>
                   )))
       }
@@ -77,7 +78,7 @@ const Newitem = () => {
                                     <p className='text-warning text-sm'>{errors.price?.message}</p>
 
                                     <span className='mt-4 text-blue-pastel text-base font-semibold'>Product color</span>
-                                    <div className='py-2 h-20 flex justify-between'>
+                                    <div className='py-2 h-20 flex flex-wrap gap-2'>
                                           {renderColor()}
                                     </div>
                                     <p className='text-warning text-sm'>{errors.color?.message}</p>

@@ -1,4 +1,5 @@
 import React from 'react'
+import Dashboard from '../../components/Admin/Dashboard'
 import Navbar from '../../components/Admin/Navbar'
 import Sidebar from '../../components/Admin/Sidebar'
 
@@ -8,8 +9,8 @@ const Admin = () => {
                   <Sidebar />
                   <div className='flex flex-col w-full'>
                         <Navbar />
-                        <div className='w-full h-full bg-fb'>
-
+                        <div className='w-full h-full bg-fb p-8'>
+                              <Dashboard />
                         </div>
                   </div>
             </div>

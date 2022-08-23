@@ -10,10 +10,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.0",
-<<<<<<< HEAD
-=======
     "@emotion/server": "^11.10.0",
->>>>>>> refs/remotes/origin/admin
     "@emotion/styled": "^11.10.0",
     "@hookform/resolvers": "^2.9.7",
     "@mui/icons-material": "^5.8.4",

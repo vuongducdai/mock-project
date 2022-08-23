@@ -5,17 +5,18 @@ module.exports = {
             "./components/**/*.{js,ts,jsx,tsx}",
       ],
       theme: {
-            colors: {
-                  'primary': '#eeaeca',
-                  'secondary': '#94bbe9',
-                  'another': 'rgb(238 174 202)',
-                  'fb': '#f7f7f9',
-                  'blue-pastel': '#213352',
-                  'blue-dark': '#1e20ff',
-                  'blue-dark-hover': '#3e3e73',
-                  'white': '#ffffff',
-                  'warning': '#ff4b4c'
-            },
+            extend: {
+                  colors: {
+                        'primary': '#eeaeca',
+                        'secondary': '#94bbe9',
+                        'another': 'rgb(238 174 202)',
+                        'fb': '#f7f7f9',
+                        'blue-pastel': '#213352',
+                        'blue-dark': '#1e20ff',
+                        'blue-dark-hover': '#3e3e73',
+                        'warning': '#ff4b4c'
+                  },
+            }
       },
       plugins: [
             require('cssnano')({
