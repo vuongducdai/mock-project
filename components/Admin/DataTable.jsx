@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button'
+import Image from 'next/image';
 
 
 
@@ -18,41 +19,44 @@ function createData(name, image, price, color, size,id) {
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Frozen yoghurt', 'https://picsum.photos/200/300', 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 'https://picsum.photos/200/300', 9.0, 37, 4.3),
+  createData('Eclair', 'https://picsum.photos/200/300', 16.0, 24, 6.0),
+  createData('Cupcake', 'https://picsum.photos/200/300', 3.7, 67, 4.3),
+  createData('Gingerbread', 'https://picsum.photos/200/300', 16.0, 49, 3.9),
+  createData('Gingerbread', 'https://picsum.photos/200/300', 16.0, 49, 3.9),
 ];
 console.log(rows)
 export default function DataTable({product,name, image, price, color, size}) {
   return (
-    <TableContainer component={Paper} className='grid justify-items-center rounded-lg bg-slate-50'>
+    <TableContainer component={Paper} className='grid justify-items-center rounded-lg'>
       <div>
         <h1>{product}</h1>
       </div>
       <Table sx={{ maxWidth: 1000 }} size="small" aria-label="a dense table">
         <TableHead>
-          <TableRow className='text-slate-200'>
-            <TableCell className='bg-red-300'>{name}</TableCell>
-            <TableCell  align="center">{image}</TableCell>
-            <TableCell  align="center">{price}</TableCell>
-            <TableCell  align="center">{color}</TableCell>
-            <TableCell  align="center">{size}</TableCell>
-            <TableCell  align="center">Actions</TableCell>
+          <TableRow className='border-b-2'>
+            <TableCell className='text-slate-400'>{name}</TableCell>
+            <TableCell className='text-slate-400' align="center">{image}</TableCell>
+            <TableCell  className='text-slate-400' align="center">{price}</TableCell>
+            <TableCell  className='text-slate-400' align="center">{color}</TableCell>
+            <TableCell  className='text-slate-400' align="center">{size}</TableCell>
+            <TableCell  className='text-slate-400' align="center">ACTIONS</TableCell>
           </TableRow>
         </TableHead>
         <TableBody sx={{borderTop:'none',height:300}}>
           {rows.map((row) => (
             <TableRow
+              className='last:border-b-2'
               key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { borderBottom: 1 },'td, th':{border:0} }}
+              sx={{ 'td, th':{border:0} }}
             >
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="center">{row.image}</TableCell>
+              <TableCell align="center">
+                <Image src={row.image} layout='fixed' width={50} height={50} className='rounded-lg'/>
+              </TableCell>
               <TableCell align="center">{row.color}</TableCell>
               <TableCell align="center">{row.size}</TableCell>
               <TableCell align="center">{row.price}</TableCell>
