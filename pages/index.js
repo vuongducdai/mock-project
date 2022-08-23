@@ -1,4 +1,7 @@
+import { Box } from "@mui/material";
+import { Container } from '@mui/material';
 import Head from "next/head";
+import ProductCard from "../components/ProductCard/ProductCard";
 
 export default function Home() {
   return (
@@ -9,6 +12,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1 className="bg-red-300">Hello World</h1>
+      <Container className="product__slider">
+        <Box className="flex flex-col">
+          <span>Hàng mới về</span>
+          <span>Tinh hoa adidas</span>
+          <span>Sắp có</span>
+        </Box>
+        <div>
+          <ProductCard />
+        </div>
+      </Container>
     </div>
   );
 }
