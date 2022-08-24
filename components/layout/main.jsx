@@ -7,7 +7,7 @@ import { useScrollDirection } from "../../hooks/useSCrollDirection";
 import { Header } from "./Header";
 import Footer from "./Footer";
 
-export const MainLayout = ({ children }) => {
+export default function MainLayout({ children }) {
   return (
     <div>
       <Header />
@@ -15,4 +15,4 @@ export const MainLayout = ({ children }) => {
       <Footer />
     </div>
   );
-};
+}
