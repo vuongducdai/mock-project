@@ -2,16 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-<<<<<<< HEAD
-  images:{
-    domains:['picsum.photos','loremflickr.com']
-  }
-}
-=======
   images: {
-    domains: ["www.adidas.com.vn"],
+    domains: ["www.adidas.com.vn", "picsum.photos", "loremflickr.com"],
   },
 };
->>>>>>> origin/dev
 
 module.exports = nextConfig;
