@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+<<<<<<< HEAD
       * {
             @apply p-0 m-0 box-border select-none;
       }
@@ -66,3 +67,9 @@
       }
     }
     
+=======
+  html {
+    font-family: "Noto Sans", "AdihausDIN", "Helvetica", system-ui, sans-serif;
+  }
+}
+>>>>>>> origin/dev
