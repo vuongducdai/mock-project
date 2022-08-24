@@ -11,7 +11,7 @@ const Admin = () => {
                         <div className="w-full h-full bg-fb">
                               <span>Something</span>
                               <div className="w-full h-full bg-fb p-8">
-                                    <d1>DASHBOARD</d1>
+                                    <h1>DASHBOARD</h1>
                               </div>
                         </div>
                   </div>
