@@ -85,22 +85,24 @@ export default function UserTable({
                 <TableCell align="center">{data.address}</TableCell>
                 <TableCell align="center">{data.phone}</TableCell>
                 <TableCell align="center">{data.isAdmin === true?'Admin':'User'}</TableCell>
-                <TableCell align="center">
+                <TableCell align="center" sx={{display:'flex',justifyContent:'center'}}>
                   <Button
-                    className="p-2 m-1"
+                    
                     variant="contained"
                     sx={{
                       color: "success.main",
+                      background:'white',
                       "&:hover": { color: "white", background: "green" },
                     }}
                   >
                     Edit
                   </Button>
                   <Button
-                    className="p-2 m-1"
+                    
                     variant="contained"
                     sx={{
                       color: "warning.main",
+                      background:'white',
                       "&:hover": { color: "white", background: "red" },
                     }}
                   >
