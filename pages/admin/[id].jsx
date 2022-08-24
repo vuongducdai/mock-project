@@ -11,7 +11,7 @@ const Container = ({ item }) => {
                   <Sidebar />
                   <dir className='w-full h-full'>
                         <Layout>
-                              <DataTable />
+                              <DataTable product='Product' name='NAME' image='IMAGE' price='PRICE' color='COLOR' size='SIZE' />
                         </Layout>
                   </dir>
             </div>
