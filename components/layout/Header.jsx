@@ -12,7 +12,7 @@ export const Header = () => {
     <header
       className={`fixed ${
         scrollDirection === "down" ? "-top-28 inset-x-0" : "top-0 inset-x-0"
-      } transition-all duration-500 z-50 bg-white`}
+      } transition-all duration-500 z-[8000] bg-white`}
     >
       <div className="bg-black h-[30px] flex justify-around items-center text-white text-xs tracking-widest w-[100%]">
         <div>MIỄN PHÍ GIAO HÀNG TRÊN 1.300.000 VNĐ</div>
@@ -31,7 +31,7 @@ export const Header = () => {
         </div>
         <div>
           <div className="flex justify-end pt-[5px] text-[14px]">
-            <a className="px-[5px]">đăng nhập</a>
+            <a className="px-[5px] cursor-pointer">đăng nhập</a>
           </div>
           <div className="flex justify-center">
             <div className="py-[8px] pl-[36px] w-[15vw]">
