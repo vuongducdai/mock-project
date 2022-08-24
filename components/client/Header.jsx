@@ -1,4 +1,10 @@
-import { Autocomplete, IconButton, InputBase, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Badge,
+  IconButton,
+  InputBase,
+  TextField,
+} from "@mui/material";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
@@ -47,7 +53,9 @@ const Header = () => {
               </div>
             </div>
             <div className="flex justify-center items-center w-[48px] h-[48px] cursor-pointer">
-              <ShoppingBagOutlinedIcon />
+              <Badge badgeContent={4} color="primary">
+                <ShoppingBagOutlinedIcon />
+              </Badge>
             </div>
           </div>
         </div>
