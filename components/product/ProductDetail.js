@@ -5,7 +5,6 @@ import SyncOutlinedIcon from '@mui/icons-material/SyncOutlined';
 import {
 	Box,
 	Breadcrumbs,
-	Button,
 	Container,
 	Grid,
 	Paper,
@@ -15,6 +14,7 @@ import {
 import React from 'react';
 import InnerImageZoom from 'react-inner-image-zoom';
 import formatNumber from '../../utils/formatNumber';
+import BlackButton from '../BlackButton';
 import According from './According';
 import { BreadCrumb } from './StyledBreadcrumb';
 import StyledButton from './StyledButton';
@@ -176,19 +176,12 @@ const ProductDetail = () => {
 									}>
 									Thêm vào giỏ hàng
 								</Button> */}
-								<Button
-									fullWidth
-									className='relative transition-color ease duration-200 flex justify-between px-3 hover:text-slate-400 hover:bg-black h-[50px] bg-black text-white rounded-none before:absolute
-									before:z-[-10]
-									before:block
-									before:w-full before:h-full
-									before:bg-transparent
-									before:top-1 before:left-1 before:border-2 before:border-solid before:border-black'
+								<BlackButton
+									title='Thêm vào giỏ hàng'
 									endIcon={
 										<ShortcutIcon fontSize='inherit' />
-									}>
-									Thêm vào giỏ hàng
-								</Button>
+									}
+								/>
 							</Box>
 							<Box
 								mt={6}
