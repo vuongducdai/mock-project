@@ -6,32 +6,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
+
 import Button from "@mui/material/Button";
 import Image from "next/image";
 import { FormControl, InputAdornment } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import SearchIcon from "@mui/icons-material/Search";
-import {useData} from 'swr';
+
 // import {useData} from '../../pages/api/swr'
 function createData(name, image, price, color, size, idx) {
   return { name, image, price, color, size, idx };
 }
 
-// const rows = [
-//   createData("Frozen yoghurt", "https://picsum.photos/200/300", 6.0, 24, 4.0),
-//   createData(
-//     "Ice cream sandwich",
-//     "https://picsum.photos/200/300",
-//     9.0,
-//     37,
-//     4.3
-//   ),
-//   createData("Eclair", "https://picsum.photos/200/300", 16.0, 24, 6.0),
-//   createData("Cupcake", "https://picsum.photos/200/300", 3.7, 67, 4.3),
-//   createData("Gingerbread", "https://picsum.photos/200/300", 16.0, 49, 3.9),
-//   createData("Gingerbread", "https://picsum.photos/200/300", 16.0, 49, 3.9),
-// ];
+
 
 export default function DataTable({
   product,
@@ -40,10 +27,9 @@ export default function DataTable({
   price,
   color,
   size,
-  id,
+  datas,
 }) {
-
-  const rows = item;
+  
   const render = () => {
     return (
       <TableContainer
@@ -93,28 +79,28 @@ export default function DataTable({
             </TableRow>
           </TableHead>
           <TableBody sx={{ borderTop: "none", height: 300 }}>
-            {rows?.map((row) => (
+            {datas?.map((data) => (
               <TableRow
                 className="last:border-b-2"
-                key={row.id}
+                key={data.id}
                 sx={{ "td, th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {data.name}
                 </TableCell>
                 <TableCell align="center">
                   <Image
-                    src={row.img}
+                    src={data.img}
                     layout="fixed"
                     width={50}
                     height={50}
                     className="rounded-lg"
-                    alt={row.name}
+                    alt={data.name}
                   />
                 </TableCell>
-                <TableCell align="center">{row.color}</TableCell>
-                <TableCell align="center">{row.size}</TableCell>
-                <TableCell align="center">{row.price}</TableCell>
+                <TableCell align="center">{data.color}</TableCell>
+                <TableCell align="center">{data.size}</TableCell>
+                <TableCell align="center">{data.price}</TableCell>
                 <TableCell align="center">
                   <Button
                     className="p-2 m-1"

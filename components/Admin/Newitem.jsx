@@ -6,9 +6,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import ImgNotFound from "./../../public/img/imgnotfound.webp"
 import { productSchema, userSchema } from '../../yupGlobal';
 import { colors } from "./../../constants/data";
+import { addProduct, addUser } from '../../api/requestMethod';
 
 const Newitem = ({ setOpenAdd }) => {
-      const [file, setFile] = useState(null);
+      const [img, setImg] = useState(null);
       const [color, setColor] = useState([]);
       const [isProduct, setIsProduct] = useState(true);
 
@@ -56,23 +57,23 @@ const Newitem = ({ setOpenAdd }) => {
             )
       }
 
-      const onSubmit = (data) => {
+      const onSubmit = async (data) => {
             if (isProduct) {
-                  const productForm = { ...data, color, file }
-                  console.log(productForm)
+                  const productForm = { ...data, color, img }
+                  await addProduct(productForm);
                   productSetValue('name', '');
                   productSetValue('price', '');
                   productSetValue('size', '');
                   setColor([]);
             } else {
-                  const userForm = { ...data, file }
-                  console.log(userForm)
+                  const userForm = { ...data, img }
+                  await addUser(userForm);
                   userSetValue('name', '');
                   userSetValue('address', '');
                   userSetValue('phone', '');
                   userSetValue('email', '');
             }
-            setFile(null);
+            setImg(null);
       }
 
 
@@ -104,12 +105,12 @@ const Newitem = ({ setOpenAdd }) => {
                                           type="file"
                                           multiple={false}
                                           onDone={(file) => {
-                                                setFile(file.base64)
+                                                setImg(file.base64)
                                           }}
                                     />
                                     <div className='w-full h-40 py-4 overflow-hidden'>
                                           <Image
-                                                src={file || ImgNotFound}
+                                                src={img || ImgNotFound}
                                                 alt="img"
                                                 width={240}
                                                 height={160}

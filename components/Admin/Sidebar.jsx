@@ -34,7 +34,6 @@ const Sidebar = () => {
                                     <div className='flex items-center gap-4 pl-12 cursor-pointer'>
                                           <div><DashboardIcon /></div>
                                           <span>Dashboard</span>
-                                          
                                     </div>
                               </Link>
 
