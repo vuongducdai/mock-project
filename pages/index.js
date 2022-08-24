@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Footer from "../components/client/Footer";
 import Header from "../components/client/Header";
 
 export default function Home() {
@@ -10,9 +11,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <div>
+      <div className="h-[5000px]">
         <h1>Hello World</h1>
       </div>
+      <Footer />
     </div>
   );
 }
