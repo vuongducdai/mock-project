@@ -1,5 +1,4 @@
 import AirportShuttleOutlinedIcon from '@mui/icons-material/AirportShuttleOutlined';
-import ShortcutIcon from '@mui/icons-material/Shortcut';
 import StarIcon from '@mui/icons-material/Star';
 import SyncOutlinedIcon from '@mui/icons-material/SyncOutlined';
 import {
@@ -176,12 +175,7 @@ const ProductDetail = () => {
 									}>
 									Thêm vào giỏ hàng
 								</Button> */}
-								<BlackButton
-									title='Thêm vào giỏ hàng'
-									endIcon={
-										<ShortcutIcon fontSize='inherit' />
-									}
-								/>
+								<BlackButton title='Thêm vào giỏ hàng' />
 							</Box>
 							<Box
 								mt={6}

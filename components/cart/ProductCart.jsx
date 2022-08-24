@@ -1,24 +1,48 @@
+import CloseIcon from '@mui/icons-material/Close';
 import {
+	Box,
 	Container,
 	FormControl,
 	Grid,
+	IconButton,
 	MenuItem,
 	Paper,
 	Select,
 	Typography,
 } from '@mui/material';
 import { Stack } from '@mui/system';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import formatNumber from '../../utils/formatNumber';
 import StyledSelect from './StyledSelect';
 const ProductCart = () => {
 	return (
-		<Container maxWidth={false}>
-			<Paper variant='outlined' square>
+		<Container maxWidth={false} disableGutters>
+			<Paper variant='outlined' square className='relative'>
+				<IconButton
+					aria-label='delete'
+					className='absolute	right-1 top-1 z-10'>
+					<CloseIcon />
+				</IconButton>
 				<Grid container spacing={0}>
 					<Grid item xs={5} md={4}>
-						1
+						<Box
+							sx={{
+								display: 'flex',
+								justifyContent: 'center',
+								flexDirection: 'column',
+								width: '100%',
+								height: '100%',
+							}}>
+							<Image
+								src='https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/fde4287a315a464d915bad25006ec160_9366/%C3%A1o-thun-ba-l%C3%A1-essentials-adicolor-loungewear.jpg'
+								layout='responsive'
+								width={250}
+								height={250}
+								alt='image item'
+							/>
+						</Box>
 					</Grid>
 					<Grid item xs={7} md={8} p={2} pr={6}>
 						<Stack direction='column'>
@@ -57,9 +81,10 @@ const ProductCart = () => {
 													backgroundColor: '#eceff1',
 												},
 											'&& .MuiPaper-root.MuiMenu-paper': {
-												marginTop: '0px',
+												marginTop: 0,
 												border: '1px solid #000',
-												borderRadius: '0px',
+												borderTopWidth: '0.5px',
+												borderRadius: 0,
 												width: '100px',
 											},
 										},
