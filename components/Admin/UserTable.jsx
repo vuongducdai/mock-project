@@ -14,14 +14,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import { type } from "os";
 
 export default function UserTable({
-  product,
-  name,
-  email,
-  address,
-  phone,
-  isAdmin,
-  datas,
-  type,
+      product,
+      name,
+      email,
+      address,
+      phone,
+      isAdmin,
+      datas,
+      type,
 }) {
   const render = () => {
     return (
@@ -120,5 +120,5 @@ export default function UserTable({
     );
   };
 
-  return <>{render()}</>;
+      return <>{render()}</>;
 }
