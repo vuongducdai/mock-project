@@ -1,42 +1,42 @@
 export const colors = [
       {
             id: 1,
-            name: 'green material',
+            name: 'green',
             color: '#7fb77e'
       },
       {
             id: 2,
-            name: 'purple violet',
+            name: 'purple',
             color: '#564a94'
       },
       {
             id: 3,
-            name: 'yellow sand',
+            name: 'sand',
             color: '#ffdba3'
       },
       {
             id: 4,
-            name: 'dark blue',
+            name: 'dark',
             color: '#111010'
       },
       {
             id: 5,
-            name: 'green matcha',
+            name: 'matcha',
             color: '#113943'
       },
       {
             id: 6,
-            name: 'red hornor',
+            name: 'red',
             color: '#b20701'
       },
       {
             id: 7,
-            name: 'blue castle',
+            name: 'blue',
             color: '#0279aa'
       },
       {
             id: 8,
-            name: 'grey street',
+            name: 'grey',
             color: '#cfd2cf'
       },
 ]
