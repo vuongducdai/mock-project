@@ -27,9 +27,9 @@ export default function DataTable({
   price,
   color,
   size,
-  data,
+  datas,
 }) {
-  const rows = data;
+  
   const render = () => {
     return (
       <TableContainer
@@ -79,28 +79,28 @@ export default function DataTable({
             </TableRow>
           </TableHead>
           <TableBody sx={{ borderTop: "none", height: 300 }}>
-            {rows?.map((row) => (
+            {datas?.map((data) => (
               <TableRow
                 className="last:border-b-2"
-                key={row.id}
+                key={data.id}
                 sx={{ "td, th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {data.name}
                 </TableCell>
                 <TableCell align="center">
                   <Image
-                    src={row.img}
+                    src={data.img}
                     layout="fixed"
                     width={50}
                     height={50}
                     className="rounded-lg"
-                    alt={row.name}
+                    alt={data.name}
                   />
                 </TableCell>
-                <TableCell align="center">{row.color}</TableCell>
-                <TableCell align="center">{row.size}</TableCell>
-                <TableCell align="center">{row.price}</TableCell>
+                <TableCell align="center">{data.color}</TableCell>
+                <TableCell align="center">{data.size}</TableCell>
+                <TableCell align="center">{data.price}</TableCell>
                 <TableCell align="center">
                   <Button
                     className="p-2 m-1"
