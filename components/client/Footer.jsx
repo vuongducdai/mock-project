@@ -165,8 +165,8 @@ const SubscribeFooter = () => {
 
   return (
     <div className="bg-[#ede734] px-[40px] py-[40px] min-w-[960px] w-[100%] mx-auto">
-      <div className="flex">
-        <div className="basis-0 grow ">
+      <div className="flex max-w-[960px] justify-between mx-auto">
+        <div className="basis-0 grow px-[7px] ">
           <span className="text-3xl">
             ĐĂNG KÝ NHẬN THÔNG TIN CẬP NHẬT VÀ ƯU ĐÃI QUA EMAIL
           </span>
