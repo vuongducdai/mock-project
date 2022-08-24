@@ -160,7 +160,8 @@ const SubscribeFooter = () => {
   const beforeAfterButtonStyle =
     "relative bg-black text-white p-4 " +
     "before:w-[100%] before:h-[3px] before:absolute before:-bottom-[3px] before:left-[3px] before:border-b before:border-l before:border-black " +
-    "after:h-[100%] after:w-[3px] after:absolute after:top-[3px] after:-right-[3px] after:border-t after:border-r after:border-black";
+    "after:h-[100%] after:w-[3px] after:absolute after:top-[3px] after:-right-[3px] after:border-t after:border-r after:border-black " +
+    "hover:text-slate-500	 duration-200 ";
 
   return (
     <div className="bg-[#ede734] px-[40px] py-[40px] min-w-[960px] w-[100%] mx-auto">
