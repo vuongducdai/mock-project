@@ -1,5 +1,4 @@
 import AirportShuttleOutlinedIcon from '@mui/icons-material/AirportShuttleOutlined';
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import ShortcutIcon from '@mui/icons-material/Shortcut';
 import StarIcon from '@mui/icons-material/Star';
 import SyncOutlinedIcon from '@mui/icons-material/SyncOutlined';
@@ -17,7 +16,7 @@ import React from 'react';
 import InnerImageZoom from 'react-inner-image-zoom';
 import formatNumber from '../../utils/formatNumber';
 import According from './According';
-import StyledBreadcrumb from './StyledBreadcrumb';
+import { BreadCrumb } from './StyledBreadcrumb';
 import StyledButton from './StyledButton';
 
 const ProductDetail = () => {
@@ -29,12 +28,13 @@ const ProductDetail = () => {
 					<Grid container>
 						<Grid item xs={12}>
 							<Box className='relative'>
-								<Breadcrumbs
+								<BreadCrumb />
+								{/* <Breadcrumbs
 									aria-label='breadcrumb'
-									className='absolute top-4 left-5 z-50'>
-									<StyledBreadcrumb
+									className='absolute top-4 left-5 z-50'> */}
+								{/* <StyledBreadcrumb
 										component='a'
-										href='/'
+										href={router.back()}
 										label='Trở lại'
 										icon={
 											<KeyboardReturnIcon fontSize='small' />
@@ -43,7 +43,7 @@ const ProductDetail = () => {
 									<StyledBreadcrumb
 										component='a'
 										href='/'
-										label='Trang chủ'
+										breadcrumb.label
 									/>
 									<StyledBreadcrumb
 										component='a'
@@ -52,8 +52,8 @@ const ProductDetail = () => {
 									/>
 									<Typography color='text.primary'>
 										Quần
-									</Typography>
-								</Breadcrumbs>
+									</Typography> */}
+								{/* </Breadcrumbs> */}
 								<InnerImageZoom
 									width={900}
 									src='http://loremflickr.com/640/480/city'
@@ -168,9 +168,22 @@ const ProductDetail = () => {
 								</Stack>
 							</Box>
 							<Box mt={3}>
-								<Button
+								{/* <Button
 									fullWidth
 									className='transition-color ease duration-200 hover:text-slate-400 hover:bg-black h-[50px] bg-black text-white rounded-none shadow-[2px_2px_rgba(255,255,255,1),3px_3px_rgba(0,0,0,1)] flex justify-between px-3'
+									endIcon={
+										<ShortcutIcon fontSize='inherit' />
+									}>
+									Thêm vào giỏ hàng
+								</Button> */}
+								<Button
+									fullWidth
+									className='relative transition-color ease duration-200 flex justify-between px-3 hover:text-slate-400 hover:bg-black h-[50px] bg-black text-white rounded-none before:absolute
+									before:z-[-10]
+									before:block
+									before:w-full before:h-full
+									before:bg-transparent
+									before:top-1 before:left-1 before:border-2 before:border-solid before:border-black'
 									endIcon={
 										<ShortcutIcon fontSize='inherit' />
 									}>

@@ -48,6 +48,33 @@ const guides = [
 		title: 'Machine wash warm',
 	},
 ];
+
+const details = [
+	{
+		id: 1,
+		title: 'Dáng tight fit và cạp cao',
+	},
+	{
+		id: 2,
+		title: 'Vải dệt kim đôi làm từ 83% polyester tái chế, 17% elastane',
+	},
+	{
+		id: 3,
+		title: 'Công nghệ AEROREADY thấm hút ẩm',
+	},
+	{
+		id: 4,
+		title: '©Disney',
+	},
+	{
+		id: 5,
+		title: 'Màu sản phẩm: Semi Solar Pink / Purple Rush / Sky Rush',
+	},
+	{
+		id: 6,
+		title: 'Mã sản phẩm: HA6572',
+	},
+];
 const StyledAccordionSummary = styled(MuiAccordionSummary)(({ theme }) => ({
 	'&': {
 		borderLeft: `4px solid ${theme.palette.common.white}`,
@@ -74,6 +101,15 @@ export default function According() {
 				{title}
 			</Typography>
 		</Grid>
+	));
+
+	const renderDetails = details.map(({ id, title }, index) => (
+		<ListItem key={id}>
+			<ListItemIcon>
+				<FiberManualRecordRoundedIcon sx={{ fontSize: 10 }} />
+			</ListItemIcon>
+			<ListItemText primary={title} />
+		</ListItem>
 	));
 	return (
 		<>
@@ -227,41 +263,8 @@ export default function According() {
 					<Grid container spacing={2}>
 						<Grid item xs={12} md>
 							<Stack direction='column'>
-								<Typography
-									variant='h4'
-									component='h4'
-									className='italic tracking-wide break-words'>
-									CHIẾC QUẦN TIE-DYE CÓ SỬ DỤNG CHẤT LIỆU TÁI
-									CHẾ.
-								</Typography>
-								<Typography
-									variant='body1'
-									component='p'
-									className='whitespace-pre-line whitespace-pre-wrap'>
-									Thể thao cộng thêm chút tinh nghịch. Đó là
-									cách bạn miêu tả bé nhà bạn. Và cũng chính
-									là cách chúng tôi miêu tả chiếc quần trẻ em
-									adidas này. Hình ảnh nàng Vịt Daisy nhà
-									Disney trượt patin cùng thiết kế tie-dye đem
-									đến nét vui tươi, rạng rỡ cho mọi hoạt động
-									trong ngày. Công nghệ AEROREADY thoát ẩm
-									giúp bé luôn khô ráo khi chơi đùa.{'\n'} Làm
-									từ một nhóm chất liệu tái chế và có chứa tối
-									thiểu 60% thành phần tái chế, sản phẩm này
-									đại diện cho một trong số rất nhiều các giải
-									pháp của chúng tôi hướng tới chấm dứt rác
-									thải nhựa.
-								</Typography>
+								<List>{renderDetails}</List>
 							</Stack>
-						</Grid>
-						<Grid item xs={12} md my='auto'>
-							<Image
-								src='http://loremflickr.com/640/480/city'
-								alt='pro'
-								layout='responsive'
-								width='100%'
-								height='100%'
-							/>
 						</Grid>
 					</Grid>
 				</AccordionDetails>
