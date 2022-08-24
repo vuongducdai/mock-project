@@ -11,6 +11,7 @@ export default function MainLayout({ children }) {
   return (
     <div>
       <Header />
+      <div className="aboslute">s</div>
       <div>{children}</div>
       <Footer />
     </div>

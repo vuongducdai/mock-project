@@ -3,7 +3,12 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["www.adidas.com.vn", "picsum.photos", "loremflickr.com"],
+    domains: [
+      "www.adidas.com.vn",
+      "picsum.photos",
+      "loremflickr.com",
+      "brand.assets.adidas.com",
+    ],
   },
 };
 
