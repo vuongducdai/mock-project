@@ -1,17 +1,11 @@
-import {
-  Autocomplete,
-  Badge,
-  IconButton,
-  InputBase,
-  TextField,
-} from "@mui/material";
+import { Badge, IconButton, InputBase } from "@mui/material";
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useScrollDirection } from "../../hooks/useSCrollDirection";
 
-const Header = () => {
+export const Header = () => {
   const scrollDirection = useScrollDirection();
 
   return (
@@ -63,5 +57,3 @@ const Header = () => {
     </header>
   );
 };
-
-export default Header;
