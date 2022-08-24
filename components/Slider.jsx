@@ -58,7 +58,7 @@ export default function Slider({ arrProduct }) {
             >
                 {arrProduct.map(item => {
                     return (
-                        <ProductCard item={item} />
+                        <ProductCard key={item.id} item={item} />
                     );
                 })}
             </Carousel>
@@ -69,7 +69,7 @@ export default function Slider({ arrProduct }) {
 
 
     return (
-        <Container className="product__slider">
+        <Container className="product__slider mt-28">
             <Box className="flex border-y-2 mb-4">
                 <span
                     onClick={() => setListActive(1)}
