@@ -14,7 +14,6 @@ module.exports = {
                         'blue-pastel': '#213352',
                         'blue-dark': '#1e20ff',
                         'blue-dark-hover': '#3e3e73',
-                        'white': '#ffffff',
                         'warning': '#ff4b4c'
                   },
             }
