@@ -9,7 +9,7 @@ import { colors } from "./../../constants/data";
 import { addProduct, addUser } from '../../api/requestMethod';
 
 
-const Newitem = ({ setOpenAdd }) => {
+const Newitem = ({ setOpen }) => {
       const [img, setImg] = useState(null);
       const [color, setColor] = useState([]);
       const [isProduct, setIsProduct] = useState(true);
@@ -79,7 +79,7 @@ const Newitem = ({ setOpenAdd }) => {
 
 
       return (
-            <div className='w-[240px] slide-top h-full bg-white shadow-md py-6 gap-6 mt-[100px]'>
+            <div className='w-[240px] slide-left h-full bg-white shadow-md py-6 gap-6 mr-[-100px] ml-[100px]'>
                   <div className='flex flex-col'>
 
                         <div className='flex items-center justify-between px-4'>
@@ -242,7 +242,7 @@ const Newitem = ({ setOpenAdd }) => {
                                           type="submit"
                                     />
                                     <button
-                                          onClick={() => setOpenAdd(false)}
+                                          onClick={() => setOpen(false)}
                                           className='text-blue-pastel px-4 py-2 rounded-lg border text-lg cursor-pointer w-24 flex-center'
                                     >
                                           Discard

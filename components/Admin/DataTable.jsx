@@ -118,32 +118,32 @@ export default function DataTable({
                       color: "success.main",
                       background: "white",
 
-                      "&:hover": { color: "white", background: "green" },
-                    }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      color: "warning.main",
-                      background: "white",
-                      "&:hover": { color: "white", background: "red" },
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <div>
-          <h1>Pagination</h1>
-        </div>
-      </TableContainer>
-    );
-  };
+                                                                  "&:hover": { color: "white", background: "green" },
+                                                            }}
+                                                      >
+                                                            Edit
+                                                      </Button>
+                                                      <Button
+                                                            variant="contained"
+                                                            sx={{
+                                                                  color: "warning.main",
+                                                                  background: "white",
+                                                                  "&:hover": { color: "white", background: "red" },
+                                                            }}
+                                                      >
+                                                            Delete
+                                                      </Button>
+                                                </TableCell>
+                                          </TableRow>
+                                    ))}
+                              </TableBody>
+                        </Table>
+                        <div>
+                              <h1>Pagination</h1>
+                        </div>
+                  </TableContainer>
+            );
+      };
 
-  return <>{render()}</>;
+      return <>{render()}</>;
 }
