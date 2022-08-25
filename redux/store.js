@@ -11,17 +11,18 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import adminSlice from "./admin/adminSlice";
-
+import productSlice from "./admin/productSlice";
+import userSlice from "./admin/userSlice";
 const rootReducer = combineReducers({
-  adminSlice,
+  productSlice, 
+  userSlice,
 });
 
 //  Handle user login when reloading page
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["adminSlice"],
+  blacklist: ["productSlice",'userSlice'],
 };
 
 const presistedReducer = persistReducer(persistConfig, rootReducer);

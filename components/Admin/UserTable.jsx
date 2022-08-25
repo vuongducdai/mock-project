@@ -14,7 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { type } from "os";
 
 export default function UserTable({
-      product,
+      
       name,
       email,
       address,
