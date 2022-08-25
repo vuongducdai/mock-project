@@ -13,7 +13,6 @@ export default function Slider({ arrProduct }) {
         return (
             <li
                 className={`cursor-pointer ${active ? 'active' : 'inactive'}`}
-                // {active ? "active" : "inactive"}
                 onClick={() => onClick()}
             >
                 <HorizontalRuleIcon />

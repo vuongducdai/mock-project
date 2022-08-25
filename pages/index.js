@@ -1,11 +1,14 @@
-import { Container, Box } from "@mui/material";
 import Head from "next/head";
 import React from 'react';
 import "react-multi-carousel/lib/styles.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import Header from "../components/client/Header";
+import ListProductComponent from "../components/ListProductComponent";
+import Pagination from "../components/Pagination";
 import Slider from '../components/Slider';
+
+
 
 export default function Home() {
   const arrBlogs = [
@@ -49,33 +52,6 @@ export default function Home() {
       desc: 'i love sea'
     },
   ]
-  const arrTitleFilter = [
-    {
-      id: 1,
-      content: 'Tất cả quần áo nam',
-    },
-    {
-      id: 2,
-      content: 'Jackets',
-    },
-    {
-      id: 3,
-      content: 'Áo nỉ và Bộ đồ thể thao',
-    },
-    {
-      id: 4,
-      content: 'Áo Phông & Áo Polo',
-    },
-    {
-      id: 5,
-      content: 'Áo hoodie & Áo khoác',
-    },
-    {
-      id: 6,
-      content: 'Quần',
-    },
-  ]
-
 
   return (
     <div>
@@ -86,20 +62,8 @@ export default function Home() {
       </Head>
       <Header />
       <Slider arrProduct={arrBlogs} />
-      <Container>
-        <div>
-          {/* <Box className="flex border-y-2 mb-4">
-            <span
-              onClick={() => setListActive(1)}
-              className={`p-2 cursor-pointer text-neutral-500 ${listActive === 1 ? 'border-b-2 border-b-black text-black' : ''} hover:border-b-2 border-b-black`}>
-              Hàng mới về
-            </span>
-          </Box> */}
-          <div>
-            list
-          </div>
-        </div>
-      </Container>
+      <ListProductComponent arrProduct={arrBlogs} />
+      <Pagination />
     </div >
   );
 }
