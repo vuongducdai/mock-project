@@ -60,6 +60,19 @@ const LoginForm = () => {
   );
 };
 
+const FacebookGoogleLogin = () => {
+  return (
+    <div className="flex flex-col">
+      <div>
+        <button className="border">FACEBOOK</button>
+      </div>
+      <div>
+        <button className="border">GOOGLE</button>
+      </div>
+    </div>
+  );
+};
+
 const LoginSection = () => {
   return (
     <div className="flex justify-center items-start">
@@ -68,6 +81,7 @@ const LoginSection = () => {
         <p>Bạn quên mật khẩu?</p>
         <LoginForm />
         <p>HOẶC</p>
+        <FacebookGoogleLogin />
       </div>
     </div>
   );
