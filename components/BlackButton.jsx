@@ -1,26 +1,22 @@
-import ShortcutIcon from '@mui/icons-material/Shortcut';
-import { Button } from '@mui/material';
-import React from 'react';
+import ShortcutIcon from "@mui/icons-material/Shortcut";
+import { Button } from "@mui/material";
+import React from "react";
+import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 
-const BlackButton = ({
-	title,
-	endIcon = <ShortcutIcon fontSize='inherit' />,
-	className,
-}) => {
-	return (
-		<Button
-			className={`relative w-full uppercase transition-color ease duration-200 flex justify-between px-3 hover:text-slate-400 hover:bg-black h-[50px] bg-black text-white rounded-none before:absolute
-			before:z-[-10]
-			before:block
-			before:w-full before:h-full
-			before:bg-transparent
-			before:top-1 before:left-1 before:border-2 before:border-solid before:border-black ${[
-				className,
-			]}`}
-			endIcon={endIcon}>
-			{title}
-		</Button>
-	);
+const BlackButton = ({ title, className }) => {
+  const beforeAfterButtonStyle = `relative bg-black text-white p-4 before:w-[100%] before:h-[3px] before:absolute before:-bottom-[3px] before:left-[3px] before:border-b before:border-l before:border-black after:h-[100%] after:w-[3px] after:absolute after:top-[3px] after:-right-[3px] after:border-t after:border-r after:border-black hover:text-slate-500	 duration-200 ${[
+    className,
+  ]}`;
+  return (
+    <button className={beforeAfterButtonStyle}>
+      <div className="flex justify-between w-[100%]">
+        <span>{title}</span>
+        <span>
+          <TrendingFlatIcon className="w-[100%]" />
+        </span>
+      </div>
+    </button>
+  );
 };
 
 export default BlackButton;

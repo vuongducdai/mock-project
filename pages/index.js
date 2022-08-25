@@ -5,13 +5,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import ListProductComponent from "../components/client/ListProductComponent";
 import Pagination from "../components/client/Pagination";
-import Slider from '../components/client/Slider';
+import Slider from "../components/client/Slider";
 import { BannerCarousel } from "../components/client/BannerCarousel";
 import MainLayout from "../components/layout/main";
 import axios from "axios";
-
-
-
 
 export default function Home(props) {
   const arrBlogs = [
@@ -55,10 +52,9 @@ export default function Home(props) {
       desc: "i love sea",
     },
   ];
-  console.log('props', props.listProduct);
+  console.log("props", props.listProduct);
 
   const [totalProduct, setTotalProduct] = useState(props.count);
-
 
   return (
     <>
@@ -76,16 +72,18 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-
-  const res = await axios.get('https://63030a4dc6dda4f287c1d8d4.mockapi.io/product?page=1&limit=10');
-  const data = res.data
+  const res = await axios.get(
+    "https://63030a4dc6dda4f287c1d8d4.mockapi.io/product?page=1&limit=10"
+  );
+  const data = res.data;
+  console.log("List product", data.products);
 
   return {
     props: {
       listProduct: data.products,
       count: data.count,
     },
-  }
+  };
 }
 
 Home.Layout = MainLayout;
