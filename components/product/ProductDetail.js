@@ -4,7 +4,10 @@ import SyncOutlinedIcon from "@mui/icons-material/SyncOutlined";
 import {
   Box,
   Breadcrumbs,
+  Button,
   Container,
+  DialogActions,
+  DialogContent,
   Grid,
   Paper,
   Stack,
@@ -20,11 +23,26 @@ import StyledButton from "./StyledButton";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/client/cartSlice";
+import {
+  AddToCartDialog,
+  BootstrapDialog,
+  BootstrapDialogTitle,
+} from "../client/AddToCardDialog";
 
 const ProductDetail = ({ productProps }) => {
   const { name, img, price, color, size, material, id } = productProps;
   const dispatch = useDispatch();
-  // const { products } = useSelector((state) => state.cartSlice);
+  const { count } = useSelector((state) => state.cartSlice);
+
+  //Hooks for add cart successfully dialog
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpenDialog = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleClick = () => {
     dispatch(
@@ -38,21 +56,25 @@ const ProductDetail = ({ productProps }) => {
         id: id,
       })
     );
+
+    //Open add cart successfully dialog
+    setOpen(true);
   };
 
   return (
-    <Container fixed maxWidth={false} disableGutters={true}>
-      {/* <Box sx={{ flexGrow: 1 }}> */}
-      <Grid container spacing={1}>
-        <Grid item md={8} xs={12}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Box className="relative">
-                <BreadCrumb />
-                {/* <Breadcrumbs
+    <div>
+      <Container fixed maxWidth={false} disableGutters={true}>
+        {/* <Box sx={{ flexGrow: 1 }}> */}
+        <Grid container spacing={1}>
+          <Grid item md={8} xs={12}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Box className="relative">
+                  <BreadCrumb />
+                  {/* <Breadcrumbs
 									aria-label='breadcrumb'
 									className='absolute top-4 left-5 z-50'> */}
-                {/* <StyledBreadcrumb
+                  {/* <StyledBreadcrumb
 										component='a'
 										href={router.back()}
 										label='Trở lại'
@@ -73,90 +95,90 @@ const ProductDetail = ({ productProps }) => {
 									<Typography color='text.primary'>
 										Quần
 									</Typography> */}
-                {/* </Breadcrumbs> */}
-                <InnerImageZoom
-                  width={900}
-                  src={img}
-                  hideHint={true}
-                  zoomType="hover"
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Stack className="mt-2">
-                <According />
-              </Stack>
+                  {/* </Breadcrumbs> */}
+                  <InnerImageZoom
+                    width={900}
+                    src={img}
+                    hideHint={true}
+                    zoomType="hover"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Stack className="mt-2">
+                  <According />
+                </Stack>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item md={4} xs={12}>
-          <Paper className="h-screen sticky top-0">
-            <Box p={3}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography component="h5">Gái • Sportswear</Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    transition: "all 0.2s ease-in-out",
-                    cursor: "pointer",
-                    "&:hover": {
-                      backgroundColor: "black",
-                      color: "white",
-                    },
-                  }}
+          <Grid item md={4} xs={12}>
+            <Paper className="h-screen sticky top-0">
+              <Box p={3}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
                 >
-                  <StarIcon sx={{ fontSize: 15 }} />
-                  <StarIcon sx={{ fontSize: 15 }} />
-                  <StarIcon sx={{ fontSize: 15 }} />
-                  <StarIcon sx={{ fontSize: 15 }} />
-                  <StarIcon sx={{ fontSize: 15 }} />
+                  <Typography component="h5">Gái • Sportswear</Typography>
                   <Box
                     sx={{
-                      ml: 1.5,
-                      mr: 0.5,
-                      textDecoration: "underline",
+                      display: "flex",
+                      alignItems: "center",
+                      transition: "all 0.2s ease-in-out",
+                      cursor: "pointer",
+                      "&:hover": {
+                        backgroundColor: "black",
+                        color: "white",
+                      },
                     }}
                   >
-                    11
+                    <StarIcon sx={{ fontSize: 15 }} />
+                    <StarIcon sx={{ fontSize: 15 }} />
+                    <StarIcon sx={{ fontSize: 15 }} />
+                    <StarIcon sx={{ fontSize: 15 }} />
+                    <StarIcon sx={{ fontSize: 15 }} />
+                    <Box
+                      sx={{
+                        ml: 1.5,
+                        mr: 0.5,
+                        textDecoration: "underline",
+                      }}
+                    >
+                      11
+                    </Box>
                   </Box>
-                </Box>
-              </Stack>
-              <Box mt={2}>
-                <Typography
-                  sx={{
-                    wordSpacing: 3,
-                  }}
-                  variant="h4"
-                  component="h4"
-                  className="italic tracking-wide break-words"
-                >
-                  {name}
-                </Typography>
-                <Typography className="font-medium">
-                  {formatNumber(price)}
-                </Typography>
-              </Box>
-              <Box mt={2}>
-                <Breadcrumbs aria-label="breadcrumb">
-                  <Typography color="text.primary">{color}</Typography>
-                  {/* <Typography color="text.primary">Purple Rush</Typography>
-                  <Typography color="text.primary">Sky Rush</Typography> */}
-                </Breadcrumbs>
-              </Box>
-              <Box mt={4}>
-                <Typography className="font-medium">Kích cỡ</Typography>
-                <Stack direction="row" alignItems="center" flexWrap="wrap">
-                  <StyledButton variant="outlined">{size}</StyledButton>
-                  <StyledButton variant="outlined">{size}</StyledButton>
                 </Stack>
-              </Box>
-              <Box mt={3}>
-                {/* <Button
+                <Box mt={2}>
+                  <Typography
+                    sx={{
+                      wordSpacing: 3,
+                    }}
+                    variant="h4"
+                    component="h4"
+                    className="italic tracking-wide break-words"
+                  >
+                    {name}
+                  </Typography>
+                  <Typography className="font-medium">
+                    {formatNumber(price)}
+                  </Typography>
+                </Box>
+                <Box mt={2}>
+                  <Breadcrumbs aria-label="breadcrumb">
+                    <Typography color="text.primary">{color}</Typography>
+                    {/* <Typography color="text.primary">Purple Rush</Typography>
+                  <Typography color="text.primary">Sky Rush</Typography> */}
+                  </Breadcrumbs>
+                </Box>
+                <Box mt={4}>
+                  <Typography className="font-medium">Kích cỡ</Typography>
+                  <Stack direction="row" alignItems="center" flexWrap="wrap">
+                    <StyledButton variant="outlined">{size}</StyledButton>
+                    <StyledButton variant="outlined">{size}</StyledButton>
+                  </Stack>
+                </Box>
+                <Box mt={3}>
+                  {/* <Button
 									fullWidth
 									className='transition-color ease duration-200 hover:text-slate-400 hover:bg-black h-[50px] bg-black text-white rounded-none shadow-[2px_2px_rgba(255,255,255,1),3px_3px_rgba(0,0,0,1)] flex justify-between px-3'
 									endIcon={
@@ -164,60 +186,73 @@ const ProductDetail = ({ productProps }) => {
 									}>
 									Thêm vào giỏ hàng
 								</Button> */}
-                <BlackButton title="Thêm vào giỏ hàng" onClick={handleClick} />
-              </Box>
-              <Box
-                mt={6}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <AirportShuttleOutlinedIcon />
-                <Typography
+                  <BlackButton
+                    title="Thêm vào giỏ hàng"
+                    onClick={handleClick}
+                  />
+                </Box>
+                <Box
+                  mt={6}
                   sx={{
-                    marginLeft: 2,
-                    textTransform: "uppercase",
-                    transition: "all 0.2s ease-in-out",
-                    cursor: "pointer",
-                    "&:hover": {
-                      backgroundColor: "black",
-                      color: "white",
-                    },
+                    display: "flex",
+                    alignItems: "center",
                   }}
                 >
-                  QUAY LẠI DỄ DÀNG
-                </Typography>
-              </Box>
-              <Box
-                mt={3}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <SyncOutlinedIcon />
-                <Typography
+                  <AirportShuttleOutlinedIcon />
+                  <Typography
+                    sx={{
+                      marginLeft: 2,
+                      textTransform: "uppercase",
+                      transition: "all 0.2s ease-in-out",
+                      cursor: "pointer",
+                      "&:hover": {
+                        backgroundColor: "black",
+                        color: "white",
+                      },
+                    }}
+                  >
+                    QUAY LẠI DỄ DÀNG
+                  </Typography>
+                </Box>
+                <Box
+                  mt={3}
                   sx={{
-                    marginLeft: 2,
-                    transition: "all 0.2s ease-in-out",
-                    cursor: "pointer",
-                    "&:hover": {
-                      backgroundColor: "black",
-                      color: "white",
-                    },
+                    display: "flex",
+                    alignItems: "center",
                   }}
                 >
-                  Không đúng kích cỡ hoặc màu sắc? Vui lòng truy cập trang Trả
-                  lại hàng & Hoàn tiền của chúng tôi để biết chi tiết
-                </Typography>
+                  <SyncOutlinedIcon />
+                  <Typography
+                    sx={{
+                      marginLeft: 2,
+                      transition: "all 0.2s ease-in-out",
+                      cursor: "pointer",
+                      "&:hover": {
+                        backgroundColor: "black",
+                        color: "white",
+                      },
+                    }}
+                  >
+                    Không đúng kích cỡ hoặc màu sắc? Vui lòng truy cập trang Trả
+                    lại hàng & Hoàn tiền của chúng tôi để biết chi tiết
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-          </Paper>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
-      {/* </Box> */}
-    </Container>
+        {/* </Box> */}
+      </Container>
+      <AddToCartDialog
+        open={open}
+        setOpen={setOpen}
+        img={img}
+        price={price}
+        color={color}
+        name={name}
+        count={count}
+      />
+    </div>
   );
 };
 
