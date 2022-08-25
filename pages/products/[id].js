@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import MainLayout from '../../components/layout/main';
 import ProductDetail from '../../components/product/ProductDetail';
 
 const Product = () => {
@@ -10,5 +11,7 @@ const Product = () => {
 		</>
 	);
 };
+
+Product.Layout = MainLayout;
 
 export default Product;
