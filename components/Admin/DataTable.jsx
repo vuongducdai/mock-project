@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,10 +12,9 @@ import Image from "next/image";
 import { FormControl, InputAdornment } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import SearchIcon from "@mui/icons-material/Search";
-import { data } from "autoprefixer";
 
 export default function DataTable({
-  product,
+  type,
   name,
   image,
   price,
@@ -22,7 +22,7 @@ export default function DataTable({
   size,
   datas,
 }) {
-      console.log(data)
+
   const render = () => {
     return (
       <TableContainer
@@ -31,7 +31,7 @@ export default function DataTable({
       >
         <div className="grid grid-cols-8 w-full pb-2 pt-8">
           <div className="text-2xl">
-            <h1>{product}</h1>
+            <h1>{type}</h1>
           </div>
           <div className="col-start-4 col-end-8">
             <FormControl className="w-full">
@@ -91,28 +91,29 @@ export default function DataTable({
                     alt={data.name}
                   />
                 </TableCell>
-                <TableCell align="center">{data.color}</TableCell>
-                <TableCell align="center">{data.size}</TableCell>
-                <TableCell align="center">{data.price}</TableCell>
-                <TableCell align="center" sx={{display:'flex',justifyContent:'center'}}>
+                <TableCell align="center">{data?.color}</TableCell>
+                <TableCell align="center">{data?.size}</TableCell>
+                <TableCell align="center">{data?.price}</TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
                   <Button
-                    
                     variant="contained"
                     sx={{
                       color: "success.main",
-                      background:'white',
-                      
+                      background: "white",
+
                       "&:hover": { color: "white", background: "green" },
                     }}
                   >
                     Edit
                   </Button>
                   <Button
-                    
                     variant="contained"
                     sx={{
                       color: "warning.main",
-                      background:'white',
+                      background: "white",
                       "&:hover": { color: "white", background: "red" },
                     }}
                   >
