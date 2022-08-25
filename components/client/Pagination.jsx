@@ -10,16 +10,28 @@ import "swiper/css/pagination";
 
 
 
-export default function Pagination() {
+export default function Pagination({ totalProduct }) {
     const [age, setAge] = React.useState(1);
+    const totalPage = Math.ceil(totalProduct / 10);
 
     const handleChange = (event) => {
         setAge(event.target.value);
     };
+
+    const renderItemPage = () => {
+        const list = []
+        for (let i = 1; i <= totalPage; i++) {
+            list.push(<MenuItem key={i} className='text-center' value={i}>{i}</MenuItem>)
+        }
+        return list
+    }
     return (
         <Container >
             <div className=' mb-4 flex flex-row justify-between'>
-                <div className="h-6 underline hover:bg-black hover:text-zinc-50 hover:no-underline">PREVIOUS</div>
+                <div
+                    className="h-6 underline hover:bg-black hover:text-zinc-50 hover:no-underline">
+                    PREVIOUS
+                </div>
                 <div className="flex justify-between items-center">
                     <span>Page</span>
                     <div className='w-26 mx-4'>
@@ -33,16 +45,16 @@ export default function Pagination() {
                                 onChange={handleChange}
                                 className='text-center'
                             >
-                                <MenuItem className='text-center' value={1}>1</MenuItem>
-                                <MenuItem className='text-center' value={2}>2</MenuItem>
-                                <MenuItem className='text-center' value={3}>3</MenuItem>
-                                <MenuItem className='text-center' value={4}>99</MenuItem>
+                                {renderItemPage()}
                             </Select>
                         </FormControl>
                     </div>
-                    <span>of 2</span>
+                    <span>of {totalPage}</span>
                 </div>
-                <div className="h-6 underline hover:bg-black hover:text-zinc-50 hover:no-underline">NEXT</div>
+                <div
+                    className="h-6 underline hover:bg-black hover:text-zinc-50 hover:no-underline">
+                    NEXT
+                </div>
             </div>
         </Container>
     )

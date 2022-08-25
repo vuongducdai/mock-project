@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { blue, brown, green, pink, red, yellow } from '@mui/material/colors';
 import ItemDrawer from './ItemDrawer';
-import ProductCard from './ProductCard';
+import ProductCard from '../ProductCard';
 
 
 
@@ -181,6 +181,30 @@ export default function ListProductComponent({ arrProduct }) {
     const [checked, setChecked] = useState([]);
     const [checkedColor, setCheckedColor] = useState([]);
 
+    console.log("color", checked);
+    function compare(a, b) {
+        if (a.price < b.price) {
+            return -1;
+        }
+        if (a.price > b.price) {
+            return 1;
+        }
+        return 0;
+    }
+
+    // const [isSortAsc, setIsSortAsc] = useState(false);
+    if (sortByActive === 1) {
+        arrProduct.sort((a, b) => {
+            return a.price - b.price
+        })
+    }
+    else {
+        arrProduct.sort((a, b) => {
+            return b.price - a.price
+        })
+    }
+
+
     const handleCheck = (id) => {
         setChecked(prev => {
             const isChecked = checked.includes(id);
@@ -212,7 +236,11 @@ export default function ListProductComponent({ arrProduct }) {
                 <span
                     onClick={() => setTitleActive(title.id)}
                     key={title.id}
-                    className={`p-2 cursor-pointer text-neutral-500 ${titleActive === title.id ? 'border-b-2 border-b-black text-black ' : ''} hover:border-b-2 border-b-black`}>
+                    className={`p-2 cursor-pointer text-neutral-500 
+                    ${titleActive === title.id
+                            ? 'border-b-2 border-b-black text-black '
+                            : ''} 
+                            hover:border-b-2 border-b-black`}>
                     {title.content}
                 </span>
             ))
@@ -225,7 +253,10 @@ export default function ListProductComponent({ arrProduct }) {
                 <div
                     key={sortBy.id}
                     onClick={() => setSortByActive(sortBy.id)}
-                    className={`cursor-pointer ${sortBy.isLast ? '' : 'border-b'} py-1.5 ${sortByActive === sortBy.id ? 'text-neutral-500 text-rose-600' : ''}`}
+                    className={`cursor-pointer 
+                    ${sortBy.isLast ? '' : 'border-b'} py-1.5 
+                    ${sortByActive === sortBy.id ? 'text-neutral-500 text-rose-600' : ''}
+                    `}
                 >
                     {sortBy.content}
                 </div>
@@ -239,7 +270,11 @@ export default function ListProductComponent({ arrProduct }) {
                 {arrSize.map((size) => (
                     <div
                         onClick={() => setSizeActive(size.id)}
-                        className={` ${sizeActive === size.id ? 'border-black' : ''} text-center py-4 w-28 border cursor-pointer hover:border-black`} key={size.id} >
+                        className={`${sizeActive === size.id
+                            ? 'border-black'
+                            : ''} 
+                            text-center py-4 w-28 border cursor-pointer hover:border-black`}
+                        key={size.id} >
                         {size.content}
                     </div>
                 ))}
@@ -251,14 +286,15 @@ export default function ListProductComponent({ arrProduct }) {
         return (
             <div className='flex flex-col'>
                 {arrCatProduct.map((cat) => (
-                    <div onClick={() => handleCheck(cat.id)} className="p-2 cursor-pointer">
-
+                    <div
+                        key={cat.id}
+                        onClick={() => handleCheck(cat.id)}
+                        className="p-2 cursor-pointer">
                         <Checkbox
                             checked={checked.includes(cat.id)}
                             sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
                         />
                         {cat.content} ({cat.quantity})
-
                     </div>
                 ))}
             </div>
@@ -271,7 +307,10 @@ export default function ListProductComponent({ arrProduct }) {
                 {arrColor.map((color) => {
                     const { id, name } = color;
                     return (
-                        <div onClick={() => handleCheckColor(id)} className="p-2 cursor-pointer">
+                        <div
+                            key={id}
+                            onClick={() => handleCheckColor(id)}
+                            className="p-2 cursor-pointer">
                             <Checkbox
                                 checkedColor={checkedColor.includes(id)}
                                 sx={{
@@ -292,7 +331,7 @@ export default function ListProductComponent({ arrProduct }) {
         return (
             <div className='flex flex-wrap'>
                 {arrProduct.map((pro) => (
-                    <div className='w-1/4'>
+                    <div key={pro.id} className='w-1/4'>
                         <ProductCard item={pro} />
                     </div>
                 ))}
@@ -300,24 +339,40 @@ export default function ListProductComponent({ arrProduct }) {
         )
     }
 
+    const handleSetIsDrawerOpen = (bool) => {
+        setIsDrawerOpen(bool)
+    }
+
+
     return (
         <Container>
-            <div className="flex justify-between items-end border-b-2 mb-4">
+            <div
+                className="flex justify-between items-end border-b-2 mb-4">
                 <Box className="flex">
                     {renderTitleFilter()}
                 </Box>
-                <div onClick={() => setIsDrawerOpen(true)} className='border-2 p-2  mb-1 cursor-pointer'>
+                <div
+                    onClick={() => handleSetIsDrawerOpen(true)}
+                    className='border-2 p-2  mb-1 cursor-pointer'>
                     <span className='mr-2'>Lọc & Sắp xếp</span>
                     <TuneIcon />
                 </div>
-                <Drawer className='z-[1201]' open={isDraweOpen} onClose={() => setIsDrawerOpen(false)} anchor="right">
+                <Drawer
+                    className='z-[1201]'
+                    open={isDraweOpen}
+                    onClose={() => handleSetIsDrawerOpen(false)}
+                    anchor="right">
                     <Box className='w-96'>
                         <Typography variant='h6' component='div' >
-                            <div className='text-lg flex justify-between items-center p-4 cursor-pointer border-b'>
+                            <div
+                                className='text-lg flex justify-between items-center p-4 cursor-pointer border-b'>
                                 <div>Lọc và Sắp xếp</div>
                                 <div>
-                                    <span className="underline text-neutral-500 hover:bg-black hover:text-zinc-50">Clear all</span>
-                                    <CloseIcon className="ml-2" onClick={() => setIsDrawerOpen(false)} />
+                                    <span
+                                        className="underline text-neutral-500 hover:bg-black hover:text-zinc-50">
+                                        Clear all
+                                    </span>
+                                    <CloseIcon className="ml-2" onClick={() => handleSetIsDrawerOpen(false)} />
                                 </div>
                             </div>
                         </Typography >

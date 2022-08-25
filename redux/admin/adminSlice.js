@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {getMethod} from '../../api/getMethod'
-
-
+import { getMethod } from '../../api/getMethod'
 
 const initialState = {
   products: [],
@@ -31,12 +29,11 @@ const adminSlice = createSlice({
       state.count -= 1;
     },
   },
-  extraReducers:{
-    [getAdminData.fulfilled]:(state,action) => (
-      {...state,products:action.payload}
+  extraReducers: {
+    [getAdminData.fulfilled]: (state, action) => (
+      { ...state, products: action.payload }
     )
   }
-    
 });
 
 export const { increment, decrement } = adminSlice.actions;

@@ -5,7 +5,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function ItemDrawer({ title, renderFuntion }) {
     return (
-        <Typography>
+        <Typography component='div'>
             <Accordion className="shadow-none border-b">
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
