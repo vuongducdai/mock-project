@@ -5,7 +5,7 @@ import { persistor, store } from "../redux/store";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  const Layout = Component.Layout ?? EmptyLayout;
+	const Layout = Component.Layout ?? EmptyLayout;
 
   return (
     <Provider store={store}>

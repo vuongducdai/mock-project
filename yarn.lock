@@ -669,9 +669,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.8 || ^17.0 || ^18.0", "@types/react@^17.0.0 || ^18.0.0":
-  "integrity" "sha512-38ETy4tL+rn4uQQi7mB81G7V1g0u2ryquNmsVIOKUAEIDK+3CUjZ6rSRpdvS99dNBnkLFL83qfmtLacGOTIhwQ=="
-  "resolved" "https://registry.npmjs.org/@types/react/-/react-18.0.17.tgz"
-  "version" "18.0.17"
+  "integrity" "sha512-zJ6IYlJ8cYYxiJfUaZOQee4lh99mFihBoqkOSEGV+dFi9leROW6+PgstzQ+w3gWTnUfskALtQPGHK6dYmPj+2A=="
+  "resolved" "https://registry.npmjs.org/@types/react/-/react-17.0.48.tgz"
+  "version" "17.0.48"
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -2982,7 +2982,7 @@
   dependencies:
     "asap" "~2.0.3"
 
-"prop-types@^15.5.10", "prop-types@^15.6.0", "prop-types@^15.6.2", "prop-types@^15.8.1":
+"prop-types@^15.5.10", "prop-types@^15.5.8", "prop-types@^15.6.0", "prop-types@^15.6.2", "prop-types@^15.8.1", "prop-types@>=15.6.2":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -3019,6 +3019,13 @@
     "loose-envify" "^1.1.0"
     "scheduler" "^0.23.0"
 
+"react-easy-swipe@^0.0.21":
+  "integrity" "sha512-OeR2jAxdoqUMHIn/nS9fgreI5hSpgGoL5ezdal4+oO7YSSgJR8ga+PkYGJrSrJ9MKlPcQjMQXnketrD7WNmNsg=="
+  "resolved" "https://registry.npmjs.org/react-easy-swipe/-/react-easy-swipe-0.0.21.tgz"
+  "version" "0.0.21"
+  dependencies:
+    "prop-types" "^15.5.8"
+
 "react-file-base64@^1.0.3":
   "integrity" "sha512-itGMFH6IkJUZF2p0YXQnUBqzUHFaMYcs+ssD9e4j1XJGHRibGe8kiLr6y46oAIw1JknX/bJUUogDJOk/o91TMg=="
   "resolved" "https://registry.npmjs.org/react-file-base64/-/react-file-base64-1.0.3.tgz"
@@ -3030,6 +3037,11 @@
   "integrity" "sha512-1lYWbEqr0GW7HHUjMScXMidGvV0BE2RJV3ap2BL7G0EJirkqpccTaawbsvBO8GZaB3JjCeFBEbnEWI1P8ZoLRQ=="
   "resolved" "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.34.2.tgz"
   "version" "7.34.2"
+
+"react-inner-image-zoom@^3.0.2":
+  "integrity" "sha512-ICjyz0wdKmLufuQkUyg4iyP0yIF2elDeHjY1+S1pOKPggrW0g9V2SCmOSA39405ZX8GVVaxadmUYWwz3OF4V5A=="
+  "resolved" "https://registry.npmjs.org/react-inner-image-zoom/-/react-inner-image-zoom-3.0.2.tgz"
+  "version" "3.0.2"
 
 "react-is@^16.10.2", "react-is@^16.13.1", "react-is@^16.7.0":
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
@@ -3086,6 +3098,15 @@
   "version" "7.1.2"
   dependencies:
     "lodash" "^4.17.21"
+
+"react-responsive-carousel@^3.2.23":
+  "integrity" "sha512-pqJLsBaKHWJhw/ItODgbVoziR2z4lpcJg+YwmRlSk4rKH32VE633mAtZZ9kDXjy4wFO+pgUZmDKPsPe1fPmHCg=="
+  "resolved" "https://registry.npmjs.org/react-responsive-carousel/-/react-responsive-carousel-3.2.23.tgz"
+  "version" "3.2.23"
+  dependencies:
+    "classnames" "^2.2.5"
+    "prop-types" "^15.5.8"
+    "react-easy-swipe" "^0.0.21"
 
 "react-smooth@^2.0.1":
   "integrity" "sha512-Own9TA0GPPf3as4vSwFhDouVfXP15ie/wIHklhyKBH5AN6NFtdk0UpHBnonV11BtqDkAWlt40MOUc+5srmW7NA=="
