@@ -11,6 +11,7 @@ import Image from "next/image";
 import { FormControl, InputAdornment } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import SearchIcon from "@mui/icons-material/Search";
+import { data } from "autoprefixer";
 
 export default function DataTable({
   product,
@@ -21,6 +22,7 @@ export default function DataTable({
   size,
   datas,
 }) {
+      console.log(data)
   const render = () => {
     return (
       <TableContainer

@@ -7,5 +7,10 @@ export const publicRequest = axios.create({
       baseURL: BASE_URL,
 });
 
-export const addProduct = (form) => publicRequest.post("/product", form);
-export const addUser = (form) => publicRequest.post("/user", form);
+
+
+
+
+
+
+
