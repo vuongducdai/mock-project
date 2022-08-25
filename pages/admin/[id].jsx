@@ -41,8 +41,9 @@ const Container = () => {
               image='IMAGE'
               price="PRICE"
               color="COLOR"
-              datas={products}
+              datas={products.products}
               size="SIZE"
+              material='MATERIALS'
             />
           ) 
           : (

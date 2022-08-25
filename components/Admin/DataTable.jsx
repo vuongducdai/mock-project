@@ -21,8 +21,8 @@ export default function DataTable({
   color,
   size,
   datas,
+  material,
 }) {
-
   const render = () => {
     return (
       <TableContainer
@@ -31,7 +31,17 @@ export default function DataTable({
       >
         <div className="grid grid-cols-8 w-full pb-2 pt-8">
           <div className="text-2xl">
-            <h1>{type}</h1>
+            <Button
+              variant="contained"
+              sx={{
+                color: "success.main",
+                background: "white",
+
+                "&:hover": { color: "white", background: "green" },
+              }}
+            >
+              {`Add ${type}`}
+            </Button>
           </div>
           <div className="col-start-4 col-end-8">
             <FormControl className="w-full">
@@ -58,13 +68,16 @@ export default function DataTable({
                 {image}
               </TableCell>
               <TableCell className="text-slate-400" align="center">
-                {price}
-              </TableCell>
-              <TableCell className="text-slate-400" align="center">
                 {color}
               </TableCell>
               <TableCell className="text-slate-400" align="center">
                 {size}
+              </TableCell>
+              <TableCell className="text-slate-400" align="center">
+                {price}
+              </TableCell>
+              <TableCell className="text-slate-400" align="center">
+                {material}
               </TableCell>
               <TableCell className="text-slate-400" align="center">
                 ACTIONS
@@ -91,9 +104,10 @@ export default function DataTable({
                     alt={data.name}
                   />
                 </TableCell>
-                <TableCell align="center">{data?.color}</TableCell>
+                <TableCell align="center">{data.color}</TableCell>
                 <TableCell align="center">{data?.size}</TableCell>
                 <TableCell align="center">{data?.price}</TableCell>
+                <TableCell align="center">{data?.material}</TableCell>
                 <TableCell
                   align="center"
                   sx={{ display: "flex", justifyContent: "center" }}

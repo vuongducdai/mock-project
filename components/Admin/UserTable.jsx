@@ -14,14 +14,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import { type } from "os";
 
 export default function UserTable({
-      
-      name,
-      email,
-      address,
-      phone,
-      isAdmin,
-      datas,
-      type,
+  name,
+  email,
+  address,
+  phone,
+  isAdmin,
+  datas,
+  type,
 }) {
   const render = () => {
     return (
@@ -30,9 +29,17 @@ export default function UserTable({
         className="grid justify-items-center rounded-lg px-10"
       >
         <div className="grid grid-cols-8 w-full pb-2 pt-8">
-          <div className="text-2xl">
-            <h1>{type}</h1>
-          </div>
+          <Button
+            variant="contained"
+            sx={{
+              color: "success.main",
+              background: "white",
+
+              "&:hover": { color: "white", background: "green" },
+            }}
+          >
+            {`Add ${type}`}
+          </Button>
           <div className="col-start-4 col-end-8">
             <FormControl className="w-full">
               <OutlinedInput
@@ -84,25 +91,28 @@ export default function UserTable({
                 <TableCell align="center">{data.email}</TableCell>
                 <TableCell align="center">{data.address}</TableCell>
                 <TableCell align="center">{data.phone}</TableCell>
-                <TableCell align="center">{data.isAdmin === true?'Admin':'User'}</TableCell>
-                <TableCell align="center" sx={{display:'flex',justifyContent:'center'}}>
+                <TableCell align="center">
+                  {data.isAdmin === true ? "Admin" : "User"}
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
                   <Button
-                    
                     variant="contained"
                     sx={{
                       color: "success.main",
-                      background:'white',
+                      background: "white",
                       "&:hover": { color: "white", background: "green" },
                     }}
                   >
                     Edit
                   </Button>
                   <Button
-                    
                     variant="contained"
                     sx={{
                       color: "warning.main",
-                      background:'white',
+                      background: "white",
                       "&:hover": { color: "white", background: "red" },
                     }}
                   >
@@ -120,5 +130,5 @@ export default function UserTable({
     );
   };
 
-      return <>{render()}</>;
+  return <>{render()}</>;
 }
