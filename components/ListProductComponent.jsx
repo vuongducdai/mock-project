@@ -310,7 +310,7 @@ export default function ListProductComponent({ arrProduct }) {
                     <span className='mr-2'>Lọc & Sắp xếp</span>
                     <TuneIcon />
                 </div>
-                <Drawer open={isDraweOpen} onClose={() => setIsDrawerOpen(false)} anchor="right">
+                <Drawer className='z-[1201]' open={isDraweOpen} onClose={() => setIsDrawerOpen(false)} anchor="right">
                     <Box className='w-96'>
                         <Typography variant='h6' component='div' >
                             <div className='text-lg flex justify-between items-center p-4 cursor-pointer border-b'>
