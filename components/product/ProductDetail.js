@@ -18,9 +18,28 @@ import According from "./According";
 import { BreadCrumb } from "./StyledBreadcrumb";
 import StyledButton from "./StyledButton";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/client/cartSlice";
 
 const ProductDetail = ({ productProps }) => {
   const { name, img, price, color, size, material, id } = productProps;
+  const dispatch = useDispatch();
+  // const { products } = useSelector((state) => state.cartSlice);
+
+  const handleClick = () => {
+    dispatch(
+      addToCart({
+        name: name,
+        img: img,
+        price: price,
+        color: color,
+        size: size,
+        material: material,
+        id: id,
+      })
+    );
+  };
+
   return (
     <Container fixed maxWidth={false} disableGutters={true}>
       {/* <Box sx={{ flexGrow: 1 }}> */}
@@ -145,7 +164,7 @@ const ProductDetail = ({ productProps }) => {
 									}>
 									Thêm vào giỏ hàng
 								</Button> */}
-                <BlackButton title="Thêm vào giỏ hàng" />
+                <BlackButton title="Thêm vào giỏ hàng" onClick={handleClick} />
               </Box>
               <Box
                 mt={6}
