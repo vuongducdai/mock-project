@@ -1,7 +1,11 @@
-import axios from "axios";
+import publicRequest from './requestMethod'
 
-export const BASE_URL = "https://63030a4dc6dda4f287c1d8d4.mockapi.io/";
+export const getProducts = () => {
+    return publicRequest.get(`/product`)
+};
 
-export const fetcher = (url) => axios.get(url).then(res => res.data)
+export const getUsers = () => {
+    return publicRequest.get(`/user`)
+};
 
 

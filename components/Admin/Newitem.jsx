@@ -8,6 +8,7 @@ import { productSchema, userSchema } from '../../yupGlobal';
 import { colors } from "./../../constants/data";
 import { addProduct, addUser } from '../../api/requestMethod';
 
+
 const Newitem = ({ setOpenAdd }) => {
       const [img, setImg] = useState(null);
       const [color, setColor] = useState([]);
