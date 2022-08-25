@@ -1,10 +1,10 @@
 import React from 'react'
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrement, increment } from '../../redux/productSlice';
+import { decrement, increment } from '../../redux/admin/adminSlice';
 
 const Navbar = () => {
-      const { count } = useSelector((state) => state.productSlice)
+      const { count } = useSelector((state) => state.adminSlice)
       const dispatch = useDispatch();
       console.log(count);
 
