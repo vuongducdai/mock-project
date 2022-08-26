@@ -1,15 +1,14 @@
 import CloseIcon from '@mui/icons-material/Close';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TuneIcon from '@mui/icons-material/Tune';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Drawer, Typography } from "@mui/material";
+import { Box, Container, Drawer, Typography } from "@mui/material";
 import Checkbox from '@mui/material/Checkbox';
+import { blue, brown, green, pink, red, yellow } from '@mui/material/colors';
 import React, { useState } from 'react';
 import "react-multi-carousel/lib/styles.css";
 import "swiper/css";
 import "swiper/css/pagination";
-import { blue, brown, green, pink, red, yellow } from '@mui/material/colors';
-import ItemDrawer from './ItemDrawer';
 import ProductCard from '../ProductCard';
+import ItemDrawer from './ItemDrawer';
 
 
 
@@ -54,17 +53,17 @@ export default function ListProductComponent({ arrProduct }) {
         {
             id: 3,
             name: brown,
-            color: '#ffdba3'
+            color: 'brown'
         },
         {
             id: 4,
             name: red,
-            color: 'brown'
+            color: 'red'
         },
         {
             id: 5,
             name: green,
-            color: 'red'
+            color: 'green'
         },
         {
             id: 6,
@@ -86,52 +85,52 @@ export default function ListProductComponent({ arrProduct }) {
     ]
     const arrSize = [
         {
-            id: 1,
+            id: 104,
             content: '104',
         },
         {
-            id: 2,
+            id: 110,
             content: '110',
         },
         {
-            id: 3,
+            id: 116,
             content: '116',
         },
         {
-            id: 4,
+            id: 122,
             content: '122',
         },
         {
-            id: 5,
+            id: 128,
             content: '128',
         },
         {
-            id: 6,
+            id: 134,
             content: '134',
         },
         {
-            id: 7,
-            content: '140',
+            id: 12090,
+            content: '12090',
         },
         {
-            id: 8,
+            id: 152,
             content: '152',
         },
         {
-            id: 9,
+            id: 164,
             content: '164',
         },
         {
-            id: 10,
+            id: 170,
             content: '170',
         },
         {
-            id: 11,
+            id: 176,
             content: '176',
         },
         {
-            id: 12,
-            content: '28',
+            id: 82449,
+            content: '82449',
         },
     ]
 
@@ -174,34 +173,28 @@ export default function ListProductComponent({ arrProduct }) {
     ]
 
 
+
     const [titleActive, setTitleActive] = useState(1);
     const [isDraweOpen, setIsDrawerOpen] = useState(false);
-    const [sortByActive, setSortByActive] = useState(1);
-    const [sizeActive, setSizeActive] = useState(1);
+    const [sortByActive, setSortByActive] = useState(0);
+    const [sizeActive, setSizeActive] = useState(104);
     const [checked, setChecked] = useState([]);
     const [checkedColor, setCheckedColor] = useState([]);
 
-    console.log("color", checked);
-    function compare(a, b) {
-        if (a.price < b.price) {
-            return -1;
-        }
-        if (a.price > b.price) {
-            return 1;
-        }
-        return 0;
-    }
 
-    // const [isSortAsc, setIsSortAsc] = useState(false);
-    if (sortByActive === 1) {
-        arrProduct.sort((a, b) => {
-            return a.price - b.price
-        })
-    }
-    else {
-        arrProduct.sort((a, b) => {
-            return b.price - a.price
-        })
+
+    const handleSortByPrice = (id) => {
+        setSortByActive(id);
+        if (sortByActive === 1) {
+            arrProduct.sort((a, b) => {
+                return b.price - a.price
+            })
+        }
+        else {
+            arrProduct.sort((a, b) => {
+                return a.price - b.price
+            })
+        }
     }
 
 
@@ -230,6 +223,10 @@ export default function ListProductComponent({ arrProduct }) {
         })
     }
 
+    const handleFilterBySize = (id) => {
+        console.log(id)
+    }
+
     const renderTitleFilter = () => {
         return (
             arrTitleFilter.map((title) => (
@@ -252,7 +249,7 @@ export default function ListProductComponent({ arrProduct }) {
             arrTitleSortBy.map((sortBy) => (
                 <div
                     key={sortBy.id}
-                    onClick={() => setSortByActive(sortBy.id)}
+                    onClick={() => handleSortByPrice(sortBy.id)}
                     className={`cursor-pointer 
                     ${sortBy.isLast ? '' : 'border-b'} py-1.5 
                     ${sortByActive === sortBy.id ? 'text-neutral-500 text-rose-600' : ''}
@@ -269,7 +266,7 @@ export default function ListProductComponent({ arrProduct }) {
             <div className='flex flex-wrap'>
                 {arrSize.map((size) => (
                     <div
-                        onClick={() => setSizeActive(size.id)}
+                        onClick={() => handleFilterBySize(size.id)}
                         className={`${sizeActive === size.id
                             ? 'border-black'
                             : ''} 
