@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,9 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Image from "next/image";
-import { FormControl, InputAdornment } from "@mui/material";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import SearchIcon from "@mui/icons-material/Search";
+import Search from "./Search";
 
 export default function DataTable({
   type,
@@ -23,6 +21,30 @@ export default function DataTable({
   datas,
   material,
 }) {
+  const [query, setQuery] = useState("");
+  const [searchData, setSearchData] = useState([]);
+
+  const handleSearch = (e) => {
+    setQuery(e);
+    if (query !== "") {
+      const filterData = datas.filter((value) => {
+        return (
+          value.name.toLowerCase().includes(query.toLocaleLowerCase()) ||
+          value.price.toLocaleLowerCase().includes(query.toLocaleLowerCase()) || 
+          value.color.toLocaleLowerCase().includes(query.toLocaleLowerCase()) || 
+          
+          value.material.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+        );
+      });
+      setSearchData(filterData);
+    } else {
+      setSearchData(datas);
+    }
+    return searchData;
+  };
+  const conditionalRender = () => {
+    return query.length > 1 ? searchData : datas;
+  };
   const render = () => {
     return (
       <TableContainer
@@ -44,21 +66,11 @@ export default function DataTable({
             </Button>
           </div>
           <div className="col-start-4 col-end-8">
-            <FormControl className="w-full">
-              <OutlinedInput
-                className="rounded-full bg-fb h-8"
-                placeholder="Search..."
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
+            <Search search={handleSearch}/>
           </div>
-          <div className="col-start-8 col-end-9 rounded-md border-2 border-solid bg-blue-dark grid place-items-center cursor-pointer hover:bg-blue-dark-hover text-white">
+          {/* <div className="col-start-8 col-end-9 rounded-md border-2 border-solid bg-blue-dark grid place-items-center cursor-pointer hover:bg-blue-dark-hover text-white">
             Filter
-          </div>
+          </div> */}
         </div>
         <Table className="w-full" size="small" aria-label="a dense table">
           <TableHead>
@@ -85,7 +97,7 @@ export default function DataTable({
             </TableRow>
           </TableHead>
           <TableBody sx={{ borderTop: "none", height: 300 }}>
-            {datas?.map((data) => (
+            {conditionalRender()?.map((data) => (
               <TableRow
                 className="last:border-b-2"
                 key={data.id}
@@ -105,9 +117,9 @@ export default function DataTable({
                   />
                 </TableCell>
                 <TableCell align="center">{data.color}</TableCell>
-                <TableCell align="center">{data?.size}</TableCell>
-                <TableCell align="center">{data?.price}</TableCell>
-                <TableCell align="center">{data?.material}</TableCell>
+                <TableCell align="center">{data.size}</TableCell>
+                <TableCell align="center">{data.price}</TableCell>
+                <TableCell align="center">{data.material}</TableCell>
                 <TableCell
                   align="center"
                   sx={{ display: "flex", justifyContent: "center" }}
@@ -118,32 +130,32 @@ export default function DataTable({
                       color: "success.main",
                       background: "white",
 
-                                                                  "&:hover": { color: "white", background: "green" },
-                                                            }}
-                                                      >
-                                                            Edit
-                                                      </Button>
-                                                      <Button
-                                                            variant="contained"
-                                                            sx={{
-                                                                  color: "warning.main",
-                                                                  background: "white",
-                                                                  "&:hover": { color: "white", background: "red" },
-                                                            }}
-                                                      >
-                                                            Delete
-                                                      </Button>
-                                                </TableCell>
-                                          </TableRow>
-                                    ))}
-                              </TableBody>
-                        </Table>
-                        <div>
-                              <h1>Pagination</h1>
-                        </div>
-                  </TableContainer>
-            );
-      };
+                      "&:hover": { color: "white", background: "green" },
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      color: "warning.main",
+                      background: "white",
+                      "&:hover": { color: "white", background: "red" },
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <div>
+          <h1>Pagination</h1>
+        </div>
+      </TableContainer>
+    );
+  };
 
-      return <>{render()}</>;
+  return <>{render()}</>;
 }

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,11 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import Image from "next/image";
-import { FormControl, InputAdornment } from "@mui/material";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import SearchIcon from "@mui/icons-material/Search";
-import { type } from "os";
+import Search from "./Search";
 
 export default function UserTable({
   name,
@@ -22,6 +19,29 @@ export default function UserTable({
   datas,
   type,
 }) {
+  const [query, setQuery] = useState("");
+  const [searchData, setSearchData] = useState([]);
+
+  const handleSearch = (e) => {
+    setQuery(e);
+    if (query !== "") {
+      const filterData = datas.filter((value) => {
+        return (
+          value.name.toLowerCase().includes(query.toLocaleLowerCase()) ||
+          value.address.toLocaleLowerCase().includes(query.toLocaleLowerCase()) || 
+          value.phone.toLocaleLowerCase().includes(query.toLocaleLowerCase()) || 
+          value.email.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+        );
+      });
+      setSearchData(filterData);
+    } else {
+      setSearchData(datas);
+    }
+    return searchData;
+  };
+  const conditionalRender = () => {
+    return query.length > 1 ? searchData : datas;
+  };
   const render = () => {
     return (
       <TableContainer
@@ -41,21 +61,11 @@ export default function UserTable({
             {`Add ${type}`}
           </Button>
           <div className="col-start-4 col-end-8">
-            <FormControl className="w-full">
-              <OutlinedInput
-                className="rounded-full bg-fb h-8"
-                placeholder="Search..."
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
+            <Search search={handleSearch} />
           </div>
-          <div className="col-start-8 col-end-9 rounded-md border-2 border-solid bg-blue-dark grid place-items-center cursor-pointer hover:bg-blue-dark-hover text-white">
+          {/* <div className="col-start-8 col-end-9 rounded-md border-2 border-solid bg-blue-dark grid place-items-center cursor-pointer hover:bg-blue-dark-hover text-white">
             Filter
-          </div>
+          </div> */}
         </div>
         <Table className="w-full" size="small" aria-label="a dense table">
           <TableHead>
@@ -79,7 +89,7 @@ export default function UserTable({
             </TableRow>
           </TableHead>
           <TableBody sx={{ borderTop: "none", height: 300 }}>
-            {datas?.map((data) => (
+            {conditionalRender().map((data) => (
               <TableRow
                 className="last:border-b-2"
                 key={data.id}
