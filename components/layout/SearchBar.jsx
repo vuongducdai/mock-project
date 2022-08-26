@@ -1,7 +1,7 @@
 import { IconButton, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-import React from "react";
+import React, { useRef } from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -95,13 +95,21 @@ export default function SearchBar() {
   const [searchResult, setSearchResult] = useState(null);
   const { products } = useSelector((state) => state.productSlice);
   const dispatch = useDispatch();
+  const typingTimeoutRef = useRef(null);
 
   const handleChange = (e) => {
-    setSearchTerm(e.target.value);
-    dispatch(getProductList());
-    if (searchResult !== null) {
-      setOpenSearchResult(true);
+    //Debounce when typing
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
     }
+
+    typingTimeoutRef.current = setTimeout(() => {
+      setSearchTerm(e.target.value);
+      dispatch(getProductList());
+      if (searchResult !== null) {
+        setOpenSearchResult(true);
+      }
+    }, 500);
   };
 
   useEffect(() => {
@@ -114,8 +122,7 @@ export default function SearchBar() {
       result = products.products.filter((item) => {
         return item.name.toLowerCase().includes(searchTerm);
       });
-      console.log(result);
-      console.log(products);
+
       if (searchTerm === "" || result.length === 0) {
         setOpenSearchResult(false);
       } else {
