@@ -5,6 +5,8 @@ import Link from "next/link";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useState } from "react";
 import { ProductColumn } from "./ProductColumn";
+import BlackButton from "../BlackButton";
+import { useRouter } from "next/router";
 
 // const ShoppingCartPopper = ({ open, id, anchorEl }) => {
 //   return (
@@ -12,13 +14,28 @@ import { ProductColumn } from "./ProductColumn";
 //   );
 // };
 
-const ShoppingCartFlyout = ({ productList }) => {
+const EmptyCart = () => {
+  return <span className="text-xl">TÚI CỦA BẠN TRỐNG</span>;
+};
+
+const HasItemCart = () => {
   return (
-    <div className="z-[1200] absolute flex bg-white w-[650px] right-0 px-[30px] py-[20px] drop-shadow-xl">
-      <div className="basis-0 grow">Hello</div>
-      <div className="basis-0 grow">
-        <ProductColumn productList={productList} />
-      </div>
+    <div>
+      <ProductColumn productList={productList} />
+      <BlackButton title="Xem giỏ hàng" onClick={handleClick} />
+    </div>
+  );
+};
+
+const ShoppingCartFlyout = ({ productList }) => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/cart/");
+  };
+  return (
+    <div className="z-[1200] absolute flex justify-center bg-white w-[400px] right-0 px-[30px] py-[20px] drop-shadow-xl">
+      {productList.length !== 0 ? <HasItemCart /> : <EmptyCart />}
     </div>
   );
 };
@@ -28,17 +45,17 @@ export const ShoppingCartIcon = ({ quantity }) => {
   console.log("rendr shopping cart icon");
 
   const productList = [
-    {
-      name: "Incredible Bronze Soap",
-      img: "http://loremflickr.com/640/480/people",
-      price: 51383,
-      color: "6",
-      size: 84,
-      createdAt: 1661509438891,
-      material: "2",
-      quantity: 49,
-      id: "6",
-    },
+    // {
+    //   name: "Incredible Bronze Soap",
+    //   img: "http://loremflickr.com/640/480/people",
+    //   price: 51383,
+    //   color: "6",
+    //   size: 84,
+    //   createdAt: 1661509438891,
+    //   material: "2",
+    //   quantity: 49,
+    //   id: "6",
+    // },
   ];
 
   const handleClick = () => {
