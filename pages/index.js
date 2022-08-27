@@ -52,7 +52,6 @@ export default function Home(props) {
       desc: "i love sea",
     },
   ];
-  console.log("props", props.listProduct);
 
   const [totalProduct, setTotalProduct] = useState(props.count);
 

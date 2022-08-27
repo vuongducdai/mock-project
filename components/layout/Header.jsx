@@ -1,23 +1,11 @@
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Badge } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useScrollDirection } from "../../hooks/useSCrollDirection";
-import SearchBar from "./SearchBar";
-
-const ShoppingCartIcon = ({ quantity }) => {
-  return (
-    <div className="flex justify-center items-center w-[48px] h-[48px] cursor-pointer">
-      <Link href="/cart">
-        <Badge badgeContent={quantity} max={10} color="primary">
-          <ShoppingBagOutlinedIcon />
-        </Badge>
-      </Link>
-    </div>
-  );
-};
+import SearchBar from "../client/SearchBar";
+import { ShoppingCartIcon } from "../client/ShoppingCartIcon";
 
 const HeaderTitle = () => {
   return (

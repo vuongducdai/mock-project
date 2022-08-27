@@ -1,16 +1,11 @@
 import { IconButton, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-
 import React, { useRef } from "react";
-import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getProductList } from "../../redux/admin/productSlice";
-import Image from "next/image";
-import Link from "next/link";
+import { ProductColumn } from "./ProductColumn";
 
 export const SearchField = ({ onSubmitSearch, onFocus, onBlur }) => {
   const typingTimeoutRef = useRef(null);
@@ -43,43 +38,6 @@ export const SearchField = ({ onSubmitSearch, onFocus, onBlur }) => {
           <SearchIcon />
         </IconButton>
       </div>
-    </div>
-  );
-};
-
-const ProductCard = ({ id, img, name, price, className }) => {
-  return (
-    <Link href={`/products/${id}`}>
-      <div className={className + " flex cursor-pointer"}>
-        <div className="pr-1">
-          <Image src={img} alt={name} width={90} height={90} layout="fixed" />
-        </div>
-        <div className="text-ellipsis">
-          <p>{name}</p>
-          <p>{price}</p>
-        </div>
-      </div>
-    </Link>
-  );
-};
-
-const ProductColumn = ({ productList }) => {
-  const productListJSX = productList
-    .slice(0, 4)
-    .map((item, index) => (
-      <ProductCard
-        id={item.id}
-        key={item.name + index}
-        img={item.img}
-        name={item.name}
-        price={item.price}
-        className="m-[5px]"
-      />
-    ));
-  return (
-    <div className="flex flex-col p-[5px]">
-      <p className="font-bold">SẢN PHẨM</p>
-      {productListJSX}
     </div>
   );
 };
@@ -120,18 +78,15 @@ export default function SearchBar() {
   }, []);
 
   const handleSubmitSearch = (searchTerm) => {
-    console.log(searchTerm);
     setSearchTerm(searchTerm);
   };
 
   const handleFocus = () => {
     setIsFocus(true);
-    console.log("focus");
   };
 
   const handleBlur = () => {
     setIsFocus(false);
-    console.log("blur");
   };
 
   useEffect(() => {
