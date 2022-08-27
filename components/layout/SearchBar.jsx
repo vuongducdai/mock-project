@@ -12,7 +12,21 @@ import { getProductList } from "../../redux/admin/productSlice";
 import Image from "next/image";
 import Link from "next/link";
 
-export const SearchField = ({ onChange }) => {
+export const SearchField = ({ onSubmitSearch }) => {
+  const typingTimeoutRef = useRef(null);
+
+  const handleSearchTermChange = (e) => {
+    const value = e.target.value;
+
+    //Debounce
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
+    typingTimeoutRef.current = setTimeout(() => {
+      onSubmitSearch(value);
+    }, 500);
+  };
+
   return (
     <div className="py-[8px] pl-[36px] w-[15vw]">
       <div className="border border-transparent hover:border-black duration-1000 bg-[#eceff1] h-[32px] flex">
@@ -20,7 +34,8 @@ export const SearchField = ({ onChange }) => {
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search"
           inputProps={{ "aria-label": "search" }}
-          onChange={onChange}
+          // value={searchTerm}
+          onChange={handleSearchTermChange}
         />
         <IconButton className="text-black text-center">
           <SearchIcon />
@@ -90,31 +105,21 @@ const SearchResult = ({ productList }) => {
 };
 
 export default function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [openSearchResult, setOpenSearchResult] = useState(false);
-  const [searchResult, setSearchResult] = useState(null);
   const { products } = useSelector((state) => state.productSlice);
   const dispatch = useDispatch();
-  const typingTimeoutRef = useRef(null);
 
-  const handleChange = (e) => {
-    //Debounce when typing
-    if (typingTimeoutRef.current) {
-      clearTimeout(typingTimeoutRef.current);
-    }
-
-    typingTimeoutRef.current = setTimeout(() => {
-      setSearchTerm(e.target.value);
-      dispatch(getProductList());
-      if (searchResult !== null) {
-        setOpenSearchResult(true);
-      }
-    }, 500);
-  };
+  const [openSearchResult, setOpenSearchResult] = useState(false);
+  const [searchResult, setSearchResult] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     dispatch(getProductList());
   }, []);
+
+  const handleSubmitSearch = (searchTerm) => {
+    console.log(searchTerm);
+    setSearchTerm(searchTerm);
+  };
 
   useEffect(() => {
     let result = [];
@@ -125,7 +130,8 @@ export default function SearchBar() {
 
       if (searchTerm === "" || result.length === 0) {
         setOpenSearchResult(false);
-      } else {
+      } else if (result.length !== 0) {
+        setOpenSearchResult(true);
         setSearchResult(result);
       }
     }
@@ -133,7 +139,7 @@ export default function SearchBar() {
 
   return (
     <div className="relative">
-      <SearchField onChange={handleChange}> </SearchField>
+      <SearchField onSubmitSearch={handleSubmitSearch} />
       {openSearchResult && <SearchResult productList={searchResult} />}
     </div>
   );
