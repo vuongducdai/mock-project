@@ -61,7 +61,7 @@ export const Header = () => {
     <header
       className={`fixed ${
         scrollDirection === "down" ? "-top-28 inset-x-0" : "top-0 inset-x-0"
-      } transition-all duration-500 z-[1200] bg-white`}
+      } transition-all duration-500 z-[1200] bg-white border-b`}
     >
       <HeaderTitle />
       <div className="flex justify-between px-[20px]">
