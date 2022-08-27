@@ -5,9 +5,6 @@ import MainLayout from "../../components/layout/main";
 import ProductDetail from "../../components/product/ProductDetail";
 
 const Product = (props) => {
-  const router = useRouter();
-  console.log("Props of product", props.data);
-
   return (
     <>
       <ProductDetail productProps={props.data} />
