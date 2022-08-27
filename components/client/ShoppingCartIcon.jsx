@@ -1,24 +1,21 @@
-import { Badge, Box, Popper } from "@mui/material";
+import { Badge } from "@mui/material";
 import ClickAwayListener from "@mui/base/ClickAwayListener";
-
-import Link from "next/link";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useState } from "react";
 import { ProductColumn } from "./ProductColumn";
 import BlackButton from "../BlackButton";
 import { useRouter } from "next/router";
 
-// const ShoppingCartPopper = ({ open, id, anchorEl }) => {
-//   return (
-
-//   );
-// };
-
 const EmptyCart = () => {
   return <span className="text-xl">TÚI CỦA BẠN TRỐNG</span>;
 };
 
-const HasItemCart = () => {
+const HasItemCart = ({ productList }) => {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/cart/");
+  };
+
   return (
     <div>
       <ProductColumn productList={productList} />
@@ -28,14 +25,13 @@ const HasItemCart = () => {
 };
 
 const ShoppingCartFlyout = ({ productList }) => {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push("/cart/");
-  };
   return (
     <div className="z-[1200] absolute flex justify-center bg-white w-[400px] right-0 px-[30px] py-[20px] drop-shadow-xl">
-      {productList.length !== 0 ? <HasItemCart /> : <EmptyCart />}
+      {productList.length !== 0 ? (
+        <HasItemCart productList={productList} />
+      ) : (
+        <EmptyCart />
+      )}
     </div>
   );
 };
@@ -69,7 +65,6 @@ export const ShoppingCartIcon = ({ quantity }) => {
 
   return (
     <div className="flex justify-center items-center w-[48px] h-[48px] cursor-pointer relative">
-      {/* <Link href="/cart"> */}
       <div className="relative">
         <ClickAwayListener onClickAway={handleClickAway}>
           <div>
@@ -80,8 +75,6 @@ export const ShoppingCartIcon = ({ quantity }) => {
           </div>
         </ClickAwayListener>
       </div>
-
-      {/* </Link> */}
     </div>
   );
 };
