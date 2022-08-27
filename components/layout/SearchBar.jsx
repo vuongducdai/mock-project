@@ -12,7 +12,7 @@ import { getProductList } from "../../redux/admin/productSlice";
 import Image from "next/image";
 import Link from "next/link";
 
-export const SearchField = ({ onSubmitSearch }) => {
+export const SearchField = ({ onSubmitSearch, onFocus, onBlur }) => {
   const typingTimeoutRef = useRef(null);
 
   const handleSearchTermChange = (e) => {
@@ -36,6 +36,8 @@ export const SearchField = ({ onSubmitSearch }) => {
           inputProps={{ "aria-label": "search" }}
           // value={searchTerm}
           onChange={handleSearchTermChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
         <IconButton className="text-black text-center">
           <SearchIcon />
@@ -111,6 +113,7 @@ export default function SearchBar() {
   const [openSearchResult, setOpenSearchResult] = useState(false);
   const [searchResult, setSearchResult] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isFocus, setIsFocus] = useState(true);
 
   useEffect(() => {
     dispatch(getProductList());
@@ -119,6 +122,16 @@ export default function SearchBar() {
   const handleSubmitSearch = (searchTerm) => {
     console.log(searchTerm);
     setSearchTerm(searchTerm);
+  };
+
+  const handleFocus = () => {
+    setIsFocus(true);
+    console.log("focus");
+  };
+
+  const handleBlur = () => {
+    setIsFocus(false);
+    console.log("blur");
   };
 
   useEffect(() => {
@@ -139,8 +152,14 @@ export default function SearchBar() {
 
   return (
     <div className="relative">
-      <SearchField onSubmitSearch={handleSubmitSearch} />
-      {openSearchResult && <SearchResult productList={searchResult} />}
+      <SearchField
+        onSubmitSearch={handleSubmitSearch}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+      />
+      {isFocus && openSearchResult && (
+        <SearchResult productList={searchResult} />
+      )}
     </div>
   );
 }
