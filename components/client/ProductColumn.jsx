@@ -1,18 +1,23 @@
+import { Box, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
-const ProductCard = ({ id, img, name, price, className }) => {
+const ProductCard = ({ id, img, name, price }) => {
   return (
     <Link href={`/products/${id}`}>
-      <div className={className + " flex cursor-pointer"}>
-        <div className="pr-1">
+      <Stack direction="row" m={"5px"} className={"cursor-pointer"}>
+        <Box pr={1}>
           <Image src={img} alt={name} width={90} height={90} layout="fixed" />
-        </div>
-        <div className="text-ellipsis">
-          <p>{name}</p>
-          <p>{price}</p>
-        </div>
-      </div>
+        </Box>
+        <Box>
+          <Box width={150}>
+            <Typography noWrap="true" align="left">
+              {name}
+            </Typography>
+          </Box>
+          <Typography align="left">{price}</Typography>
+        </Box>
+      </Stack>
     </Link>
   );
 };
@@ -27,13 +32,14 @@ export const ProductColumn = ({ productList }) => {
         img={item.img}
         name={item.name}
         price={item.price}
-        className="m-[5px]"
       />
     ));
   return (
-    <div className="flex flex-col p-[5px]">
-      <p className="font-bold">SẢN PHẨM</p>
+    <Stack p={"5px"}>
+      <Typography variant="h6" align="left">
+        SẢN PHẨM
+      </Typography>
       {productListJSX}
-    </div>
+    </Stack>
   );
 };

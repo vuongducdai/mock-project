@@ -1,9 +1,7 @@
-import { IconButton, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import React, { useRef } from "react";
-import { useState } from "react";
+import { Box, IconButton, InputBase, Stack, Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { getProductList } from "../../redux/admin/productSlice";
 import { ProductColumn } from "./ProductColumn";
 
@@ -23,8 +21,8 @@ export const SearchField = ({ onSubmitSearch, onFocus, onBlur }) => {
   };
 
   return (
-    <div className="py-[8px] pl-[36px] w-[15vw]">
-      <div className="border border-transparent hover:border-black duration-1000 bg-[#eceff1] h-[32px] flex">
+    <Box className="py-[8px] pl-[36px] w-[15vw]">
+      <Box className="border border-transparent hover:border-black duration-1000 bg-[#eceff1] h-[32px] flex">
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search"
@@ -37,30 +35,40 @@ export const SearchField = ({ onSubmitSearch, onFocus, onBlur }) => {
         <IconButton className="text-black text-center">
           <SearchIcon />
         </IconButton>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
 const SuggestionColumn = () => {
   return (
-    <div className="p-[5px]">
-      <p>SUGGESSTIONS</p>
-      <p>KHÔNG CÓ ĐỀ XUẤT</p>
-    </div>
+    <Stack p={"5px"} height={"100%"}>
+      <Typography variant="h6">SUGGESTIONS</Typography>
+      <Typography>KHÔNG CÓ ĐỀ XUẤT</Typography>
+    </Stack>
   );
 };
 
 const SearchResult = ({ productList }) => {
   return (
-    <div className="z-[1200] absolute flex bg-white w-[650px] right-0 px-[30px] py-[20px] drop-shadow-xl">
-      <div className="basis-0 grow">
+    <Stack
+      zIndex={1200}
+      position="absolute"
+      direction="row"
+      bgcolor="white"
+      width="650px"
+      right="0"
+      px="30px"
+      py="20px"
+      className="drop-shadow-xl"
+    >
+      <Box flexBasis={0} flexGrow={1}>
         <SuggestionColumn />
-      </div>
-      <div className="basis-0 grow">
+      </Box>
+      <Box flexBasis={0} flexGrow={1}>
         <ProductColumn productList={productList} />
-      </div>
-    </div>
+      </Box>
+    </Stack>
   );
 };
 
@@ -106,7 +114,7 @@ export default function SearchBar() {
   }, [searchTerm, products]);
 
   return (
-    <div className="relative">
+    <Box position="relative">
       <SearchField
         onSubmitSearch={handleSubmitSearch}
         onFocus={handleFocus}
@@ -115,6 +123,6 @@ export default function SearchBar() {
       {isFocus && openSearchResult && (
         <SearchResult productList={searchResult} />
       )}
-    </div>
+    </Box>
   );
 }
