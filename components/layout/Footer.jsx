@@ -154,12 +154,12 @@ const SubscribeFooter = () => {
         mx={"auto"}
         direction="row"
       >
-        <Box flexGrow={1} px={"7px"} className="basis-0">
+        <Box flexGrow={1} px={"7px"} flexBasis={0}>
           <Typography variant="h4">
             ĐĂNG KÝ NHẬN THÔNG TIN CẬP NHẬT VÀ ƯU ĐÃI QUA EMAIL
           </Typography>
         </Box>
-        <Box flexGrow={1} className="basis-0">
+        <Box flexGrow={1} flexBasis={0}>
           <BlackButton title="ĐĂNG KÝ NHẬN BẢN TIN" />
         </Box>
       </Stack>
@@ -169,7 +169,7 @@ const SubscribeFooter = () => {
 
 function Footer() {
   return (
-    <Box varian="footer">
+    <Box variant="footer">
       <SubscribeFooter />
       <AboutUsFooter />
       <LegalFooter />
