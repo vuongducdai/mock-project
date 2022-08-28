@@ -75,7 +75,6 @@ export async function getServerSideProps() {
     "https://63030a4dc6dda4f287c1d8d4.mockapi.io/product?page=1&limit=10"
   );
   const data = res.data;
-  console.log("List product", data.products);
 
   return {
     props: {
