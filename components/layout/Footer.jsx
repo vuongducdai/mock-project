@@ -5,32 +5,50 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
+import BlackButton from "../BlackButton";
+import { Box, Stack, Typography } from "@mui/material";
 
 const LegalFooter = () => {
   return (
-    <div className="bg-[#363738] text-[#c8cbcc] text-[12px] h-[60px] flex items-center justify-center">
-      <ol className="flex justify-center items-center ">
-        <li className="px-[15px] my-[9px] border-r border-inherit">
-          Chính sách Bảo mật{" "}
-        </li>
-        <li className="px-[15px] my-[9px] border-r border-inherit">
+    <Stack bgcolor={"#363738"} color={"#c8cbcc"}>
+      <Stack justifyContent={"center"} alignItems={"center"} direction="row">
+        <Typography px={"15px"} my={"9px"} borderRight={1} variant="caption">
+          Chính sách Bảo mật
+        </Typography>
+        <Typography px={"15px"} my={"9px"} borderRight={1} variant="caption">
           Điều Khoản và Điều Kiện
-        </li>
-        <li className="px-[15px] my-[9px] border-r border-inherit ">
+        </Typography>
+        <Typography px={"15px"} my={"9px"} borderRight={1} variant="caption">
           XUẤT BẢN BỞI
-        </li>
-        <li className="px-[15px] my-[9px]">
+        </Typography>
+        <Typography px={"15px"} my={"9px"} variant="caption">
           © 2020 Công ty TNHH adidas Việt Nam
-        </li>
-      </ol>
-    </div>
+        </Typography>
+      </Stack>
+    </Stack>
+  );
+};
+
+const FooterStack = ({ children }) => {
+  return (
+    <Stack mx={"15px"} mt={"20px"} mb={"30px"} flexBasis={0} flexGrow={1}>
+      {children}
+    </Stack>
+  );
+};
+
+const FooterColumn = ({ title, items }) => {
+  return (
+    <FooterStack>
+      <Typography variant="h6" mb={"10px"}>
+        {title}
+      </Typography>
+      {items}
+    </FooterStack>
   );
 };
 
 const AboutUsFooter = () => {
-  const listItemStyle = "text-[13px] pt-[5px]";
-
   const productsFooter = [
     "Giày",
     "Quần áo",
@@ -40,9 +58,9 @@ const AboutUsFooter = () => {
     "adidas Exclusive",
     "Outlet",
   ].map((item, index) => (
-    <li className={listItemStyle} key={(item, index)}>
+    <Typography variant="overline" key={(item, index)}>
       {item}
-    </li>
+    </Typography>
   ));
 
   const sportsFooter = [
@@ -55,9 +73,9 @@ const AboutUsFooter = () => {
     "Ngoài trời",
     "Bơi lội",
   ].map((item, index) => (
-    <li className={listItemStyle} key={(item, index)}>
+    <Typography variant="overline" key={(item, index)}>
       {item}
-    </li>
+    </Typography>
   ));
 
   const bstFooter = [
@@ -74,9 +92,9 @@ const AboutUsFooter = () => {
     "nmd",
     "ZX",
   ].map((item, index) => (
-    <li className={listItemStyle} key={(item, index)}>
+    <Typography variant="overline" key={(item, index)}>
       {item}
-    </li>
+    </Typography>
   ));
 
   const supportFooter = [
@@ -89,9 +107,9 @@ const AboutUsFooter = () => {
     "khuyến mãi",
     "Sơ đồ trang web",
   ].map((item, index) => (
-    <li className={listItemStyle} key={(item, index)}>
+    <Typography variant="overline" key={(item, index)}>
       {item}
-    </li>
+    </Typography>
   ));
 
   const aboutCompany = [
@@ -99,100 +117,63 @@ const AboutUsFooter = () => {
     "Cơ Hội Nghề Nghiệp",
     "Tin tức",
   ].map((item, index) => (
-    <li className={listItemStyle} key={(item, index)}>
+    <Typography variant="overline" key={(item, index)}>
       {item}
-    </li>
+    </Typography>
   ));
 
-  const titleFooterStyle = "text-[18px] font-medium mb-[10px]";
-  const footerListStyle = "mx-[15px] mt-[20px] mb-[30px] basis-0 grow	";
+  const socialMedia = [
+    <FacebookIcon key="facebookIcon" />,
+    <InstagramIcon key="instagramIcon" />,
+    <TwitterIcon key="twitterIcon" />,
+    <PinterestIcon key="pinterestIcon" />,
+    <MusicNoteIcon key="tiktokIcon" />,
+    <YouTubeIcon key="youtubeIcon" />,
+  ];
 
   return (
-    <div className="flex justify-center">
-      <div className="flex justify-center max-w-[1010px]">
-        <ul className={footerListStyle}>
-          <li className={titleFooterStyle}>SẢN PHẨM</li>
-          {productsFooter}
-        </ul>
-        <ul className={footerListStyle}>
-          <li className={titleFooterStyle}>THỂ THAO</li>
-          {sportsFooter}
-        </ul>
-        <ul className={footerListStyle}>
-          <li className={titleFooterStyle}>BỘ SƯU TẬP</li>
-          {bstFooter}
-        </ul>
-        <ul className={footerListStyle}>
-          <li className={titleFooterStyle}>THÔNG TIN VỀ CÔNG TY</li>
-          {aboutCompany}
-        </ul>
-        <ul className={footerListStyle}>
-          <li className={titleFooterStyle}>HỖ TRỢ</li>
-          {supportFooter}
-        </ul>
-        <ul className={footerListStyle}>
-          <li className={titleFooterStyle}>THEO DÕI CHÚNG TÔI</li>
-          <li>
-            <FacebookIcon />
-          </li>
-          <li>
-            <InstagramIcon />
-          </li>
-          <li>
-            <TwitterIcon />
-          </li>
-          <li>
-            <PinterestIcon />
-          </li>
-          <li>
-            <MusicNoteIcon />
-          </li>
-          <li>
-            <YouTubeIcon />
-          </li>
-        </ul>
-      </div>
-    </div>
+    <Stack justifyContent="center" direction="row">
+      <Stack justifyContent="center" direction="row" maxWidth="1010px">
+        <FooterColumn title={"SẢN PHẨM"} items={productsFooter} />
+        <FooterColumn title={"THỂ THAO"} items={sportsFooter} />
+        <FooterColumn title={"BỘ SƯU TẬP"} items={bstFooter} />
+        <FooterColumn title={"THÔNG TIN VỀ CÔNG TY"} items={aboutCompany} />
+        <FooterColumn title={"HỖ TRỢ"} items={supportFooter} />
+        <FooterColumn title={"THEO DÕI CHÚNG TÔI"} items={socialMedia} />
+      </Stack>
+    </Stack>
   );
 };
 
 const SubscribeFooter = () => {
-  const beforeAfterButtonStyle =
-    "relative bg-black text-white p-4 " +
-    "before:w-[100%] before:h-[3px] before:absolute before:-bottom-[3px] before:left-[3px] before:border-b before:border-l before:border-black " +
-    "after:h-[100%] after:w-[3px] after:absolute after:top-[3px] after:-right-[3px] after:border-t after:border-r after:border-black " +
-    "hover:text-slate-500	 duration-200 ";
-
   return (
-    <div className="bg-[#ede734] px-[40px] py-[40px] min-w-[960px] w-[100%] mx-auto">
-      <div className="flex max-w-[960px] justify-between mx-auto">
-        <div className="basis-0 grow px-[7px] ">
-          <span className="text-3xl">
+    <Box bgcolor={"#ede734"} p={"40px"} minWidth={"960px"}>
+      <Stack
+        justifyContent="space-between"
+        maxWidth={"960px"}
+        mx={"auto"}
+        direction="row"
+      >
+        <Box flexGrow={1} px={"7px"} className="basis-0">
+          <Typography variant="h4">
             ĐĂNG KÝ NHẬN THÔNG TIN CẬP NHẬT VÀ ƯU ĐÃI QUA EMAIL
-          </span>
-        </div>
-        <div className="basis-0 grow h-[100px]">
-          <button className={beforeAfterButtonStyle}>
-            <div className="flex justify-between w-[100%]">
-              <span>ĐĂNG KÝ NHẬN BẢN TIN</span>
-              <span>
-                <TrendingFlatIcon className="w-[100%]" />
-              </span>
-            </div>
-          </button>
-        </div>
-      </div>
-    </div>
+          </Typography>
+        </Box>
+        <Box flexGrow={1} className="basis-0">
+          <BlackButton title="ĐĂNG KÝ NHẬN BẢN TIN" />
+        </Box>
+      </Stack>
+    </Box>
   );
 };
 
 function Footer() {
   return (
-    <footer>
+    <Box varian="footer">
       <SubscribeFooter />
       <AboutUsFooter />
       <LegalFooter />
-    </footer>
+    </Box>
   );
 }
 
