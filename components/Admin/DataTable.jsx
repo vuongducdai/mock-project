@@ -13,16 +13,38 @@ import Search from "./Search";
 
 const DataTable = ({ type, datas }) => {
   const [query, setQuery] = useState("");
+  const [searchResult, setSearchResult] = useState(datas);
   const [searchData, setSearchData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [columnsToHide, setColumnsToHide] = useState(["id", "createdAt"]);
 
   useEffect(() => {
     mapDynamicColumns();
-  }, [datas]);
+
+    // const filter = (objs) => {
+    //   if (query) {
+    //     return objs.filter(obj => {
+    //       return obj.name.includes(query)
+    //     })
+    //   }
+    //   return objs
+    // }
+
+    const result =datas.filter((item) => {
+      // return item.name.toLowerCase().includes(query)
+      const arrayResult = Object.values(item).map((x) => {
+        // console.log(x, x.toString().toLowerCase().includes(query))
+        return x.toString().toLowerCase().includes(query);
+      });
+      // console.log(arrayResult, )
+
+      if (arrayResult.includes(true)) return true;
+      else return false;
+    });
+    setSearchResult(result);
+  }, [datas, query]);
   // Format Table Rows
-  
-  
+
   // create dynamic columns from import data:
   const mapDynamicColumns = () => {
     let dynamicCol = [];
@@ -42,17 +64,16 @@ const DataTable = ({ type, datas }) => {
   //   } else {
   //     return obj
   //   }
-    
+
   // };
   const isImg = (item) => {
-    if (item.includes('http://')) {
-      return (
-        <Image src={item} width={40} height={40}/>
-      )
-    } else {
-      return item
-    }
-  }
+    return item.includes("http://") ? (
+      <Image src={item} width={40} height={40} />
+    ) : (
+      item
+    );
+  };
+
   // create dynamic row from import data
   const addTableRow = (obj) => {
     let cells = [];
@@ -62,17 +83,16 @@ const DataTable = ({ type, datas }) => {
         cells.push(
           Object.keys(obj).map((item) => {
             if (obj[item] !== undefined && item === col) {
-              console.log(obj)
-
               return isImg(obj[item].toString());
-            } 
+            }
           })
         );
+        // search data
 
-        // filterDeepUndeFinedValues(cells);
+        filterDeepUndeFinedValues(cells);
       }
     });
-    return cells.map((cell, index) => {
+    return filterDeepUndeFinedValues(cells).map((cell, index) => {
       return <TableCell key={index}>{cell}</TableCell>;
     });
   };
@@ -81,17 +101,17 @@ const DataTable = ({ type, datas }) => {
     return query ? arr.map((val) => val.filter((x) => x === query)) : arr;
   };
   // create a deep filter function to find value
-  // const filterDeepUndeFinedValues = (arr) => {
-  //   return arr
-  //     .map((val) => val.map((deepVal) => deepVal).filter((deepVal) => deepVal))
-  //     .map((val) => {
-  //       if (val.length < 1) {
-  //         val = ["-"];
-  //         return val;
-  //       }
-  //       return val;
-  //     });
-  // };
+  const filterDeepUndeFinedValues = (arr) => {
+    return arr
+      .map((val) => val.map((deepVal) => deepVal).filter((deepVal) => deepVal))
+      .map((val) => {
+        if (val.length < 1) {
+          val = ["-"];
+          return val;
+        }
+        return val;
+      });
+  };
   // Mapping table columns
   const mapTableColumns = () => {
     return columns.map((col, index) => {
@@ -104,10 +124,11 @@ const DataTable = ({ type, datas }) => {
       }
     });
   };
+  // handle search data
+
   // create dynamic table
   const createTableRows = (objs) => {
     return objs?.map((obj, index) => {
-      
       return (
         <TableRow
           className="last:border-b-2"
@@ -205,7 +226,7 @@ const DataTable = ({ type, datas }) => {
           </TableRow>
         </TableHead>
         <TableBody sx={{ borderTop: "none", height: 300 }}>
-          {datas && createTableRows(datas)}
+          {datas && createTableRows(searchResult)}
         </TableBody>
       </Table>
       {/* {datas.length ? createTable(datas) : null} */}
