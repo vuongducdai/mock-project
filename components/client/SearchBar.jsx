@@ -1,16 +1,9 @@
-import { IconButton, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-
-import React, { useRef } from "react";
-import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { useState } from "react";
+import { Box, IconButton, InputBase, Stack, Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { getProductList } from "../../redux/admin/productSlice";
-import Image from "next/image";
-import Link from "next/link";
+import { ProductColumn } from "./ProductColumn";
 
 export const SearchField = ({ onSubmitSearch, onFocus, onBlur }) => {
   const typingTimeoutRef = useRef(null);
@@ -28,8 +21,8 @@ export const SearchField = ({ onSubmitSearch, onFocus, onBlur }) => {
   };
 
   return (
-    <div className="py-[8px] pl-[36px] w-[15vw]">
-      <div className="border border-transparent hover:border-black duration-1000 bg-[#eceff1] h-[32px] flex">
+    <Box className="py-[8px] pl-[36px] w-[15vw]">
+      <Box className="border border-transparent hover:border-black duration-1000 bg-[#eceff1] h-[32px] flex">
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search"
@@ -42,67 +35,40 @@ export const SearchField = ({ onSubmitSearch, onFocus, onBlur }) => {
         <IconButton className="text-black text-center">
           <SearchIcon />
         </IconButton>
-      </div>
-    </div>
-  );
-};
-
-const ProductCard = ({ id, img, name, price, className }) => {
-  return (
-    <Link href={`/products/${id}`}>
-      <div className={className + " flex cursor-pointer"}>
-        <div className="pr-1">
-          <Image src={img} alt={name} width={90} height={90} layout="fixed" />
-        </div>
-        <div className="text-ellipsis">
-          <p>{name}</p>
-          <p>{price}</p>
-        </div>
-      </div>
-    </Link>
-  );
-};
-
-const ProductColumn = ({ productList }) => {
-  const productListJSX = productList
-    .slice(0, 4)
-    .map((item, index) => (
-      <ProductCard
-        id={item.id}
-        key={item.name + index}
-        img={item.img}
-        name={item.name}
-        price={item.price}
-        className="m-[5px]"
-      />
-    ));
-  return (
-    <div className="flex flex-col p-[5px]">
-      <p className="font-bold">SẢN PHẨM</p>
-      {productListJSX}
-    </div>
+      </Box>
+    </Box>
   );
 };
 
 const SuggestionColumn = () => {
   return (
-    <div className="p-[5px]">
-      <p>SUGGESSTIONS</p>
-      <p>KHÔNG CÓ ĐỀ XUẤT</p>
-    </div>
+    <Stack p={"5px"} height={"100%"}>
+      <Typography variant="h6">SUGGESTIONS</Typography>
+      <Typography>KHÔNG CÓ ĐỀ XUẤT</Typography>
+    </Stack>
   );
 };
 
 const SearchResult = ({ productList }) => {
   return (
-    <div className="z-[1200] absolute flex bg-white w-[650px] right-0 px-[30px] py-[20px] drop-shadow-xl">
-      <div className="basis-0 grow">
+    <Stack
+      zIndex={1200}
+      position="absolute"
+      direction="row"
+      bgcolor="white"
+      width="650px"
+      right="0"
+      px="30px"
+      py="20px"
+      className="drop-shadow-xl"
+    >
+      <Box flexBasis={0} flexGrow={1}>
         <SuggestionColumn />
-      </div>
-      <div className="basis-0 grow">
+      </Box>
+      <Box flexBasis={0} flexGrow={1}>
         <ProductColumn productList={productList} />
-      </div>
-    </div>
+      </Box>
+    </Stack>
   );
 };
 
@@ -120,18 +86,15 @@ export default function SearchBar() {
   }, []);
 
   const handleSubmitSearch = (searchTerm) => {
-    console.log(searchTerm);
     setSearchTerm(searchTerm);
   };
 
   const handleFocus = () => {
     setIsFocus(true);
-    console.log("focus");
   };
 
   const handleBlur = () => {
     setIsFocus(false);
-    console.log("blur");
   };
 
   useEffect(() => {
@@ -151,7 +114,7 @@ export default function SearchBar() {
   }, [searchTerm, products]);
 
   return (
-    <div className="relative">
+    <Box position="relative">
       <SearchField
         onSubmitSearch={handleSubmitSearch}
         onFocus={handleFocus}
@@ -160,6 +123,6 @@ export default function SearchBar() {
       {isFocus && openSearchResult && (
         <SearchResult productList={searchResult} />
       )}
-    </div>
+    </Box>
   );
 }

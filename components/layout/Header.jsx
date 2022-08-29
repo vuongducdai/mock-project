@@ -1,46 +1,36 @@
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import { Badge } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { useScrollDirection } from '../../hooks/useSCrollDirection';
-import { getCartList } from '../../redux/client/cartSlice';
-import calculateQuantityCart from '../../utils/calculateQuantityCart';
-import SearchBar from './SearchBar';
-
-const ShoppingCartIcon = () => {
-	const cartList = useSelector(getCartList);
-	const quantityOrder = useMemo(
-		() => calculateQuantityCart(cartList),
-		[cartList],
-	);
-	return (
-		<div className='flex justify-center items-center w-[48px] h-[48px] cursor-pointer'>
-			<Link href='/cart'>
-				<Badge badgeContent={quantityOrder} max={50} color='primary'>
-					<ShoppingBagOutlinedIcon />
-				</Badge>
-			</Link>
-		</div>
-	);
-};
+import SearchBar from '../client/SearchBar';
+import { ShoppingCartIcon } from '../client/ShoppingCartIcon';
 
 const HeaderTitle = () => {
 	return (
-		<div className='bg-black h-[30px] flex justify-around items-center text-white text-xs tracking-widest w-[100%]'>
-			<div>MIỄN PHÍ GIAO HÀNG TRÊN 1.300.000 VNĐ</div>
-			<div>TRẢ HÀNG DỄ DÀNG</div>
-			<div> NAY ĐÃ CÓ THỂ THANH TOÁN VỚI THẺ TÍN DỤNG!</div>
-		</div>
+		<Stack
+			direction='row'
+			justifyContent='space-around'
+			alignItems='center'
+			bgcolor='black'
+			height={30}
+			color='white'>
+			<Typography variant='body2'>
+				MIỄN PHÍ GIAO HÀNG TRÊN 1.300.000 VNĐ
+			</Typography>
+			<Typography variant='body2'>TRẢ HÀNG DỄ DÀNG</Typography>
+			<Typography variant='body2'>
+				NAY ĐÃ CÓ THỂ THANH TOÁN VỚI THẺ TÍN DỤNG!
+			</Typography>
+		</Stack>
 	);
 };
 
 const LoginSection = () => {
 	return (
-		<div className='flex justify-end pt-[5px] text-[14px]'>
-			<a className='px-[5px] cursor-pointer'>đăng nhập</a>
-		</div>
+		<Link underline='none' href='#' variant='body2'>
+			đăng nhập
+		</Link>
 	);
 };
 
@@ -66,23 +56,30 @@ export const Header = () => {
 	const scrollDirection = useScrollDirection();
 
 	return (
-		<header
+		<Box
+			variant='header'
 			className={`fixed ${
 				scrollDirection === 'down'
 					? '-top-28 inset-x-0'
 					: 'top-0 inset-x-0'
-			} transition-all duration-500 z-[1200] bg-white`}>
+			} transition-all duration-500 z-[1200] bg-white border-b`}>
 			<HeaderTitle />
-			<div className='flex justify-between px-[20px]'>
+			<Stack
+				justifyContent='space-between'
+				px={'20px'}
+				pt={'5px'}
+				direction='row'>
 				<LogoIcon />
-				<div>
-					<LoginSection />
-					<div className='flex justify-center'>
+				<Stack>
+					<Box textAlign={'right'}>
+						<LoginSection />
+					</Box>
+					<Stack justifyContent='center' direction='row'>
 						<SearchBar />
 						<ShoppingCartIcon />
-					</div>
-				</div>
-			</div>
-		</header>
+					</Stack>
+				</Stack>
+			</Stack>
+		</Box>
 	);
 };
