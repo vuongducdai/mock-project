@@ -10,12 +10,13 @@ const Product = () => {
 
   useEffect(() => {
     dispatch(getProductList());
-    
   }, []);
 
   return (
     <div>
-      {products.products && <DataTable datas={products.products} type="PRODUCT" name='name' img='img' price='price' color='color' size='size' material='material' quanity='quanity'/>}
+      {products.products && (
+        <DataTable datas={products.products} type="PRODUCT" />
+      )}
     </div>
   );
 };

@@ -16,7 +16,7 @@ const Product = () => {
 
   return (
     <div>
-      {users && <DataTable datas={users} type="USER" name='name' address='address' email='email' phone='phone' isAdmin='isAdmin'/>}
+      {users && <DataTable datas={users} type="USER"/>}
     </div>
   );
 };

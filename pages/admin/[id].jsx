@@ -17,7 +17,7 @@ const Container = () => {
 
   const router = useRouter();
   const { id } = router.query;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   // useEffect(() => {
   //   dispatch(getProductList());
