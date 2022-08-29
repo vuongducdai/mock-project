@@ -56,21 +56,20 @@ export default function ListProductComponent({ arrProduct }) {
                 }))
             }
         }
-
     }
 
     const handleFilterSize = (id) => {
         setSizeActive(id);
-        if (result?.length > 0) {
-            if (id !== 0) {
-                setResult(result.filter((item) => item.size === id))
-            }
+        // if (result?.length > 0) {
+        //     if (id !== 0) {
+        //         setResult(result.filter((item) => item.size === id))
+        //     }
+        // }
+        // else {
+        if (id !== 0) {
+            setResult(arrProduct.filter((item) => item.size === id))
         }
-        else {
-            if (id !== 0) {
-                setResult(arrProduct.filter((item) => item.size === id))
-            }
-        }
+        // }
     }
 
     const handleCheck = (id) => {
@@ -88,30 +87,21 @@ export default function ListProductComponent({ arrProduct }) {
 
     const handleFilterByCatProduct = () => {
         let filterArr = []
-        if (result?.length > 0) {
-            filterArr = checked.map(check => {
-                return result.filter(pro => {
-                    if (pro.material.toLowerCase() === check.toLowerCase()) return pro;
-                })
+        filterArr = checked.map(check => {
+            return arrProduct.filter(pro => {
+                if (pro.material.toLowerCase() === check.toLowerCase()) return pro;
             })
-        }
-        else {
-            filterArr = checked.map(check => {
-                return arrProduct.filter(pro => {
-                    if (pro.material.toLowerCase() === check.toLowerCase()) return pro;
-                })
-            })
-        }
+        })
+
         if (checked.length > 0) {
             setResult(filterArr.flat(Infinity));
         }
-        else {
-            setResult(arrProduct)
-        }
+        // else {
+        //     setResult(arrProduct)
+        // }
     }
 
     const handleFilterByColorProduct = () => {
-
         const filterArr = checkedColor.map(color => {
             return arrProduct.filter(pro => {
                 if (+pro.color === color) return pro;
@@ -201,14 +191,41 @@ export default function ListProductComponent({ arrProduct }) {
             </div>
         )
     }
+    const handleFilterAll = () => {
+        console.log('checked', checked, 'color', checkedColor)
+        const final = arrProduct.filter((item) => {
+            console.log(checked.map(check => {
+                if (item.material.toLowerCase() === check.toLowerCase()) return true
+                else return false;
+            }))
+            return (item.size === sizeActive
+                &&
+                checked.map(check => {
+                    if (item.material.toLowerCase() === check.toLowerCase()) return true
+                    else return false;
+                })
+                &&
+                checkedColor.map(color => {
+                    if (+item.color === color) return true
+                    else return false;
+                }))
+        }
+
+        )
+        console.log('final result', final)
+    }
 
     useEffect(() => {
-        handleFilterByCatProduct();
-    }, [checked]);
+        handleFilterAll()
+    }, [checked, checkedColor, sizeActive]);
 
-    useEffect(() => {
-        handleFilterByColorProduct();
-    }, [checkedColor]);
+    // useEffect(() => {
+    //     handleFilterByCatProduct();
+    // }, [checked]);
+
+    // useEffect(() => {
+    //     handleFilterByColorProduct();
+    //}, [checkedColor]);
 
     useEffect(() => {
         setResult(arrProduct);
@@ -266,17 +283,13 @@ export default function ListProductComponent({ arrProduct }) {
         return (
             <div className='flex flex-wrap'>
                 {
-                    result?.length > 0
-                        ? result.map((pro) => (
-                            <div key={pro.id} className='w-1/4'>
-                                <ProductCard item={pro} />
-                            </div>
-                        ))
-                        : arrProduct.map((pro) => (
-                            <div key={pro.id} className='w-1/4'>
-                                <ProductCard item={pro} />
-                            </div>
-                        ))}
+
+                    result?.map((pro) => (
+                        <div key={pro.id} className='w-1/4'>
+                            <ProductCard item={pro} />
+                        </div>
+                    ))
+                }
             </div>
         )
     }
