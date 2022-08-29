@@ -38,23 +38,24 @@ const LoginSection = () => {
 
 const LogoIcon = () => {
   return (
-    <Stack>
+    <div className="flex">
       <Link href="/">
-        <Image
-          src="https://www.adidas.com.vn/glass/react/f269eb7/assets/img/icon-adidas-logo.svg"
-          alt="adidas logo"
-          width={60}
-          height={60}
-          className="cursor-pointer relative top-[-17px]"
-        />
+        <a>
+          <Image
+            src="https://www.adidas.com.vn/glass/react/f269eb7/assets/img/icon-adidas-logo.svg"
+            alt="adidas logo"
+            width={60}
+            height={60}
+            className="cursor-pointer relative top-[-17px]"
+          />
+        </a>
       </Link>
-    </Stack>
+    </div>
   );
 };
 
 export const Header = () => {
   const scrollDirection = useScrollDirection();
-  const { count } = useSelector((state) => state.cartSlice);
 
   return (
     <Box
@@ -77,7 +78,7 @@ export const Header = () => {
           </Box>
           <Stack justifyContent="center" direction="row">
             <SearchBar />
-            <ShoppingCartIcon quantity={count} />
+            <ShoppingCartIcon />
           </Stack>
         </Stack>
       </Stack>

@@ -26,6 +26,7 @@
     "react-dom": "18.2.0",
     "react-file-base64": "^1.0.3",
     "react-hook-form": "^7.34.2",
+    "react-img-zoom": "^0.1.0",
     "react-inner-image-zoom": "^3.0.2",
     "react-material-ui-carousel": "^3.4.2",
     "react-multi-carousel": "^2.8.2",
