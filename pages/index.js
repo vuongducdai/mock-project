@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-multi-carousel/lib/styles.css";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,11 +10,20 @@ import { BannerCarousel } from "../components/client/BannerCarousel";
 import MainLayout from "../components/layout/main";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { getListProduct } from "../redux/admin/productSlice";
+import { listProductData, listProductReUse } from "../redux/client/productSlice";
 
 export default function Home(props) {
 
   const [totalProduct, setTotalProduct] = useState(props.count);
+  const [page, setPage] = useState(1);
+
+
+  const handlePagination = (number) => {
+    setPage(number);
+  }
+
+  // dispatch(listProductData(props.listProduct));
+  // dispatch(listProductReUse(props.listProduct));
 
   return (
     <>
@@ -25,18 +34,17 @@ export default function Home(props) {
       </Head>
       <BannerCarousel />
       <Slider arrProduct={props.listProduct.slice(0, 8)} />
-      <ListProductComponent arrProduct={props.listProduct} />
-      <Pagination totalProduct={totalProduct} />
+      <ListProductComponent arrProduct={props.listProduct.slice(((page - 1) * 10), page * 10)} />
+      <Pagination totalProduct={totalProduct} handlePagination={handlePagination} />
     </>
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(number) {
   const res = await axios.get(
-    "https://63030a4dc6dda4f287c1d8d4.mockapi.io/product?page=1&limit=10"
+    `https://63030a4dc6dda4f287c1d8d4.mockapi.io/product`
   );
   const data = res.data;
-  console.log("List product", data.products);
 
   return {
     props: {

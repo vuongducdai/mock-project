@@ -8,7 +8,7 @@ import React from "react";
 import formatNumber from "../utils/formatNumber";
 
 export default function ProductCard({ item }) {
-  const { img, name, price, id } = item;
+  const { img, name, price, id, size, material } = item;
   return (
     <Link href={`products/${id}`} className="no-underline">
       <Card
@@ -24,11 +24,13 @@ export default function ProductCard({ item }) {
         </div>
         <CardContent>
           <Typography component="div" className="text-sm">
-            <span>{name}</span>
+            <span className='truncate'>{name}</span>
             <br />
             <span className="text-neutral-500">Nam Original</span>
             <br />
             <span>mới</span>
+            <br />
+            <span>{material}</span>
           </Typography>
         </CardContent>
       </Card>

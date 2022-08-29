@@ -45,8 +45,8 @@ export default function Slider({ arrProduct }) {
                 customDot={<CustomDot />}
                 responsive={responsive}
                 infinite={true}
-                autoPlaySpeed={3000}
-                autoPlay={true}
+                // autoPlaySpeed={3000}
+                // autoPlay={true}
                 keyBoardControl={true}
                 slidesToSlide={2}
                 transitionDuration={500}

@@ -2,230 +2,151 @@ import CloseIcon from '@mui/icons-material/Close';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Box, Container, Drawer, Typography } from "@mui/material";
 import Checkbox from '@mui/material/Checkbox';
-import { blue, brown, green, pink, red, yellow } from '@mui/material/colors';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import "react-multi-carousel/lib/styles.css";
+import { useDispatch, useSelector } from 'react-redux';
 import "swiper/css";
 import "swiper/css/pagination";
+import { arrCatProduct, arrColor, arrSize, arrTitleFilter, arrTitleSortBy } from '../../constants/data';
 import ProductCard from '../ProductCard';
 import ItemDrawer from './ItemDrawer';
 
 
 
 export default function ListProductComponent({ arrProduct }) {
-    const arrTitleFilter = [
-        {
-            id: 1,
-            content: 'Tất cả quần áo nam',
-        },
-        {
-            id: 2,
-            content: 'Jackets',
-        },
-        {
-            id: 3,
-            content: 'Áo nỉ và Bộ đồ thể thao',
-        },
-        {
-            id: 4,
-            content: 'Áo Phông & Áo Polo',
-        },
-        {
-            id: 5,
-            content: 'Áo hoodie & Áo khoác',
-        },
-        {
-            id: 6,
-            content: 'Quần',
-        },
-    ]
-    const arrColor = [
-        {
-            id: 1,
-            name: pink,
-            color: 'pink'
-        },
-        {
-            id: 2,
-            name: blue,
-            color: 'blue'
-        },
-        {
-            id: 3,
-            name: brown,
-            color: 'brown'
-        },
-        {
-            id: 4,
-            name: red,
-            color: 'red'
-        },
-        {
-            id: 5,
-            name: green,
-            color: 'green'
-        },
-        {
-            id: 6,
-            name: yellow,
-            color: 'yellow'
-        }
-    ]
-    const arrTitleSortBy = [
-        {
-            id: 1,
-            isLast: false,
-            content: 'GIÁ (THẤP - CAO)',
-        },
-        {
-            id: 2,
-            isLast: true,
-            content: 'GIÁ (CAO - THẤP)',
-        },
-    ]
-    const arrSize = [
-        {
-            id: 104,
-            content: '104',
-        },
-        {
-            id: 110,
-            content: '110',
-        },
-        {
-            id: 116,
-            content: '116',
-        },
-        {
-            id: 122,
-            content: '122',
-        },
-        {
-            id: 128,
-            content: '128',
-        },
-        {
-            id: 134,
-            content: '134',
-        },
-        {
-            id: 12090,
-            content: '12090',
-        },
-        {
-            id: 152,
-            content: '152',
-        },
-        {
-            id: 164,
-            content: '164',
-        },
-        {
-            id: 170,
-            content: '170',
-        },
-        {
-            id: 176,
-            content: '176',
-        },
-        {
-            id: 82449,
-            content: '82449',
-        },
-    ]
 
-    const arrCatProduct = [
-        {
-            id: 1,
-            content: 'T-shirts',
-            quantity: 13,
-        },
-        {
-            id: 2,
-            content: 'Quần',
-            quantity: 4,
-        },
-        {
-            id: 3,
-            content: 'Quần bó',
-            quantity: 90,
-        },
-        {
-            id: 4,
-            content: 'Bộ đồ thể thao',
-            quantity: 8,
-        },
-        {
-            id: 5,
-            content: 'Quần sort',
-            quantity: 53,
-        },
-        {
-            id: 7,
-            content: 'Áo khoác',
-            quantity: 23,
-        },
-        {
-            id: 8,
-            content: 'Áo nỉ',
-            quantity: 3,
-        },
-    ]
-
-
+    const [result, setResult] = useState();
 
     const [titleActive, setTitleActive] = useState(1);
     const [isDraweOpen, setIsDrawerOpen] = useState(false);
     const [sortByActive, setSortByActive] = useState(0);
-    const [sizeActive, setSizeActive] = useState(104);
+
+    const [sizeActive, setSizeActive] = useState(0);
     const [checked, setChecked] = useState([]);
     const [checkedColor, setCheckedColor] = useState([]);
 
-
+    const handleSetIsDrawerOpen = (bool) => {
+        setIsDrawerOpen(bool);
+    }
 
     const handleSortByPrice = (id) => {
         setSortByActive(id);
-        if (sortByActive === 1) {
-            arrProduct.sort((a, b) => {
-                return b.price - a.price
-            })
+        if (result.length > 0) {
+            if (id === 1) {
+                setResult([...result].sort((a, b) => {
+                    return a.price - b.price
+                }))
+            }
+            else {
+                setResult([...result].sort((a, b) => {
+                    return b.price - a.price
+                }))
+            }
         }
         else {
-            arrProduct.sort((a, b) => {
-                return a.price - b.price
-            })
+            if (id === 1) {
+                setResult([...arrProduct].sort((a, b) => {
+                    return a.price - b.price
+                }))
+            }
+            else {
+                setResult([...arrProduct].sort((a, b) => {
+                    return b.price - a.price
+                }))
+            }
+        }
+
+    }
+
+    const handleFilterSize = (id) => {
+        setSizeActive(id);
+        if (result?.length > 0) {
+            if (id !== 0) {
+                setResult(result.filter((item) => item.size === id))
+            }
+        }
+        else {
+            if (id !== 0) {
+                setResult(arrProduct.filter((item) => item.size === id))
+            }
         }
     }
 
-
     const handleCheck = (id) => {
-        setChecked(prev => {
+        setChecked(() => {
             const isChecked = checked.includes(id);
             if (isChecked) {
 
                 return checked.filter(item => item !== id)
             }
             else {
-                return [...prev, id,]
+                return [...checked, id,]
             }
         })
     }
+
+    const handleFilterByCatProduct = () => {
+        let filterArr = []
+        if (result?.length > 0) {
+            filterArr = checked.map(check => {
+                return result.filter(pro => {
+                    if (pro.material.toLowerCase() === check.toLowerCase()) return pro;
+                })
+            })
+        }
+        else {
+            filterArr = checked.map(check => {
+                return arrProduct.filter(pro => {
+                    if (pro.material.toLowerCase() === check.toLowerCase()) return pro;
+                })
+            })
+        }
+        if (checked.length > 0) {
+            setResult(filterArr.flat(Infinity));
+        }
+        else {
+            setResult(arrProduct)
+        }
+    }
+
+    const handleFilterByColorProduct = () => {
+
+        const filterArr = checkedColor.map(color => {
+            return arrProduct.filter(pro => {
+                if (+pro.color === color) return pro;
+            })
+        })
+        if (checkedColor.length > 0) {
+            setResult(filterArr.flat(Infinity));
+        }
+        else {
+            setResult(arrProduct)
+        }
+    }
+
     const handleCheckColor = (id) => {
-        setCheckedColor(prev => {
+        setCheckedColor(() => {
             const isChecked = checkedColor.includes(id);
             if (isChecked) {
 
                 return checkedColor.filter(item => item !== id)
             }
             else {
-                return [...prev, id,]
+                return [...checkedColor, id,]
             }
         })
     }
 
-    const handleFilterBySize = (id) => {
-        console.log(id)
+    const handleMergeArr = () => {
+        if (sortByPriceArr.length > 0) {
+            setArrResult(sortByPriceArr)
+        }
     }
+
+
+
+
 
     const renderTitleFilter = () => {
         return (
@@ -233,27 +154,29 @@ export default function ListProductComponent({ arrProduct }) {
                 <span
                     onClick={() => setTitleActive(title.id)}
                     key={title.id}
-                    className={`p-2 cursor-pointer text-neutral-500 
-                    ${titleActive === title.id
+                    className={`p-2 cursor-pointer text-neutral-500
+                   ${titleActive === title.id
                             ? 'border-b-2 border-b-black text-black '
-                            : ''} 
-                            hover:border-b-2 border-b-black`}>
+                            : ''}
+                           hover:border-b-2 border-b-black`}>
                     {title.content}
                 </span>
             ))
         )
     }
 
-    const renderTitleSortBy = () => {
+    const renderTitleSortByPrice = () => {
         return (
             arrTitleSortBy.map((sortBy) => (
                 <div
                     key={sortBy.id}
-                    onClick={() => handleSortByPrice(sortBy.id)}
-                    className={`cursor-pointer 
-                    ${sortBy.isLast ? '' : 'border-b'} py-1.5 
-                    ${sortByActive === sortBy.id ? 'text-neutral-500 text-rose-600' : ''}
-                    `}
+                    onClick={() => (
+                        handleSortByPrice(sortBy.id)
+                    )}
+                    className={`cursor-pointer
+                   ${sortBy.isLast ? '' : 'border-b'} py-1.5
+                   ${sortByActive === sortBy.id ? 'text-neutral-500 text-rose-600' : ''}
+                   `}
                 >
                     {sortBy.content}
                 </div>
@@ -266,11 +189,11 @@ export default function ListProductComponent({ arrProduct }) {
             <div className='flex flex-wrap'>
                 {arrSize.map((size) => (
                     <div
-                        onClick={() => handleFilterBySize(size.id)}
+                        onClick={() => handleFilterSize(size.id)}
                         className={`${sizeActive === size.id
                             ? 'border-black'
-                            : ''} 
-                            text-center py-4 w-28 border cursor-pointer hover:border-black`}
+                            : ''}
+                           text-center py-4 w-28 border cursor-pointer hover:border-black`}
                         key={size.id} >
                         {size.content}
                     </div>
@@ -279,13 +202,28 @@ export default function ListProductComponent({ arrProduct }) {
         )
     }
 
+    useEffect(() => {
+        handleFilterByCatProduct();
+    }, [checked]);
+
+    useEffect(() => {
+        handleFilterByColorProduct();
+    }, [checkedColor]);
+
+    useEffect(() => {
+        setResult(arrProduct);
+    }, [])
+
     const renderCatProductList = () => {
         return (
             <div className='flex flex-col'>
                 {arrCatProduct.map((cat) => (
                     <div
                         key={cat.id}
-                        onClick={() => handleCheck(cat.id)}
+                        onClick={() => {
+                            handleCheck(cat.id);
+                        }
+                        }
                         className="p-2 cursor-pointer">
                         <Checkbox
                             checked={checked.includes(cat.id)}
@@ -309,7 +247,7 @@ export default function ListProductComponent({ arrProduct }) {
                             onClick={() => handleCheckColor(id)}
                             className="p-2 cursor-pointer">
                             <Checkbox
-                                checkedColor={checkedColor.includes(id)}
+                                checked={checkedColor.includes(id)}
                                 sx={{
                                     color: name[800],
                                     '&.Mui-checked': {
@@ -327,19 +265,30 @@ export default function ListProductComponent({ arrProduct }) {
     const renderProductList = () => {
         return (
             <div className='flex flex-wrap'>
-                {arrProduct.map((pro) => (
-                    <div key={pro.id} className='w-1/4'>
-                        <ProductCard item={pro} />
-                    </div>
-                ))}
+                {
+                    result?.length > 0
+                        ? result.map((pro) => (
+                            <div key={pro.id} className='w-1/4'>
+                                <ProductCard item={pro} />
+                            </div>
+                        ))
+                        : arrProduct.map((pro) => (
+                            <div key={pro.id} className='w-1/4'>
+                                <ProductCard item={pro} />
+                            </div>
+                        ))}
             </div>
         )
     }
 
-    const handleSetIsDrawerOpen = (bool) => {
-        setIsDrawerOpen(bool)
+    const handleClearAll = () => {
+        setResult(arrProduct);
+        setSortByActive(0);
+        setSizeActive(0);
+        setCheckedColor([]);
+        setChecked([]);
+        setIsDrawerOpen(false);
     }
-
 
     return (
         <Container>
@@ -366,6 +315,7 @@ export default function ListProductComponent({ arrProduct }) {
                                 <div>Lọc và Sắp xếp</div>
                                 <div>
                                     <span
+                                        onClick={handleClearAll}
                                         className="underline text-neutral-500 hover:bg-black hover:text-zinc-50">
                                         Clear all
                                     </span>
@@ -373,7 +323,7 @@ export default function ListProductComponent({ arrProduct }) {
                                 </div>
                             </div>
                         </Typography >
-                        <ItemDrawer title='Sort By' renderFuntion={renderTitleSortBy} />
+                        <ItemDrawer title='Sort By' renderFuntion={renderTitleSortByPrice} />
                         <ItemDrawer title='Kích cỡ' renderFuntion={renderSizeList} />
                         <ItemDrawer title='Loại Sản Phẩm' renderFuntion={renderCatProductList} />
                         <ItemDrawer title='MÀU' renderFuntion={renderColorList} />

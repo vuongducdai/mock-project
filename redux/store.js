@@ -14,11 +14,13 @@ import storage from "redux-persist/lib/storage";
 import productSlice from "./admin/productSlice";
 import userSlice from "./admin/userSlice";
 import cartSlice from "./client/cartSlice";
+import clientProductSlice from './client/productSlice';
 
 const rootReducer = combineReducers({
   productSlice,
   userSlice,
   cartSlice,
+  clientProductSlice,
 });
 
 //  Handle user login when reloading page

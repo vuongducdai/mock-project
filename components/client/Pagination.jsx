@@ -10,13 +10,19 @@ import "swiper/css/pagination";
 
 
 
-export default function Pagination({ totalProduct }) {
+export default function Pagination({ totalProduct, handlePagination }) {
     const [age, setAge] = React.useState(1);
     const totalPage = Math.ceil(totalProduct / 10);
 
+
     const handleChange = (event) => {
         setAge(event.target.value);
+        onPagination(event.target.value)
     };
+
+    const onPagination = (age) => {
+        handlePagination(age);
+    }
 
     const renderItemPage = () => {
         const list = []
