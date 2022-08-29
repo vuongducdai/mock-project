@@ -4,9 +4,10 @@ import { getProductList } from "../../../redux/admin/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Layout from "../../../components/Admin/Layout";
+import Loading from "../../../components/Admin/Loading";
 
 const Product = () => {
-      const { products } = useSelector((state) => state.productSlice);
+      const { products, loading } = useSelector((state) => state.productSlice);
       const router = useRouter();
       const path = router.pathname.split("/")[2];
       const dispatch = useDispatch();
@@ -16,8 +17,10 @@ const Product = () => {
       }, [dispatch]);
 
       return (
-            <Layout>
-                  {products.products && <DataTable datas={products.products} type={path} />}
+            <Layout type={path}>
+                  {loading
+                        ? <Loading />
+                        : <DataTable datas={products} type={path} />}
             </Layout>
       );
 };

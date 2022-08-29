@@ -8,10 +8,7 @@ const publicRequest = axios.create({
       baseURL: BASE_URL,
 });
 
-
-
 // Products
-
 export const getProducts = () => publicRequest.get('/product')
 export const getProduct = (id) => publicRequest.get(`/product/${id}`)
 
