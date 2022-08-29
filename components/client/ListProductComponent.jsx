@@ -15,6 +15,7 @@ import ItemDrawer from './ItemDrawer';
 
 
 export default function ListProductComponent({ arrProduct }) {
+    console.log('pagination 5', arrProduct)
 
     const [result, setResult] = useState();
 
@@ -23,7 +24,7 @@ export default function ListProductComponent({ arrProduct }) {
     const [sortByActive, setSortByActive] = useState(0);
 
     const [sizeActive, setSizeActive] = useState(0);
-    const [checked, setChecked] = useState([]);
+    const [checkedCat, setCheckedCat] = useState([]);
     const [checkedColor, setCheckedColor] = useState([]);
 
     const handleSetIsDrawerOpen = (bool) => {
@@ -34,12 +35,12 @@ export default function ListProductComponent({ arrProduct }) {
         setSortByActive(id);
         if (result.length > 0) {
             if (id === 1) {
-                setResult([...result].sort((a, b) => {
+                setResult(result.sort((a, b) => {
                     return a.price - b.price
                 }))
             }
             else {
-                setResult([...result].sort((a, b) => {
+                setResult(result.sort((a, b) => {
                     return b.price - a.price
                 }))
             }
@@ -58,68 +59,22 @@ export default function ListProductComponent({ arrProduct }) {
         }
     }
 
-    const handleFilterSize = (id) => {
-        setSizeActive(id);
-        // if (result?.length > 0) {
-        //     if (id !== 0) {
-        //         setResult(result.filter((item) => item.size === id))
-        //     }
-        // }
-        // else {
-        if (id !== 0) {
-            setResult(arrProduct.filter((item) => item.size === id))
-        }
-        // }
-    }
-
-    const handleCheck = (id) => {
-        setChecked(() => {
-            const isChecked = checked.includes(id);
+    const handleCheckCat = (id) => {
+        setCheckedCat(() => {
+            const isChecked = checkedCat.includes(id);
             if (isChecked) {
-
-                return checked.filter(item => item !== id)
+                return checkedCat.filter(item => item !== id)
             }
             else {
-                return [...checked, id,]
+                return [...checkedCat, id,]
             }
         })
-    }
-
-    const handleFilterByCatProduct = () => {
-        let filterArr = []
-        filterArr = checked.map(check => {
-            return arrProduct.filter(pro => {
-                if (pro.material.toLowerCase() === check.toLowerCase()) return pro;
-            })
-        })
-
-        if (checked.length > 0) {
-            setResult(filterArr.flat(Infinity));
-        }
-        // else {
-        //     setResult(arrProduct)
-        // }
-    }
-
-    const handleFilterByColorProduct = () => {
-        const filterArr = checkedColor.map(color => {
-            return arrProduct.filter(pro => {
-                if (+pro.color === color) return pro;
-            })
-        })
-        if (checkedColor.length > 0) {
-            setResult(filterArr.flat(Infinity));
-        }
-        else {
-            setResult(arrProduct)
-        }
     }
 
     const handleCheckColor = (id) => {
         setCheckedColor(() => {
             const isChecked = checkedColor.includes(id);
             if (isChecked) {
-
                 return checkedColor.filter(item => item !== id)
             }
             else {
@@ -128,15 +83,27 @@ export default function ListProductComponent({ arrProduct }) {
         })
     }
 
-    const handleMergeArr = () => {
-        if (sortByPriceArr.length > 0) {
-            setArrResult(sortByPriceArr)
-        }
+    const handleFilterAll = () => {
+        const final = arrProduct.filter((item) => {
+            const booleanResult =
+                (sizeActive !== 0 ? item.size === sizeActive : true)
+                &&
+                (checkedColor.length !== 0 ? checkedColor.includes(+item.color) : true)
+                &&
+                (checkedCat.length !== 0 ? checkedCat.includes(item.material.toString().toLowerCase()) : true)
+            return (booleanResult)
+        })
+        console.log('final result', final);
+        setResult(final)
     }
 
+    useEffect(() => {
+        handleFilterAll()
+    }, [checkedCat, checkedColor, sizeActive]);
 
-
-
+    useEffect(() => {
+        setResult([...arrProduct]);
+    }, [])
 
     const renderTitleFilter = () => {
         return (
@@ -179,7 +146,7 @@ export default function ListProductComponent({ arrProduct }) {
             <div className='flex flex-wrap'>
                 {arrSize.map((size) => (
                     <div
-                        onClick={() => handleFilterSize(size.id)}
+                        onClick={() => setSizeActive(size.id)}
                         className={`${sizeActive === size.id
                             ? 'border-black'
                             : ''}
@@ -191,45 +158,6 @@ export default function ListProductComponent({ arrProduct }) {
             </div>
         )
     }
-    const handleFilterAll = () => {
-        console.log('checked', checked, 'color', checkedColor)
-        const final = arrProduct.filter((item) => {
-            console.log(checked.map(check => {
-                if (item.material.toLowerCase() === check.toLowerCase()) return true
-                else return false;
-            }))
-            return (item.size === sizeActive
-                &&
-                checked.map(check => {
-                    if (item.material.toLowerCase() === check.toLowerCase()) return true
-                    else return false;
-                })
-                &&
-                checkedColor.map(color => {
-                    if (+item.color === color) return true
-                    else return false;
-                }))
-        }
-
-        )
-        console.log('final result', final)
-    }
-
-    useEffect(() => {
-        handleFilterAll()
-    }, [checked, checkedColor, sizeActive]);
-
-    // useEffect(() => {
-    //     handleFilterByCatProduct();
-    // }, [checked]);
-
-    // useEffect(() => {
-    //     handleFilterByColorProduct();
-    //}, [checkedColor]);
-
-    useEffect(() => {
-        setResult(arrProduct);
-    }, [])
 
     const renderCatProductList = () => {
         return (
@@ -238,12 +166,12 @@ export default function ListProductComponent({ arrProduct }) {
                     <div
                         key={cat.id}
                         onClick={() => {
-                            handleCheck(cat.id);
+                            handleCheckCat(cat.id);
                         }
                         }
                         className="p-2 cursor-pointer">
                         <Checkbox
-                            checked={checked.includes(cat.id)}
+                            checked={checkedCat.includes(cat.id)}
                             sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
                         />
                         {cat.content} ({cat.quantity})
@@ -281,14 +209,15 @@ export default function ListProductComponent({ arrProduct }) {
 
     const renderProductList = () => {
         return (
-            <div className='flex flex-wrap'>
-                {
-
+            <div className={`flex flex-wrap ${result?.length > 0 ? '' : 'justify-center'}`}>
+                {result?.length > 0 ?
                     result?.map((pro) => (
                         <div key={pro.id} className='w-1/4'>
                             <ProductCard item={pro} />
                         </div>
-                    ))
+                    )) : <div className='text-xl text-rose-600 my-8'>
+                        Không có sản phẩm phù hợp
+                    </div>
                 }
             </div>
         )
@@ -299,7 +228,7 @@ export default function ListProductComponent({ arrProduct }) {
         setSortByActive(0);
         setSizeActive(0);
         setCheckedColor([]);
-        setChecked([]);
+        setCheckedCat([]);
         setIsDrawerOpen(false);
     }
 

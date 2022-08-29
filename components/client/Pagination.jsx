@@ -3,14 +3,15 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import React from 'react';
+import React, { useState } from 'react';
 import "react-multi-carousel/lib/styles.css";
 import "swiper/css";
 import "swiper/css/pagination";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 
-
-export default function Pagination({ totalProduct, handlePagination }) {
+export default function PaginationData({ totalProduct, handlePagination }) {
     const [age, setAge] = React.useState(1);
     const totalPage = Math.ceil(totalProduct / 10);
 
@@ -31,17 +32,22 @@ export default function Pagination({ totalProduct, handlePagination }) {
         }
         return list
     }
+    const [page, setPage] = useState(1);
+    const handleChangePage = (event, value) => {
+        setPage(value);
+        onPagination(value)
+    };
     return (
         <Container >
-            <div className=' mb-4 flex flex-row justify-between'>
-                <div
+            <div className=' mb-4 flex flex-row justify-center'>
+                {/* <div
                     className="h-6 underline hover:bg-black hover:text-zinc-50 hover:no-underline">
                     PREVIOUS
-                </div>
+                </div> */}
                 <div className="flex justify-between items-center">
-                    <span>Page</span>
+                    {/* <span>Page</span> */}
                     <div className='w-26 mx-4'>
-                        <FormControl fullWidth>
+                        {/* <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Page</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
@@ -53,14 +59,17 @@ export default function Pagination({ totalProduct, handlePagination }) {
                             >
                                 {renderItemPage()}
                             </Select>
-                        </FormControl>
+                        </FormControl> */}
+                        <Stack>
+                            <Pagination page={page} onChange={handleChangePage} count={totalPage} variant="outlined" color="secondary" />
+                        </Stack>
                     </div>
-                    <span>of {totalPage}</span>
+                    {/* <span>of {totalPage}</span> */}
                 </div>
-                <div
+                {/* <div
                     className="h-6 underline hover:bg-black hover:text-zinc-50 hover:no-underline">
                     NEXT
-                </div>
+                </div> */}
             </div>
         </Container>
     )
