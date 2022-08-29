@@ -11,7 +11,7 @@ const ProductCard = ({ id, img, name, price }) => {
         </Box>
         <Box>
           <Box width={150}>
-            <Typography noWrap="true" align="left">
+            <Typography noWrap align="left">
               {name}
             </Typography>
           </Box>
