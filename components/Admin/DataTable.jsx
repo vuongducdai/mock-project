@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -10,40 +10,32 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Image from "next/image";
 import Search from "./Search";
-
+import Box from "@mui/material/Box";
+import TablePagination from "@mui/material/TablePagination";
 const DataTable = ({ type, datas }) => {
   const [query, setQuery] = useState("");
   const [searchResult, setSearchResult] = useState(datas);
   const [searchData, setSearchData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [columnsToHide, setColumnsToHide] = useState(["id", "createdAt"]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     mapDynamicColumns();
 
-    // const filter = (objs) => {
-    //   if (query) {
-    //     return objs.filter(obj => {
-    //       return obj.name.includes(query)
-    //     })
-    //   }
-    //   return objs
-    // }
-
-    const result =datas.filter((item) => {
+    const result = datas.filter((item) => {
       // return item.name.toLowerCase().includes(query)
       const arrayResult = Object.values(item).map((x) => {
         // console.log(x, x.toString().toLowerCase().includes(query))
         return x.toString().toLowerCase().includes(query);
       });
-      // console.log(arrayResult, )
 
       if (arrayResult.includes(true)) return true;
       else return false;
     });
     setSearchResult(result);
   }, [datas, query]);
-  // Format Table Rows
 
   // create dynamic columns from import data:
   const mapDynamicColumns = () => {
@@ -80,7 +72,6 @@ const DataTable = ({ type, datas }) => {
             }
           })
         );
-        // search data
 
         filterDeepUndeFinedValues(cells);
       }
@@ -114,7 +105,6 @@ const DataTable = ({ type, datas }) => {
       }
     });
   };
- 
 
   // create dynamic table
   const createTableRows = (objs) => {
@@ -159,50 +149,79 @@ const DataTable = ({ type, datas }) => {
 
   const handleSearch = (e) => {
     setQuery(e);
+  };
+  // PAGINATION FUNCTIONS
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    console.log(page)
+  };
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+    console.log(rowsPerPage)
 
   };
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - createTableRows(datas).length) : 0;
 
   return (
-    <TableContainer
-      component={Paper}
-      className="grid justify-items-center rounded-lg px-10"
-    >
-      <div className="grid grid-cols-8 w-full pb-2 pt-8">
-        <div className="text-2xl">
-          <Button
-            variant="contained"
-            sx={{
-              color: "success.main",
-              background: "white",
+    <Box>
+      <TableContainer
+        component={Paper}
+        className="grid justify-items-center rounded-lg px-10"
+      >
+        <div className="grid grid-cols-8 w-full pb-2 pt-8">
+          <div className="text-2xl">
+            <Button
+              variant="contained"
+              sx={{
+                color: "success.main",
+                background: "white",
 
-              "&:hover": { color: "white", background: "green" },
-            }}
-          >
-            {`Add ${type}`}
-          </Button>
+                "&:hover": { color: "white", background: "green" },
+              }}
+            >
+              {`Add ${type}`}
+            </Button>
+          </div>
+          <div className="col-start-4 col-end-8">
+            <Search search={handleSearch} />
+          </div>
         </div>
-        <div className="col-start-4 col-end-8">
-          <Search search={handleSearch} />
-        </div>
-      </div>
-      <Table className="w-full" size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow className="border-b-2">
-            {datas && mapTableColumns()}
-            <TableCell className="text-slate-400" align="center">
-              ACTIONS
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody sx={{ borderTop: "none", height: 300 }}>
-          {datas && createTableRows(searchResult)}
-        </TableBody>
-      </Table>
-      {/* {datas.length ? createTable(datas) : null} */}
-      <div>
-        <h1>Pagination</h1>
-      </div>
-    </TableContainer>
+        <Table className="w-full" size="small" aria-label="a dense table">
+          <TableHead>
+            <TableRow className="border-b-2">
+              {datas && mapTableColumns()}
+              <TableCell className="text-slate-400" align="center">
+                ACTIONS
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody sx={{ borderTop: "none", height: 300 }}>
+            {datas && createTableRows(searchResult).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+            {emptyRows > 0 && (
+                <TableRow
+                  style={{
+                    height: (dense ? 33 : 53) * emptyRows,
+                  }}
+                >
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+          </TableBody>
+        </Table>
+        {/* {datas.length ? createTable(datas) : null} */}
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={createTableRows(datas).length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Box>
   );
 };
 
