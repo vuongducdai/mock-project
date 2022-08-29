@@ -35,7 +35,7 @@ const Sidebar = ({ setOpen }) => {
                                     </div>
                               </Link>
 
-                              <Link href="/admin/products">
+                              <Link href="/admin/product">
                                     <div className="flex items-center gap-4 pl-12 cursor-pointer">
                                           <div>
                                                 <LocalOfferIcon />
@@ -44,7 +44,7 @@ const Sidebar = ({ setOpen }) => {
                                     </div>
                               </Link>
 
-                              <Link href="/admin/users">
+                              <Link href="/admin/user">
                                     <div className="flex items-center gap-4 pl-12 cursor-pointer">
                                           <div>
                                                 <PersonIcon />
