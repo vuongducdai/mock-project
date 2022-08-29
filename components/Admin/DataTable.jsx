@@ -16,15 +16,16 @@ const DataTable = ({ type, datas }) => {
   const [searchData, setSearchData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [columnsToHide, setColumnsToHide] = useState(["id", "createdAt"]);
-  const [tableCell, setTableCell] = useState([]);
+
   useEffect(() => {
     mapDynamicColumns();
   }, [datas]);
-
+  // Format Table Rows
+  
+  
   // create dynamic columns from import data:
   const mapDynamicColumns = () => {
     let dynamicCol = [];
-
     datas?.forEach((result) => {
       Object.keys(result).forEach((col) => {
         if (!dynamicCol.includes(col)) {
@@ -35,7 +36,14 @@ const DataTable = ({ type, datas }) => {
 
     setColumns(dynamicCol);
   };
-
+  // const formatTable = (obj) => {
+  //   if (Object.keys(obj).includes('isAdmin')) {
+  //     return obj['isAdmin'] ? obj.isAdmin= 'user':obj.isAdmin = 'admin'
+  //   } else {
+  //     return obj
+  //   }
+    
+  // };
   // create dynamic row from import data
   const addTableRow = (obj) => {
     let cells = [];
@@ -45,6 +53,7 @@ const DataTable = ({ type, datas }) => {
         cells.push(
           Object.keys(obj).map((item) => {
             if (obj[item] && item === col) {
+             
               
               return obj[item];
             } else if (item === col) {
@@ -55,7 +64,6 @@ const DataTable = ({ type, datas }) => {
 
         filterDeepUndeFinedValues(cells);
       }
-      
     });
     return filterDeepUndeFinedValues(cells).map((cell, index) => {
       return <TableCell key={index}>{cell}</TableCell>;
@@ -92,7 +100,7 @@ const DataTable = ({ type, datas }) => {
   // create dynamic table
   const createTableRows = (objs) => {
     return objs?.map((obj, index) => {
-      console.log(obj)
+      
       return (
         <TableRow
           className="last:border-b-2"
