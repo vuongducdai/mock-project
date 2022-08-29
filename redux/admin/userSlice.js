@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUsers } from "../../api/getMethod";
+import { getUsers } from "../../api/requestMethod";
 
 const initialState = {
       users: [],
@@ -9,7 +9,6 @@ const initialState = {
 
 export const getUsersList = createAsyncThunk("admin/getUsers", async () => {
       const res = await getUsers();
-
       return res.data;
 });
 

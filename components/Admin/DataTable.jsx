@@ -16,7 +16,7 @@ const DataTable = ({ type, datas }) => {
   const [searchData, setSearchData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [columnsToHide, setColumnsToHide] = useState(["id", "createdAt"]);
-  const [tableCell,setTableCell] = useState([])
+  const [tableCell, setTableCell] = useState([]);
   useEffect(() => {
     mapDynamicColumns();
   }, [datas]);
@@ -45,7 +45,7 @@ const DataTable = ({ type, datas }) => {
         cells.push(
           Object.keys(obj).map((item) => {
             if (obj[item] && item === col) {
-              console.log(obj[item]);
+              
               return obj[item];
             } else if (item === col) {
               return "no value";
@@ -53,21 +53,18 @@ const DataTable = ({ type, datas }) => {
           })
         );
 
-        
-        
         filterDeepUndeFinedValues(cells);
       }
-      console.log(filterDeepUndeFinedValues(cells));
       
     });
-    return deepSearch(filterDeepUndeFinedValues(cells)).map((cell, index) => {
+    return filterDeepUndeFinedValues(cells).map((cell, index) => {
       return <TableCell key={index}>{cell}</TableCell>;
     });
   };
   // handle search in cells
   const deepSearch = (arr) => {
-    return query ? arr.map(val => val.filter(x => x === query)): arr
-  }
+    return query ? arr.map((val) => val.filter((x) => x === query)) : arr;
+  };
   // create a deep filter function to find value
   const filterDeepUndeFinedValues = (arr) => {
     return arr
@@ -95,6 +92,7 @@ const DataTable = ({ type, datas }) => {
   // create dynamic table
   const createTableRows = (objs) => {
     return objs?.map((obj, index) => {
+      console.log(obj)
       return (
         <TableRow
           className="last:border-b-2"
@@ -141,7 +139,7 @@ const DataTable = ({ type, datas }) => {
   };
   const handleSearch = (e) => {
     setQuery(e);
-   
+
     // if (!query) {
     //   const filterData = datas.filter((data) => {
     //     // const arr = Object.keys(data).filter(
