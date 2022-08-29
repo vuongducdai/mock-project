@@ -44,6 +44,15 @@ const DataTable = ({ type, datas }) => {
   //   }
     
   // };
+  const isImg = (item) => {
+    if (item.includes('http://')) {
+      return (
+        <Image src={item} width={40} height={40}/>
+      )
+    } else {
+      return item
+    }
+  }
   // create dynamic row from import data
   const addTableRow = (obj) => {
     let cells = [];
@@ -52,20 +61,18 @@ const DataTable = ({ type, datas }) => {
       if (!columnsToHide.includes(col)) {
         cells.push(
           Object.keys(obj).map((item) => {
-            if (obj[item] && item === col) {
-             
-              
-              return obj[item];
-            } else if (item === col) {
-              return "no value";
-            }
+            if (obj[item] !== undefined && item === col) {
+              console.log(obj)
+
+              return isImg(obj[item].toString());
+            } 
           })
         );
 
-        filterDeepUndeFinedValues(cells);
+        // filterDeepUndeFinedValues(cells);
       }
     });
-    return filterDeepUndeFinedValues(cells).map((cell, index) => {
+    return cells.map((cell, index) => {
       return <TableCell key={index}>{cell}</TableCell>;
     });
   };
@@ -74,17 +81,17 @@ const DataTable = ({ type, datas }) => {
     return query ? arr.map((val) => val.filter((x) => x === query)) : arr;
   };
   // create a deep filter function to find value
-  const filterDeepUndeFinedValues = (arr) => {
-    return arr
-      .map((val) => val.map((deepVal) => deepVal).filter((deepVal) => deepVal))
-      .map((val) => {
-        if (val.length < 1) {
-          val = ["-"];
-          return val;
-        }
-        return val;
-      });
-  };
+  // const filterDeepUndeFinedValues = (arr) => {
+  //   return arr
+  //     .map((val) => val.map((deepVal) => deepVal).filter((deepVal) => deepVal))
+  //     .map((val) => {
+  //       if (val.length < 1) {
+  //         val = ["-"];
+  //         return val;
+  //       }
+  //       return val;
+  //     });
+  // };
   // Mapping table columns
   const mapTableColumns = () => {
     return columns.map((col, index) => {
