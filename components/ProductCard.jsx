@@ -1,11 +1,11 @@
 // import { Link } from '@mui/material';
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import formatNumber from "../utils/formatNumber";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import formatNumber from '../utils/formatNumber';
 
 export default function ProductCard({ item }) {
   const { img, name, price, id, size, material } = item;

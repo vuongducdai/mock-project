@@ -47,7 +47,7 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 	};
 });
 
-const BreadCrumb = () => {
+const BreadCrumb = ({ name }) => {
 	const router = useRouter();
 	const [breadcrumbs, setBreadcrumbs] = useState();
 
@@ -83,9 +83,9 @@ const BreadCrumb = () => {
 			<StyledBreadcrumb href='/' component='a' label='Trang chủ' />
 			{breadcrumbs &&
 				breadcrumbs.map(breadcrumb => {
-					return breadcrumb.isLastItem ? (
-						<Typography color='common.white' key='currentItem'>
-							Quần
+					return breadcrumb.isLastItem && name ? (
+						<Typography color='common.black' key='currentItem'>
+							{name}
 						</Typography>
 					) : (
 						<StyledBreadcrumb

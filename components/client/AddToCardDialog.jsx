@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { Box, Divider, Stack } from "@mui/material";
-import { Image } from "@mui/icons-material";
+import Image from "next/image";
 
 export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -70,7 +70,7 @@ export const AddToCartDialog = ({
         <div className="flex justify-between p-[5px]">
           <div className="basis-0 grow m-[5px] flex justify-between">
             <div className="m-[5px]">
-              <img src={img} alt="product" width="111px" height="111px" />
+              <Image src={img} alt="product" width="111px" height="111px" />
             </div>
             <div className="m-[5px] border-r">
               <p>{name}</p>
