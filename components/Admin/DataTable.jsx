@@ -58,14 +58,7 @@ const DataTable = ({ type, datas }) => {
 
     setColumns(dynamicCol);
   };
-  // const formatTable = (obj) => {
-  //   if (Object.keys(obj).includes('isAdmin')) {
-  //     return obj['isAdmin'] ? obj.isAdmin= 'user':obj.isAdmin = 'admin'
-  //   } else {
-  //     return obj
-  //   }
 
-  // };
   const isImg = (item) => {
     return item.includes("http://") ? (
       <Image src={item} width={40} height={40} />
@@ -96,10 +89,7 @@ const DataTable = ({ type, datas }) => {
       return <TableCell key={index}>{cell}</TableCell>;
     });
   };
-  // handle search in cells
-  const deepSearch = (arr) => {
-    return query ? arr.map((val) => val.filter((x) => x === query)) : arr;
-  };
+
   // create a deep filter function to find value
   const filterDeepUndeFinedValues = (arr) => {
     return arr
@@ -124,7 +114,7 @@ const DataTable = ({ type, datas }) => {
       }
     });
   };
-  // handle search data
+ 
 
   // create dynamic table
   const createTableRows = (objs) => {
@@ -166,31 +156,10 @@ const DataTable = ({ type, datas }) => {
       );
     });
   };
-  const filterRow = (arr) => {
-    if (query) {
-      return arr.filter((item) => item === query);
-    } else {
-      return arr;
-    }
-  };
+
   const handleSearch = (e) => {
     setQuery(e);
 
-    // if (!query) {
-    //   const filterData = datas.filter((data) => {
-    //     // const arr = Object.keys(data).filter(
-    //     //   (key) => key !== "createdAt" && key !== "id"
-    //     // );
-
-    //     return data.name.toLowerCase().includes(query.toLocaleLowerCase());
-    //   });
-    //   return filterData;
-    // } else {
-    //   return datas;
-    // }
-  };
-  const conditionalRender = () => {
-    return query.length > 1 ? searchData : datas;
   };
 
   return (
