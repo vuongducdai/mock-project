@@ -14,9 +14,6 @@ import Stack from '@mui/material/Stack';
 import { Container } from "@mui/material";
 import { BASE_URL, getProducts } from "../api/requestMethod";
 
-
-const fetcher = url => fetch(url).then(r => r.json());
-
 export default function Home(props) {
 
   const [page, setPage] = useState(1);
