@@ -16,13 +16,14 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { clearFormData, openToolbar, setAdd, setEdit, setFormData } from "../../redux/admin/toolbarSlice";
 import { deleteOneProduct } from "../../redux/admin/productSlice";
+import { deleteOneUser } from "../../redux/admin/userSlice";
 
 const DataTable = ({ type, datas }) => {
       const [query, setQuery] = useState("");
       const [searchResult, setSearchResult] = useState(datas);
       const [searchData, setSearchData] = useState([]);
       const [columns, setColumns] = useState([]);
-      const [columnsToHide, setColumnsToHide] = useState(["_id", "createdAt", '__v', 'updatedAt']);
+      const [columnsToHide, setColumnsToHide] = useState(["_id", "createdAt", '__v', 'updatedAt', 'password']);
       const [page, setPage] = useState(0);
       const [rowsPerPage, setRowsPerPage] = useState(5);
       const dispatch = useDispatch();
@@ -56,7 +57,11 @@ const DataTable = ({ type, datas }) => {
       }
 
       const handleDelete = (id) => {
-            dispatch(deleteOneProduct(id));
+            if (type === 'product') {
+                  dispatch(deleteOneProduct(id));
+            } else {
+                  dispatch(deleteOneUser(id))
+            }
       }
       // create dynamic columns from import data:
       const mapDynamicColumns = () => {
