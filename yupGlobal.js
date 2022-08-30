@@ -12,5 +12,11 @@ export let userSchema = yup.object().shape({
       name: yup.string().required('Fill is required'),
       email: yup.string().email().required('Fill is required'),
       address: yup.string().required('Fill is required'),
-      phone: yup.number().required('Fill is required').typeError('Fill is required'),
+      phone: yup.number('').required('Fill is required').typeError('Number type required'),
+      password: yup
+            .string()
+            .required('Please Enter your password')
+            .matches(
+                  "(?=.*[a-z])(?=.*[a-zA-Z]).{6,}$", 'Password must longer than 6 letter'
+            ),
 });

@@ -216,6 +216,15 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                                                 <p className='text-warning text-sm'>{userError.name?.message}</p>
 
                                                 <span className='mt-4 text-blue-pastel text-base font-semibold'>
+                                                      Password
+                                                </span>
+                                                <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
+                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("password")} defaultValue="" type='password'
+                                                      />
+                                                </div>
+                                                <p className='text-warning text-sm'>{userError.password?.message}</p>
+
+                                                <span className='mt-4 text-blue-pastel text-base font-semibold'>
                                                       Email
                                                 </span>
                                                 <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
@@ -237,7 +246,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                                                       Phone
                                                 </span>
                                                 <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
-                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("phone")} type="number" defaultValue=""
+                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("phone")} type='string' defaultValue=""
                                                       />
                                                 </div>
                                                 <p className='text-warning text-sm'>{userError.phone?.message}</p>
