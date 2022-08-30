@@ -1,20 +1,24 @@
 import axios from 'axios';
 
-export const fetcher = url => axios.get(url).then(res => res.data);
-
-// const BASE_URL = 'https://63030a4dc6dda4f287c1d8d4.mockapi.io/';
 export const SERVER_URL = 'http://localhost:8000';
-// const BASE_URL = 'https://ecommercevoyager.herokuapp.com/';
 
-export const BASE_URL = 'https://ecommercevoyager.herokuapp.com/';
-// const BASE_URL = 'https://63030a4dc6dda4f287c1d8d4.mockapi.io';
-// const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
+const BASE_URL = 'https://ecommercevoyager.herokuapp.com/';
+// const BASE_URL = 'http://localhost:8000';
+
+let user;
+if (typeof window !== 'undefined') {
+	user = JSON.parse(localStorage.getItem('persist:root'))?.user;
+}
+const currentUser = user && JSON.parse(user).currentUser;
+const TOKEN = currentUser?.accessToken;
 
 const publicRequest = axios.create({
 	baseURL: BASE_URL,
 });
-export const serverRequest = axios.create({
-	baseURL: SERVER_URL,
+
+export const userRequest = axios.create({
+	baseURL: BASE_URL,
+	header: { token: `Bearer ${TOKEN}` },
 });
 
 // Products
@@ -26,9 +30,16 @@ export const patchProduct = data =>
 	publicRequest.patch(`/product/${data.id}`, data.form);
 export const deleteProduct = id => publicRequest.delete(`/product/${id}`);
 
+// Auth
+export const postRegister = form => publicRequest.post('/auth/register', form);
+export const postLogin = form => publicRequest.post(`/auth/login`, form);
+
 // Users
 export const getUsers = () => publicRequest.get('/user');
-export const postUser = form => publicRequest.post('/user', form);
 export const patchUser = data =>
 	publicRequest.patch(`/user/${data.id}`, data.form);
 export const deleteUser = id => publicRequest.delete(`/user/${id}`);
+
+// Cart
+export const getCarts = () => publicRequest.get('/cart');
+export const deleteCart = id => publicRequest.delete(`/cart/${id}`);

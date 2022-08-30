@@ -1,15 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { deleteUser, getUsers, patchUser, postUser } from "../../api/requestMethod";
+import { deleteUser, getUsers, patchUser, postLogin, postRegister } from "../../api/requestMethod";
 
-export const getUsersList = createAsyncThunk(
-      "admin/getUserList", async () => {
-            const res = await getUsers();
+
+export const loginUser = createAsyncThunk(
+      "admin/loginUser", async (form) => {
+            const res = await postLogin(form);
             return res.data;
       });
 
 export const createUser = createAsyncThunk(
       "admin/createUser", async (form) => {
-            const res = await postUser(form);
+            const res = await postRegister(form);
+            return res.data;
+      });
+
+export const getUsersList = createAsyncThunk(
+      "admin/getUserList", async () => {
+            const res = await getUsers();
             return res.data;
       });
 
@@ -26,7 +33,7 @@ export const deleteOneUser = createAsyncThunk(
 
 const initialState = {
       users: [],
-      user: {},
+      user: null,
       loading: false,
 };
 
@@ -40,6 +47,15 @@ const userSlice = createSlice({
             });
             builder.addCase(getUsersList.fulfilled, (state, action) => {
                   state.users = action.payload;
+                  state.loading = false;
+            });
+
+            // LOGIN USER
+            builder.addCase(loginUser.pending, (state, action) => {
+                  state.loading = true;
+            });
+            builder.addCase(loginUser.fulfilled, (state, action) => {
+                  state.user = action.payload;
                   state.loading = false;
             });
 
