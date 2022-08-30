@@ -8,15 +8,13 @@ import "react-multi-carousel/lib/styles.css";
 import { useDispatch, useSelector } from 'react-redux';
 import "swiper/css";
 import "swiper/css/pagination";
-import { arrCatProduct, arrColor, arrSize, arrTitleFilter, arrTitleSortBy } from '../../constants/data';
+import { arrCatProduct, arrColor, arrSize, arrTitleFilter, arrTitleSortBy, sizesArr } from '../../constants/data';
 import ProductCard from '../ProductCard';
 import ItemDrawer from './ItemDrawer';
 
 
 
 export default function ListProductComponent({ arrProduct }) {
-    console.log('pagination 5', arrProduct)
-
     const [result, setResult] = useState();
 
     const [titleActive, setTitleActive] = useState(1);
@@ -103,7 +101,7 @@ export default function ListProductComponent({ arrProduct }) {
 
     useEffect(() => {
         setResult([...arrProduct]);
-    }, [])
+    }, [arrProduct])
 
     const renderTitleFilter = () => {
         return (
@@ -144,7 +142,7 @@ export default function ListProductComponent({ arrProduct }) {
     const renderSizeList = () => {
         return (
             <div className='flex flex-wrap'>
-                {arrSize.map((size) => (
+                {sizesArr.map((size) => (
                     <div
                         onClick={() => setSizeActive(size.id)}
                         className={`${sizeActive === size.id
@@ -152,7 +150,7 @@ export default function ListProductComponent({ arrProduct }) {
                             : ''}
                            text-center py-4 w-28 border cursor-pointer hover:border-black`}
                         key={size.id} >
-                        {size.content}
+                        {size.size}
                     </div>
                 ))}
             </div>
