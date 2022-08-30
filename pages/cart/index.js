@@ -10,16 +10,17 @@ const CartPage = () => {
 	);
 };
 
-// export async function getStaticProps() {
-//   const res = await cartApi.getCartList(1);
-//   const data = res.data;
-//   console.log("Cart product", data);
+// export async function getServerSideProps() {
+// 	// const res = await cartApi.getCartList(1);
+// 	const res = await axios.get('http://localhost:8000/cart/find/7');
+// 	const data = res.data;
 
-//   return {
-//     props: {
-//       cartProducts: data,
-//     },
-//   };
+// 	return {
+// 		props: {
+// 			carts: data,
+// 			revalidate: 5,
+// 		},
+// 	};
 // }
 
 CartPage.Layout = MainLayout;

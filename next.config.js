@@ -1,16 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  images: {
-    domains: [
-      "www.adidas.com.vn",
-      "picsum.photos",
-      "loremflickr.com",
-      "assets.adidas.com",
-      "brand.assets.adidas.com",
-    ],
-  },
+	reactStrictMode: true,
+	swcMinify: true,
+	images: {
+		domains: [
+			'www.adidas.com.vn',
+			'picsum.photos',
+			'loremflickr.com',
+			'assets.adidas.com',
+			'brand.assets.adidas.com',
+			'ecommercevoyager.herokuapp.com',
+			'media.istockphoto.com',
+		],
+	},
 };
 
 module.exports = nextConfig;
