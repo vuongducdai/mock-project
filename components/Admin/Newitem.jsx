@@ -20,6 +20,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
       const [size, setSize] = useState('104');
       const [isAdmin, setIsAdmin] = useState(false)
       const dispatch = useDispatch();
+      console.log(formData)
 
       const { register: userRegister, handleSubmit: userHandleSubmit, setValue: userSetValue, formState: { errors: userError } } = useForm({
             resolver: yupResolver(userSchema),
@@ -44,7 +45,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                   userSetValue('email', formData.email);
                   setIsAdmin(formData.isAdmin)
             }
-      }, [formData, isEdit])
+      }, [formData, isEdit, type])
 
       const handleChangeColor = (event) => {
             setColor(event.target.value);
@@ -65,7 +66,6 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                               <Radio
                                     key={x.id}
                                     {...controlProps(x.id)}
-                                    defaultValue=""
                                     sx={{
                                           color: x.color[800],
                                           '&.Mui-checked': {
@@ -87,7 +87,6 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                                     value={size}
                                     label="Size"
                                     onChange={(e) => setSize(e.target.value)}
-                                    defaultValue=""
                               >
                                     {sizes.map((item) => (
                                           <MenuItem key={item.id} value={item.size}>{item.size}</MenuItem>

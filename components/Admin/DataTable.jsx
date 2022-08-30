@@ -12,15 +12,19 @@ import Search from "./Search";
 import Box from "@mui/material/Box";
 import TablePagination from "@mui/material/TablePagination";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { clearFormData, openToolbar, setAdd, setEdit, setFormData } from "../../redux/admin/toolbarSlice";
+import { deleteOneProduct } from "../../redux/admin/productSlice";
 
 const DataTable = ({ type, datas }) => {
       const [query, setQuery] = useState("");
       const [searchResult, setSearchResult] = useState(datas);
       const [searchData, setSearchData] = useState([]);
       const [columns, setColumns] = useState([]);
-      const [columnsToHide, setColumnsToHide] = useState(["_id", "createdAt"]);
+      const [columnsToHide, setColumnsToHide] = useState(["_id", "createdAt", '__v', 'updatedAt']);
       const [page, setPage] = useState(0);
       const [rowsPerPage, setRowsPerPage] = useState(5);
+      const dispatch = useDispatch();
 
       useEffect(() => {
             mapDynamicColumns();
@@ -38,6 +42,21 @@ const DataTable = ({ type, datas }) => {
             setSearchResult(result);
       }, [datas, query]);
 
+      const handleAdd = () => {
+            dispatch(setAdd());
+            dispatch(clearFormData());
+            dispatch(openToolbar());
+      }
+
+      const handleEdit = (obj) => {
+            dispatch(setEdit());
+            dispatch(setFormData(obj));
+            dispatch(openToolbar());
+      }
+
+      const handleDelete = (id) => {
+            dispatch(deleteOneProduct(id));
+      }
       // create dynamic columns from import data:
       const mapDynamicColumns = () => {
             let dynamicCol = [];
@@ -72,7 +91,6 @@ const DataTable = ({ type, datas }) => {
                                           sx={{
                                                 color: "success.main",
                                                 background: "white",
-
                                                 "&:hover": { color: "white", background: "green" },
                                           }}
                                     >
@@ -96,8 +114,8 @@ const DataTable = ({ type, datas }) => {
       };
 
       const isImg = (item) => {
-            return item.includes("http://") ? (
-                  <Image src={item} width={40} height={40} />
+            return item.includes("data") ? (
+                  <Image alt='img' src={item} width={40} height={40} />
             ) : (
                   item
             );
@@ -155,6 +173,7 @@ const DataTable = ({ type, datas }) => {
       const handleSearch = (e) => {
             setQuery(e);
       };
+
       // PAGINATION FUNCTIONS
       const handleChangePage = (event, newPage) => {
             setPage(newPage);
@@ -178,11 +197,11 @@ const DataTable = ({ type, datas }) => {
                         <div className="grid grid-cols-8 w-full pb-2 pt-8">
                               <div className="text-2xl">
                                     <Button
+                                          onClick={handleAdd}
                                           variant="contained"
                                           sx={{
                                                 color: "success.main",
                                                 background: "white",
-
                                                 "&:hover": { color: "white", background: "green" },
                                           }}
                                     >
@@ -207,7 +226,7 @@ const DataTable = ({ type, datas }) => {
                                     {emptyRows > 0 && (
                                           <TableRow
                                                 style={{
-                                                      height: (dense ? 33 : 53) * emptyRows,
+                                                      height: emptyRows,
                                                 }}
                                           >
                                                 <TableCell colSpan={6} />
