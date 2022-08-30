@@ -5,7 +5,7 @@ const BASE_URL = "https://ecommercevoyager.herokuapp.com/";
 // const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
 
 const publicRequest = axios.create({
-      baseURL: BASE_URL,
+  baseURL: BASE_URL,
 });
 
 // Products
