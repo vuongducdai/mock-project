@@ -13,10 +13,10 @@ export function useAuth(option) {
     ...option,
   });
 
-  async function login() {
+  async function login(username, password) {
     await authAPI.login({
-      username: "vuongducdai",
-      password: "123456",
+      name: username,
+      password: password,
     });
 
     //re-trigger request

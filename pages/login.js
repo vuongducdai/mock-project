@@ -19,10 +19,10 @@ const LoginForm = () => {
     revalidateOnMount: false,
   });
 
-  async function handleLoginClick() {
-    console.log("Handle Login");
+  async function handleLoginClick({ email, password }) {
+    console.log(email, password);
     try {
-      await login();
+      await login(email, password);
     } catch (error) {
       console.log("failed to login", error);
     }
@@ -47,11 +47,10 @@ const LoginForm = () => {
     },
     resolver: yupResolver(schema),
   });
-  const onSubmit = () => {};
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col	">
+      <form onSubmit={handleSubmit(handleLoginClick)} className="flex flex-col	">
         <input
           type="email"
           {...register("email")}
@@ -76,9 +75,11 @@ const LoginForm = () => {
           <input type="checkbox" id="keepLogin" name="keepLogin" />
           <label htmlFor="keepLogin">Giữ đăng nhập cho tôi</label>
         </div>
-        <input type="submit" onSubmit={handleLoginClick} />
+        <button type="submit" onSubmit={handleLoginClick}>
+          Submit
+        </button>
       </form>
-      <button onClick={handleLoginClick}>Login</button>
+      {/* <button onClick={handleLoginClick}>Login</button> */}
       <button onClick={handleLogoutClick}>Logout</button>
 
       <p>Profile: {JSON.stringify(profile || {}, null, 4)}</p>
@@ -101,7 +102,7 @@ const FacebookGoogleLogin = () => {
 
 const LoginSection = () => {
   return (
-    <div className="flex justify-center items-start">
+    <Stack className="flex justify-center items-start">
       <div>
         <span className="text-5xl font-semibold">ĐĂNG NHẬP</span>
         <p>Bạn quên mật khẩu?</p>
@@ -109,7 +110,7 @@ const LoginSection = () => {
         <p>HOẶC</p>
         <FacebookGoogleLogin />
       </div>
-    </div>
+    </Stack>
   );
 };
 
