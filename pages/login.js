@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import MainLayout from "../components/layout/main";
+import { useAuth } from "../hooks/useAuth";
 
 const schema = yup.object({
   email: yup
@@ -14,6 +15,27 @@ const schema = yup.object({
 });
 
 const LoginForm = () => {
+  const { profile, login, logout } = useAuth({
+    revalidateOnMount: false,
+  });
+
+  async function handleLoginClick() {
+    console.log("Handle Login");
+    try {
+      await login();
+    } catch (error) {
+      console.log("failed to login", error);
+    }
+  }
+
+  async function handleLogoutClick() {
+    try {
+      await logout();
+    } catch (error) {
+      console.log("failed to logout", error);
+    }
+  }
+
   const {
     register,
     handleSubmit,
@@ -54,8 +76,12 @@ const LoginForm = () => {
           <input type="checkbox" id="keepLogin" name="keepLogin" />
           <label htmlFor="keepLogin">Giữ đăng nhập cho tôi</label>
         </div>
-        <input type="submit" />
+        <input type="submit" onSubmit={handleLoginClick} />
       </form>
+      <button onClick={handleLoginClick}>Login</button>
+      <button onClick={handleLogoutClick}>Logout</button>
+
+      <p>Profile: {JSON.stringify(profile || {}, null, 4)}</p>
     </div>
   );
 };
