@@ -14,17 +14,6 @@ const Sidebar = ({ setOpen }) => {
                               <h1 className="text-2xl text-blue-pastel font-bold">Admin Panel</h1>
                         </div>
 
-                        <div className="flex-center">
-                              <button
-                                    className="py-2 px-10 text-white bg-blue-dark rounded-3xl flex-center hover:bg-blue-dark-hover transition-all duration-300
-"
-                                    onClick={() => setOpen(true)}
-                              >
-                                    <AddIcon className="mr-2" />
-                                    Add New Item
-                              </button>
-                        </div>
-
                         <div className="flex flex-col gap-8">
                               <Link href="/admin">
                                     <div className="flex items-center gap-4 pl-12 cursor-pointer">

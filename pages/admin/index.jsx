@@ -1,10 +1,9 @@
 import React from "react";
 import Navbar from "../../components/Admin/Navbar";
 import Sidebar from "../../components/Admin/Sidebar";
-import {useRouter} from 'next/router'
+
 const Admin = () => {
-      const router = useRouter();
-      const { id } = router.query;
+
       return (
             <div className="flex h-screen w-full bg-fb">
                   <Sidebar />

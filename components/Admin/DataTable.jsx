@@ -8,17 +8,17 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import Image from "next/image";
 import Search from "./Search";
 import Box from "@mui/material/Box";
 import TablePagination from "@mui/material/TablePagination";
 import ReactFacebookLogin from "react-facebook-login";
+import Image from "next/image";
 const DataTable = ({ type, datas }) => {
   const [query, setQuery] = useState("");
   const [searchResult, setSearchResult] = useState(datas);
   const [searchData, setSearchData] = useState([]);
   const [columns, setColumns] = useState([]);
-  const [columnsToHide, setColumnsToHide] = useState(["id", "createdAt"]);
+  const [columnsToHide, setColumnsToHide] = useState(["_id", "createdAt",'__v']);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -52,8 +52,51 @@ const DataTable = ({ type, datas }) => {
     setColumns(dynamicCol);
   };
 
+  // create dynamic table
+  const createTableRows = (objs) => {
+    return objs?.map((obj, index) => {
+      return (
+        <TableRow
+          className="last:border-b-2 min-h-fit"
+          key={index}
+          sx={{ "td, th": { border: 0 },'tr' :{height:20 } }}
+        >
+          {addTableRow(obj)}
+          <TableCell
+            align="center"
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            <Button
+              onClick={() => handleEdit(obj)}
+              variant="contained"
+              sx={{
+                color: "success.main",
+                background: "white",
+
+                "&:hover": { color: "white", background: "green" },
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              onClick={() => handleDelete(obj._id)}
+              variant="contained"
+              sx={{
+                color: "warning.main",
+                background: "white",
+                "&:hover": { color: "white", background: "red" },
+              }}
+            >
+              Delete
+            </Button>
+          </TableCell>
+        </TableRow>
+      );
+    });
+  };
+
   const isImg = (item) => {
-    return item.includes("http://") ? (
+    return item.includes("data") ? (
       <Image src={item} width={40} height={40} />
     ) : (
       item
@@ -108,45 +151,6 @@ const DataTable = ({ type, datas }) => {
   };
 
   // create dynamic table
-  const createTableRows = (objs) => {
-    return objs?.map((obj, index) => {
-      return (
-        <TableRow
-          className="last:border-b-2"
-          key={index}
-          sx={{ "td, th": { border: 0 } }}
-        >
-          {addTableRow(obj)}
-          <TableCell
-            align="center"
-            sx={{ display: "flex", justifyContent: "center" }}
-          >
-            <Button
-              variant="contained"
-              sx={{
-                color: "success.main",
-                background: "white",
-
-                "&:hover": { color: "white", background: "green" },
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                color: "warning.main",
-                background: "white",
-                "&:hover": { color: "white", background: "red" },
-              }}
-            >
-              Delete
-            </Button>
-          </TableCell>
-        </TableRow>
-      );
-    });
-  };
 
   const handleSearch = (e) => {
     setQuery(e);
@@ -154,13 +158,12 @@ const DataTable = ({ type, datas }) => {
   // PAGINATION FUNCTIONS
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    console.log(page)
+    console.log(page);
   };
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-    console.log(rowsPerPage)
-
+    console.log(rowsPerPage);
   };
   // SORT TABLE
   function descendingComparator(a, b, orderBy) {
@@ -172,9 +175,9 @@ const DataTable = ({ type, datas }) => {
     }
     return 0;
   }
-  
+
   function getComparator(order, orderBy) {
-    return order === 'desc'
+    return order === "desc"
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
@@ -190,7 +193,9 @@ const DataTable = ({ type, datas }) => {
     return stabilizedThis.map((el) => el[0]);
   }
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - createTableRows(datas).length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - createTableRows(datas).length)
+      : 0;
 
   return (
     <Box>
@@ -225,17 +230,21 @@ const DataTable = ({ type, datas }) => {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody sx={{ borderTop: "none", height: 300 }}>
-            {datas && createTableRows(searchResult).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
-            {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
+          <TableBody sx={{ borderTop: "none", minheight: 100 }}>
+            {datas &&
+              createTableRows(searchResult).slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
               )}
+            {emptyRows > 0 && (
+              <TableRow
+                style={{
+                  height:  emptyRows,
+                }}
+              >
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
           </TableBody>
         </Table>
         {/* {datas.length ? createTable(datas) : null} */}
@@ -249,7 +258,6 @@ const DataTable = ({ type, datas }) => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      
     </Box>
   );
 };
