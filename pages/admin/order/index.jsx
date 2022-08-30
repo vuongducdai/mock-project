@@ -13,7 +13,6 @@ const Order = () => {
       const router = useRouter();
       const path = router.pathname.split("/")[2];
       const dispatch = useDispatch();
-      console.log(carts);
 
       useEffect(() => {
             dispatch(getCartList())
