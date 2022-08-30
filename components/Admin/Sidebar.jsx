@@ -5,7 +5,15 @@ import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { clearFormData, closeToolbar } from "../../redux/admin/toolbarSlice";
 const Sidebar = ({ setOpen }) => {
+      const dispatch = useDispatch()
+
+      const handleChangePage = () => {
+            dispatch(closeToolbar());
+            dispatch(clearFormData());
+      }
 
       return (
             <div className="flex">
@@ -16,7 +24,7 @@ const Sidebar = ({ setOpen }) => {
 
                         <div className="flex flex-col gap-8">
                               <Link href="/admin">
-                                    <div className="flex items-center gap-4 pl-12 cursor-pointer">
+                                    <div onClick={handleChangePage} className="flex items-center gap-4 pl-12 cursor-pointer">
                                           <div>
                                                 <DashboardIcon />
                                           </div>
@@ -25,7 +33,7 @@ const Sidebar = ({ setOpen }) => {
                               </Link>
 
                               <Link href="/admin/product">
-                                    <div className="flex items-center gap-4 pl-12 cursor-pointer">
+                                    <div onClick={handleChangePage} className="flex items-center gap-4 pl-12 cursor-pointer">
                                           <div>
                                                 <LocalOfferIcon />
                                           </div>
@@ -34,7 +42,7 @@ const Sidebar = ({ setOpen }) => {
                               </Link>
 
                               <Link href="/admin/user">
-                                    <div className="flex items-center gap-4 pl-12 cursor-pointer">
+                                    <div onClick={handleChangePage} className="flex items-center gap-4 pl-12 cursor-pointer">
                                           <div>
                                                 <PersonIcon />
                                           </div>
@@ -43,7 +51,7 @@ const Sidebar = ({ setOpen }) => {
                               </Link>
 
                               <Link href="/admin/order">
-                                    <div className="flex items-center gap-4 pl-12 cursor-pointer">
+                                    <div onClick={handleChangePage} className="flex items-center gap-4 pl-12 cursor-pointer">
                                           <div>
                                                 <ShoppingCartIcon />
                                           </div>

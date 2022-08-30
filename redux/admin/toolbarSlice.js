@@ -5,9 +5,7 @@ const toolbarSlice = createSlice({
       initialState: {
             isOpen: false,
             isEdit: false,
-            formData: {
-                  name: '', price: '', color: '', address: '', size: '', email: '', phone: '', isAdmin: false
-            }
+            formData: {},
       },
       reducers: {
             openToolbar: (state, action) => {
@@ -26,9 +24,7 @@ const toolbarSlice = createSlice({
                   state.formData = action.payload
             },
             clearFormData: (state, action) => {
-                  state.formData = {
-                        name: '', price: '', color: '', address: '', size: '', email: '', phone: '', isAdmin: false
-                  }
+                  state.formData = {};
             }
       },
 });

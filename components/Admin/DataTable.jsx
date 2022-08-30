@@ -140,7 +140,7 @@ const DataTable = ({ type, datas }) => {
                   }
             });
             return filterDeepUndeFinedValues(cells).map((cell, index) => {
-                  return <TableCell key={index}>{cell}</TableCell>;
+                  return <TableCell align='center' key={index}>{cell}</TableCell>;
             });
       };
 
@@ -223,7 +223,7 @@ const DataTable = ({ type, datas }) => {
                                           </TableCell>
                                     </TableRow>
                               </TableHead>
-                              <TableBody sx={{ borderTop: "none", height: 300 }}>
+                              <TableBody sx={{ borderTop: "none", minHeight: 100 }}>
                                     {datas && createTableRows(searchResult).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
                                     {emptyRows > 0 && (
                                           <TableRow
