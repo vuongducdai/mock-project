@@ -1,18 +1,26 @@
+import { useEffect } from 'react';
 import Image from 'next/image';
 import React, { useState } from 'react'
 import FileBase64 from "react-file-base64";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import ImgNotFound from "./../../public/img/imgnotfound.webp"
 import { productSchema, userSchema } from '../../yupGlobal';
-import { colors } from "./../../constants/data";
-import { addProduct, addUser } from '../../api/requestMethod';
+import { Box } from '@mui/system';
+import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select } from '@mui/material';
+import { colors, sizes, unk } from "./../../constants/data";
+import { useDispatch, useSelector } from 'react-redux';
+import { clearFormData, closeToolbar } from '../../redux/admin/toolbarSlice';
+import { createProduct, updateProduct } from '../../redux/admin/productSlice';
+import { createUser, updateUser } from '../../redux/admin/userSlice';
 
-
-const Newitem = ({ setOpenAdd }) => {
-      const [img, setImg] = useState(null);
-      const [color, setColor] = useState([]);
-      const [isProduct, setIsProduct] = useState(true);
+const Newitem = ({ isOpen, type, isEdit }) => {
+      const { formData } = useSelector(state => state.toolbarSlice);
+      const [img, setImg] = useState(unk);
+      const [color, setColor] = useState('1');
+      const [size, setSize] = useState('104');
+      const [isAdmin, setIsAdmin] = useState(false)
+      const dispatch = useDispatch();
+      console.log(formData)
 
       const { register: userRegister, handleSubmit: userHandleSubmit, setValue: userSetValue, formState: { errors: userError } } = useForm({
             resolver: yupResolver(userSchema),
@@ -22,109 +30,139 @@ const Newitem = ({ setOpenAdd }) => {
             resolver: yupResolver(productSchema),
       });
 
-      const handleSetColor = (colorName) => {
-            const duplicatedColor = color.find((x) => x === colorName)
-            if (!duplicatedColor) {
-                  setColor(prev => [...prev, colorName]);
-            } else {
-                  const updatedColor = color.filter(x => x !== duplicatedColor)
-                  setColor(updatedColor);
+      useEffect(() => {
+            if (formData && isEdit && type === 'product') {
+                  setImg(formData.img)
+                  productSetValue('name', formData.name);
+                  productSetValue('price', formData.price);
+                  setColor(formData.color);
+                  setSize(formData.size);
             }
+            else if (formData && isEdit && type === 'user') {
+                  userSetValue('name', formData.name);
+                  userSetValue('address', formData.address);
+                  userSetValue('phone', formData.phone);
+                  userSetValue('email', formData.email);
+                  setIsAdmin(formData.isAdmin)
+            }
+      }, [formData, isEdit, type])
+
+      const handleChangeColor = (event) => {
+            setColor(event.target.value);
+      };
+
+      const controlProps = (item) => ({
+            checked: color == item,
+            onChange: handleChangeColor,
+            value: item,
+            name: 'color-radio-button-demo',
+            inputProps: { 'aria-label': item },
+      });
+
+      const renderColors = () => {
+            return (
+                  <>
+                        {colors.map(x => (
+                              <Radio
+                                    key={x.id}
+                                    {...controlProps(x.id)}
+                                    sx={{
+                                          color: x.color[800],
+                                          '&.Mui-checked': {
+                                                color: x.color[600],
+                                          },
+                                    }}
+                              />
+                        ))}
+                  </>
+            )
       }
 
-      const renderColor = () => {
+      const renderSizes = () => {
             return (
-                  colors.map((item) => (
-                        <div
-                              key={item.id}
-                              style={{ backgroundColor: item.color }}
-                              className='rounded-full w-8 h-8 cursor-pointer'
-                              onClick={() => handleSetColor(item.name)}
-                        ></div>
-                  )))
-      }
-
-      const renderColorName = () => {
-            return (
-                  color.map((colorName, index) => (
-                        <div
-                              key={index}
-                              onClick={() => handleSetColor(colorName)}
-                              className='px-4 py-1 h-10 text-white bg-green-500 rounded-3xl capitalize text-sm flex-center flex-wrap cursor-pointer min-w-[100px]'
-                        >
-                              {colorName}
-                        </div>
-                  ))
+                  <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth>
+                              <InputLabel>Size</InputLabel>
+                              <Select
+                                    value={size}
+                                    label="Size"
+                                    onChange={(e) => setSize(e.target.value)}
+                              >
+                                    {sizes.map((item) => (
+                                          <MenuItem key={item.id} value={item.size}>{item.size}</MenuItem>
+                                    ))}
+                              </Select>
+                        </FormControl>
+                  </Box>
             )
       }
 
       const onSubmit = async (data) => {
-            if (isProduct) {
-                  const productForm = { ...data, color, img }
-                  await addProduct(productForm);
+            if (type === 'product') {
+                  const productForm = { ...data, color, size, img }
+                  if (isEdit && formData) {
+                        dispatch(updateProduct({ form: productForm, id: formData._id }))
+                        dispatch(clearFormData())
+                  } else {
+                        dispatch(createProduct(productForm))
+                  }
                   productSetValue('name', '');
                   productSetValue('price', '');
-                  productSetValue('size', '');
-                  setColor([]);
+                  setColor('1');
+                  setSize('');
+                  setImg('');
             } else {
-                  const userForm = { ...data, img }
-                  await addUser(userForm);
+                  const userForm = { ...data, isAdmin }
+                  if (isEdit && formData) {
+                        dispatch(updateUser({ form: userForm, id: formData._id }))
+                        dispatch(clearFormData())
+                  } else {
+                        dispatch(createUser(userForm))
+                  }
                   userSetValue('name', '');
                   userSetValue('address', '');
                   userSetValue('phone', '');
                   userSetValue('email', '');
             }
-            setImg(null);
+            dispatch(closeToolbar())
       }
 
-
       return (
-            <div className='w-[240px] slide-top h-full bg-white shadow-md py-6 gap-6 mt-[100px]'>
+            <div className='w-[240px] slide-left h-100vh bg-white shadow-md py-6 gap-6 mr-[-100px] ml-[100px]'>
                   <div className='flex flex-col'>
 
-                        <div className='flex items-center justify-between px-4'>
-                              <button
-                                    onClick={() => setIsProduct(true)}
-                                    className={`text-2xl ${isProduct ? 'text-blue-pastel' : 'text-[#ddd]'} font-semibold`}
-                              >
-                                    Product
-                              </button>
-                              <button
-                                    onClick={() => setIsProduct(false)}
-                                    className={`text-2xl ${!isProduct ? 'text-blue-pastel' : 'text-[#ddd]'} font-semibold`}
-                              >
-                                    User
-                              </button>
+                        <div className='flex-center capitalize px-4'>
+                              <h3 className='text-2xl font-semibold text-[#333]'>{isEdit ? 'Update' : 'Add'} {type}</h3>
                         </div>
 
                         <form
                               className='px-4 h-full flex flex-col gap-4'
-                              onSubmit={isProduct ? productHandleSubmit(onSubmit) : userHandleSubmit(onSubmit)}
+                              onSubmit={type === 'product' ? productHandleSubmit(onSubmit) : userHandleSubmit(onSubmit)}
                         >
-                              <div className="form__container__filebase64 flex flex-col py-4 border-b border-[#ddd]">
-                                    <FileBase64
-                                          type="file"
-                                          multiple={false}
-                                          onDone={(file) => {
-                                                setImg(file.base64)
-                                          }}
-                                    />
-                                    <div className='w-full h-40 py-4 overflow-hidden'>
-                                          <Image
-                                                src={img || ImgNotFound}
-                                                alt="img"
-                                                width={240}
-                                                height={160}
-                                                layout='responsive'
-                                                objectFit='cover'
-                                                className='rounded-lg'
+                              {type === 'product' &&
+                                    <div className="form__container__filebase64 flex flex-col py-4 border-b border-[#ddd]">
+                                          <FileBase64
+                                                type="file"
+                                                multiple={false}
+                                                onDone={(file) => {
+                                                      setImg(file.base64)
+                                                }}
                                           />
-                                    </div>
-                              </div>
-
+                                          <div className='w-full h-40 py-4 overflow-hidden'>
+                                                <Image
+                                                      src={img || unk}
+                                                      alt="imga"
+                                                      width={240}
+                                                      height={160}
+                                                      layout='responsive'
+                                                      objectFit='cover'
+                                                      className='rounded-lg'
+                                                />
+                                          </div>
+                                    </div>}
                               <div className='flex flex-col'>
 
-                                    {isProduct &&
+                                    {type === 'product' &&
                                           <>
                                                 <span className='text-blue-pastel text-base font-semibold'>
                                                       Product name
@@ -133,6 +171,7 @@ const Newitem = ({ setOpenAdd }) => {
                                                       <input
                                                             className='text-[#333] outline-none bg-fb'
                                                             {...productRegister("name")}
+                                                            defaultValue=""
                                                       />
                                                 </div>
                                                 <p className='text-warning text-sm'>{productError.name?.message}</p>
@@ -144,51 +183,53 @@ const Newitem = ({ setOpenAdd }) => {
                                                 <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
                                                       <input
                                                             className='text-[#333] outline-none bg-fb'
-                                                            {...productRegister("price")} type="number"
+                                                            {...productRegister("price")}
+                                                            type="number"
+                                                            defaultValue=""
                                                       />
                                                 </div>
                                                 <p className='text-warning text-sm'>{productError.price?.message}</p>
 
-                                                <span className='mt-4 text-blue-pastel text-base font-semibold'>
+                                                <span className='mt-4 text-blue-pastel text-base font-semibold mb-4'>
                                                       Product size
                                                 </span>
-                                                <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
-                                                      <input
-                                                            className='text-[#333] outline-none bg-fb'
-                                                            {...productRegister("size")}
-                                                            type="number"
-                                                      />
-                                                </div>
-                                                <p className='text-warning text-sm'>{productError.size?.message}</p>
+                                                {renderSizes()}
 
                                                 <span className='mt-4 text-blue-pastel text-base font-semibold'>
                                                       Product color
                                                 </span>
                                                 <div className='py-2 h-20 flex flex-wrap gap-2'>
-                                                      {renderColor()}
+                                                      {renderColors()}
                                                 </div>
-                                                <div className='py-2 flex flex-wrap gap-2'>
-                                                      {renderColorName()}
-                                                </div>
-                                                <p className='text-warning text-sm'>{productError.color?.message}</p>
                                           </>
                                     }
 
-                                    {!isProduct &&
+                                    {type === 'user' &&
                                           <>
                                                 <span className='text-blue-pastel text-base font-semibold'>
                                                       Name
                                                 </span>
                                                 <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
-                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("name")} />
+                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("name")} defaultValue=""
+                                                      />
                                                 </div>
                                                 <p className='text-warning text-sm'>{userError.name?.message}</p>
+
+                                                <span className='mt-4 text-blue-pastel text-base font-semibold'>
+                                                      Password
+                                                </span>
+                                                <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
+                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("password")} defaultValue="" type='password'
+                                                      />
+                                                </div>
+                                                <p className='text-warning text-sm'>{userError.password?.message}</p>
 
                                                 <span className='mt-4 text-blue-pastel text-base font-semibold'>
                                                       Email
                                                 </span>
                                                 <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
-                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("email")} type="text" />
+                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("email")} type="text" defaultValue=""
+                                                      />
                                                 </div>
                                                 <p className='text-warning text-sm'>{userError.email?.message}</p>
 
@@ -196,7 +237,8 @@ const Newitem = ({ setOpenAdd }) => {
                                                       Address
                                                 </span>
                                                 <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
-                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("address")} type="text" />
+                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("address")} type="text" defaultValue=""
+                                                      />
                                                 </div>
                                                 <p className='text-warning text-sm'>{userError.address?.message}</p>
 
@@ -204,33 +246,24 @@ const Newitem = ({ setOpenAdd }) => {
                                                       Phone
                                                 </span>
                                                 <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
-                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("phone")} type="number" />
+                                                      <input className='text-[#333] outline-none bg-fb' {...userRegister("phone")} type='string' defaultValue=""
+                                                      />
                                                 </div>
                                                 <p className='text-warning text-sm'>{userError.phone?.message}</p>
-
-                                                <span className='mt-4 text-blue-pastel text-base font-semibold'>
-                                                      Admin
-                                                </span>
-                                                <div className='py-2 font-sans font-lg flex items-center gap-8'>
-                                                      <div className='flex items-center justify-between w-20'>
-                                                            <label htmlFor='true'>True</label>
-                                                            <input id='true'
-                                                                  className='text-[#333] outline-none bg-fb w-4 h-4 cursor-pointer' {...userRegister("isAdmin")}
-                                                                  type="radio"
-                                                                  value={true} />
-                                                      </div>
-
-                                                      <div className='flex items-center justify-between w-20'>
-                                                            <label htmlFor='false'>False</label>
-                                                            <input id='false'
-                                                                  className='text-[#333] outline-none bg-fb w-4 h-4 cursor-pointer' {...userRegister("isAdmin")}
-                                                                  type="radio"
-                                                                  value={false}
-                                                                  checked="checked"
-                                                            />
-                                                      </div>
+                                                <div className='py-4'>
+                                                      <FormControl>
+                                                            <span className='text-[#333] text-base font-semibold'>Admin</span>
+                                                            <RadioGroup
+                                                                  name="controlled-radio-buttons-group"
+                                                                  value={isAdmin}
+                                                                  onChange={(e) => setIsAdmin(e.target.value)}
+                                                            >
+                                                                  <FormControlLabel value={true} control={<Radio />} label="True" defaultChecked={isAdmin === true} default />
+                                                                  <FormControlLabel value={false} control={<Radio />} label="False" defaultChecked={isAdmin === false} />
+                                                            </RadioGroup>
+                                                      </FormControl>
                                                 </div>
-                                                <p className='text-warning text-sm'>{userError.isAdmin?.message}</p>
+
                                           </>
                                     }
 
@@ -242,7 +275,7 @@ const Newitem = ({ setOpenAdd }) => {
                                           type="submit"
                                     />
                                     <button
-                                          onClick={() => setOpenAdd(false)}
+                                          onClick={() => dispatch(closeToolbar())}
                                           className='text-blue-pastel px-4 py-2 rounded-lg border text-lg cursor-pointer w-24 flex-center'
                                     >
                                           Discard

@@ -1,59 +1,35 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-multi-carousel/lib/styles.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import ListProductComponent from "../components/client/ListProductComponent";
-import Pagination from "../components/client/Pagination";
+import PaginationData from '../components/client/Pagination';
 import Slider from "../components/client/Slider";
 import { BannerCarousel } from "../components/client/BannerCarousel";
 import MainLayout from "../components/layout/main";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { listProductData, listProductReUse } from "../redux/client/productSlice";
+import useSWR from "swr";
+import useSWRInfinite from 'swr/infinite'
+
+
+const fetcher = url => fetch(url).then(r => r.json());
+const url = 'https://63030a4dc6dda4f287c1d8d4.mockapi.io/product';
 
 export default function Home(props) {
-  const arrBlogs = [
-    {
-      id: 1,
-      title: "mountain",
-      url: "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/fde4287a315a464d915bad25006ec160_9366/%C3%A1o-thun-ba-l%C3%A1-essentials-adicolor-loungewear.jpg",
 
-      desc: "i love nature",
-    },
-    {
-      id: 2,
-      title: "waterfall",
-      url: "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/5232fa5d0a1e4a1c92d1aed8008f493f_9366/%C3%A1o-thun-class-of-72-adidas-originals-unisex.jpg",
+  const [page, setPage] = useState(1);
 
-      desc: "i love water",
-    },
-    {
-      id: 3,
-      title: "forest",
-      url: "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/fde4287a315a464d915bad25006ec160_9366/%C3%A1o-thun-ba-l%C3%A1-essentials-adicolor-loungewear.jpg",
+  const { data } = useSWR(`${url}?page=${page}&limit=10`, fetcher);
+  console.log("data fetching", data);
 
-      desc: "i love forest",
-    },
-    {
-      id: 4,
-      title: "sea",
-      url: "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/fde4287a315a464d915bad25006ec160_9366/%C3%A1o-thun-ba-l%C3%A1-essentials-adicolor-loungewear.jpg",
-      desc: "i love sea",
-    },
-    {
-      id: 5,
-      title: "sea",
-      url: "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/fde4287a315a464d915bad25006ec160_9366/%C3%A1o-thun-ba-l%C3%A1-essentials-adicolor-loungewear.jpg",
-      desc: "i love sea",
-    },
-    {
-      id: 6,
-      title: "sea",
-      url: "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/fde4287a315a464d915bad25006ec160_9366/%C3%A1o-thun-ba-l%C3%A1-essentials-adicolor-loungewear.jpg",
-      desc: "i love sea",
-    },
-  ];
 
-  const [totalProduct, setTotalProduct] = useState(props.count);
+  const handlePagination = (number) => {
+    console.log("Page number", number);
+    setPage(number);
+  }
 
   return (
     <>
@@ -63,25 +39,27 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <BannerCarousel /> */}
-      <Slider arrProduct={props.listProduct.slice(0, 8)} />
-      <ListProductComponent arrProduct={props.listProduct} />
-      <Pagination totalProduct={totalProduct} />
+      {/* <Slider arrProduct={props.listProduct.slice(0, 8)} /> */}
+      {data && <ListProductComponent arrProduct={data?.products} />}
+      {data && <PaginationData
+        totalProduct={data?.count}
+        handlePagination={handlePagination} />}
     </>
   );
 }
 
-export async function getServerSideProps() {
-  const res = await axios.get(
-    "https://63030a4dc6dda4f287c1d8d4.mockapi.io/product?page=1&limit=10"
-  );
-  const data = res.data;
+// export async function getServerSideProps(page) {
+//   const res = await axios.get(
+//     `https://63030a4dc6dda4f287c1d8d4.mockapi.io/product?page=${page}&limit=10`
+//   );
+//   const data = res.data;
 
-  return {
-    props: {
-      listProduct: data.products,
-      count: data.count,
-    },
-  };
-}
+//   return {
+//     props: {
+//       listProduct: data.products,
+//       count: data.count,
+//     },
+//   };
+// }
 
 Home.Layout = MainLayout;
