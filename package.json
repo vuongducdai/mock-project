@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.0",
     "@emotion/cache": "^11.10.0",
+    "@emotion/react": "^11.10.0",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@hookform/resolvers": "^2.9.7",
@@ -26,6 +26,7 @@
     "react-dom": "18.2.0",
     "react-facebook-login": "^4.1.1",
     "react-file-base64": "^1.0.3",
+    "react-google-login": "^5.2.2",
     "react-hook-form": "^7.34.2",
     "react-img-zoom": "^0.1.0",
     "react-inner-image-zoom": "^3.0.2",
