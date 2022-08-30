@@ -1,11 +1,12 @@
 import React from "react";
 import FacebookLogin from "react-facebook-login";
 
-const responseFacebook = (response) => {
-  console.log(response);
-};
 
-const Login = () => {
+const Facebook = () => {
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
+  
   return (
     <div>
       <FacebookLogin
@@ -19,4 +20,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Facebook;
