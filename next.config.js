@@ -11,6 +11,7 @@ const nextConfig = {
 			'brand.assets.adidas.com',
 			'ecommercevoyager.herokuapp.com',
 			'media.istockphoto.com',
+			'go.labhok.com',
 		],
 	},
 };

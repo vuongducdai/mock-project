@@ -1,8 +1,9 @@
 import React from "react";
 import Navbar from "../../components/Admin/Navbar";
 import Sidebar from "../../components/Admin/Sidebar";
-import DataTable from "../../components/Admin/DataTable";
+
 const Admin = () => {
+
       return (
             <div className="flex h-screen w-full bg-fb">
                   <Sidebar />

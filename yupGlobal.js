@@ -13,5 +13,4 @@ export let userSchema = yup.object().shape({
       email: yup.string().email().required('Fill is required'),
       address: yup.string().required('Fill is required'),
       phone: yup.number().required('Fill is required').typeError('Fill is required'),
-      isAdmin: yup.boolean().required('Fill is required')
 });

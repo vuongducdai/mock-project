@@ -1,23 +1,29 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
-	FLUSH,
-	PAUSE,
-	PERSIST,
-	persistReducer,
-	persistStore,
-	PURGE,
-	REGISTER,
-	REHYDRATE,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+      persistStore,
+      persistReducer,
+      FLUSH,
+      REHYDRATE,
+      PAUSE,
+      PERSIST,
+      PURGE,
+      REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-import productSlice from './admin/productSlice';
-import userSlice from './admin/userSlice';
-import cartSlice from './client/cartSlice';
+import productSlice from "./admin/productSlice";
+import userSlice from "./admin/userSlice";
+import cartSlice from "./client/cartSlice";
+import clientProductSlice from './client/productSlice';
+import toolbarSlice from "./admin/toolbarSlice";
+
+
 const rootReducer = combineReducers({
 	productSlice,
 	userSlice,
 	cartSlice,
+	clientProductSlice,
+      toolbarSlice
 });
 
 //  Handle user login when reloading page

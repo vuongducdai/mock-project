@@ -10,21 +10,19 @@ import {
 	Stack,
 	Typography,
 } from '@mui/material';
+import Image from 'next/image';
 import React from 'react';
-import Zoom from 'react-img-zoom';
-// import InnerImageZoom from 'react-inner-image-zoom';
-// import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../redux/client/cartSlice';
 import formatNumber from '../../utils/formatNumber';
+import mapColorData from '../../utils/mapColorData';
 import BlackButton from '../BlackButton';
 import StyledDialog from '../StyledDialog';
 import According from './According';
 import { BreadCrumb } from './StyledBreadcrumb';
-import StyledButton from './StyledButton';
 
 const ProductDetail = ({ productProps }) => {
-	const { name, img, price, color, size, material, id } = productProps;
+	const { name, img, price, color, size, quantity, material, id } =
+		productProps;
 	const dispatch = useDispatch();
 	const { count } = useSelector(state => state.cartSlice);
 
@@ -39,17 +37,16 @@ const ProductDetail = ({ productProps }) => {
 	};
 
 	const handleClick = () => {
-		dispatch(
-			addToCart({
-				name: name,
-				img: img,
-				price: price,
-				color: color,
-				size: size,
-				material: material,
-				id: id,
-			}),
-		);
+		const data = {
+			name,
+			price,
+			color,
+			size,
+			quantity,
+			material,
+			img,
+		};
+		console.log(data);
 
 		//Open add cart successfully dialog
 		setOpen(true);
@@ -65,57 +62,18 @@ const ProductDetail = ({ productProps }) => {
 							<Grid item xs={12}>
 								<Box className='relative'>
 									<BreadCrumb name={name} />
-									{/* <Breadcrumbs
-									aria-label='breadcrumb'
-									className='absolute top-4 left-5 z-50'> */}
-									{/* <StyledBreadcrumb
-										component='a'
-										href={router.back()}
-										label='Trở lại'
-										icon={
-											<KeyboardReturnIcon fontSize='small' />
-										}
-									/>
-									<StyledBreadcrumb
-										component='a'
-										href='/'
-										breadcrumb.label
-									/>
-									<StyledBreadcrumb
-										component='a'
-										href='/male'
-										label='Nam'
-									/>
-									<Typography color='text.primary'>
-										Quần
-									</Typography> */}
-									{/* </Breadcrumbs> */}
-									{/* <InnerImageZoom
-										width={900}
-										height={900}
+									<Image
 										src={img}
-										zoomSrc={img}
-										hideHint={true}
-										// zoomPreload={true}
-										zoomScale={1}
-										zoomType='hover'
-									/> */}
-
-									<Zoom
-										style={{
-											width: '100%',
-											height: '100%',
-										}}
-										img={img}
-										zoomScale={3}
-										width={800}
-										height={600}
+										layout='responsive'
+										width='100%'
+										height='100%'
+										alt='image'
 									/>
 								</Box>
 							</Grid>
 							<Grid item xs={12}>
 								<Stack className='mt-2'>
-									<According />
+									<According img={img} />
 								</Stack>
 							</Grid>
 						</Grid>
@@ -127,8 +85,8 @@ const ProductDetail = ({ productProps }) => {
 									direction='row'
 									justifyContent='space-between'
 									alignItems='center'>
-									<Typography component='h5'>
-										Gái • Sportswear
+									<Typography variant='h6' component='h6'>
+										Đánh giá
 									</Typography>
 									<Box
 										sx={{
@@ -172,14 +130,18 @@ const ProductDetail = ({ productProps }) => {
 								</Box>
 								<Box mt={2}>
 									<Breadcrumbs aria-label='breadcrumb'>
-										<Typography color='text.primary'>
-											{color}
+										<Typography
+											color='text.primary'
+											sx={{
+												textTransform: 'uppercase',
+											}}>
+											{mapColorData(color)}
 										</Typography>
 										{/* <Typography color="text.primary">Purple Rush</Typography>
                   <Typography color="text.primary">Sky Rush</Typography> */}
 									</Breadcrumbs>
 								</Box>
-								<Box mt={4}>
+								{/* <Box mt={4}>
 									<Typography className='font-medium'>
 										Kích cỡ
 									</Typography>
@@ -190,15 +152,19 @@ const ProductDetail = ({ productProps }) => {
 										<StyledButton variant='outlined'>
 											{size}
 										</StyledButton>
-										<StyledButton variant='outlined'>
-											{size}
-										</StyledButton>
 									</Stack>
-								</Box>
+								</Box> */}
 								<Box mt={3}>
 									<BlackButton
 										title='Thêm vào giỏ hàng'
 										onClick={handleClick}
+										className='w-4/5'
+									/>
+									<BlackButton
+										title='Thêm vào giỏ hàng test'
+										onClick={handleClick}
+										className='w-4/5'
+										isLoading={true}
 									/>
 								</Box>
 								<Box
@@ -257,7 +223,6 @@ const ProductDetail = ({ productProps }) => {
 				price={price}
 				color={color}
 				name={name}
-				count={count}
 				title='ĐÃ THÊM VÀO GIỎ HÀNG CỦA BẠN THÀNH CÔNG!'
 				hasContent
 			/>

@@ -8,9 +8,9 @@ import React from 'react';
 import formatNumber from '../utils/formatNumber';
 
 export default function ProductCard({ item }) {
-	const { img, name, price, id } = item;
+	const { img, name, price, _id, size, material } = item;
 	return (
-		<Link href={`products/${id}`} className='no-underline'>
+		<Link href={`products/${_id}`} className='no-underline'>
 			<Card
 				elevation={0}
 				className='mb-10 border-black shadow-none cursor-pointer hover:border mx-0.5 group'>
@@ -28,11 +28,13 @@ export default function ProductCard({ item }) {
 				</div>
 				<CardContent>
 					<Typography component='div' className='text-sm'>
-						<span>{name}</span>
+						<span className='truncate'>{name}</span>
 						<br />
 						<span className='text-neutral-500'>Nam Original</span>
 						<br />
 						<span>mới</span>
+						<br />
+						<span>{material}</span>
 					</Typography>
 				</CardContent>
 			</Card>
