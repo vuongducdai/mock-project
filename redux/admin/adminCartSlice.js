@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { deleteCart, getCarts } from "../../api/requestMethod";
 
 export const getCartList = createAsyncThunk(
       "admin/getCartList", async () => {
@@ -8,7 +9,7 @@ export const getCartList = createAsyncThunk(
 
 export const deleteOneCart = createAsyncThunk(
       "admin/deleteOneCart", async (id) => {
-            const res = await deleteOneCart(id);
+            const res = await deleteCart(id);
             return res.data;
       });
 
@@ -18,10 +19,10 @@ const initialState = {
 };
 
 const adminCartSlice = createSlice({
-      name: "user",
+      name: "cart",
       initialState,
       extraReducers: (builder) => {
-            // GET USER LIST
+            // GET CART LIST
             builder.addCase(getCartList.pending, (state, action) => {
                   state.loading = true;
             });
@@ -30,7 +31,7 @@ const adminCartSlice = createSlice({
                   state.loading = false;
             });
 
-            // DELETE USER
+            // DELETE CART
             builder.addCase(deleteOneCart.pending, (state, action) => {
                   state.loading = true;
             });

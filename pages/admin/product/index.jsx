@@ -11,6 +11,7 @@ const Product = () => {
       const router = useRouter();
       const path = router.pathname.split("/")[2];
       const dispatch = useDispatch();
+      console.log(products)
 
       useEffect(() => {
             dispatch(getProductList());

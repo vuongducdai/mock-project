@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { productSchema, userSchema } from '../../yupGlobal';
 import { Box } from '@mui/system';
 import { FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select } from '@mui/material';
-import { colors, sizes, unk } from "./../../constants/data";
+import { arrCatProduct, colors, sizes, unk } from "./../../constants/data";
 import { useDispatch, useSelector } from 'react-redux';
 import { clearFormData, closeToolbar } from '../../redux/admin/toolbarSlice';
 import { createProduct, updateProduct } from '../../redux/admin/productSlice';
@@ -17,10 +17,10 @@ const Newitem = ({ isOpen, type, isEdit }) => {
       const { formData } = useSelector(state => state.toolbarSlice);
       const [img, setImg] = useState(unk);
       const [color, setColor] = useState('1');
-      const [size, setSize] = useState('104');
+      const [size, setSize] = useState(104);
+      const [cat, setCat] = useState('material 1');
       const [isAdmin, setIsAdmin] = useState(false)
       const dispatch = useDispatch();
-      console.log(formData)
 
       const { register: userRegister, handleSubmit: userHandleSubmit, setValue: userSetValue, formState: { errors: userError } } = useForm({
             resolver: yupResolver(userSchema),
@@ -35,8 +35,10 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                   setImg(formData.img)
                   productSetValue('name', formData.name);
                   productSetValue('price', formData.price);
+                  productSetValue('quantity', formData.quantity);
                   setColor(formData.color);
                   setSize(formData.size);
+                  setCat(formData.cat);
             }
             else if (formData && isEdit && type === 'user') {
                   userSetValue('name', formData.name);
@@ -78,6 +80,25 @@ const Newitem = ({ isOpen, type, isEdit }) => {
             )
       }
 
+      const renderCategories = () => {
+            return (
+                  <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth>
+                              <InputLabel className='bg-white w-20'>Categories</InputLabel>
+                              <Select
+                                    value={cat}
+                                    label="Cat"
+                                    onChange={(e) => setCat(e.target.value)}
+                              >
+                                    {arrCatProduct.map((item) => (
+                                          <MenuItem key={item.id} value={item.id}>{item.content}</MenuItem>
+                                    ))}
+                              </Select>
+                        </FormControl>
+                  </Box>
+            )
+      }
+
       const renderSizes = () => {
             return (
                   <Box sx={{ minWidth: 120 }}>
@@ -99,12 +120,13 @@ const Newitem = ({ isOpen, type, isEdit }) => {
 
       const onSubmit = async (data) => {
             if (type === 'product') {
-                  const productForm = { ...data, color, size, img }
+                  const productForm = { ...data, color, size, cat, img }
                   if (isEdit && formData) {
                         dispatch(updateProduct({ form: productForm, id: formData._id }))
                         dispatch(clearFormData())
                   } else {
                         dispatch(createProduct(productForm))
+                        console.log(productForm)
                   }
                   productSetValue('name', '');
                   productSetValue('price', '');
@@ -190,10 +212,28 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                                                 </div>
                                                 <p className='text-warning text-sm'>{productError.price?.message}</p>
 
+                                                <span className='mt-4 text-blue-pastel text-base font-semibold'>
+                                                      Product quantity
+                                                </span>
+                                                <div className='px-4 py-2 rounded-3xl bg-fb font-sans font-base'>
+                                                      <input
+                                                            onChange={(e) => setQuantity(e.target.value)}
+                                                            className='text-[#333] outline-none bg-fb'
+                                                            {...productRegister("quantity")}
+                                                            type="number"
+                                                            defaultValue={100} />
+                                                </div>
+                                                <p className='text-warning text-sm'>{productError.price?.message}</p>
+
                                                 <span className='mt-4 text-blue-pastel text-base font-semibold mb-4'>
                                                       Product size
                                                 </span>
                                                 {renderSizes()}
+
+                                                <span className='mt-4 text-blue-pastel text-base font-semibold mb-4'>
+                                                      Product categories
+                                                </span>
+                                                {renderCategories()}
 
                                                 <span className='mt-4 text-blue-pastel text-base font-semibold'>
                                                       Product color
