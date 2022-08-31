@@ -34,53 +34,53 @@ export const colors = [
       },
 ]
 
-export const sizes = [
+export const sizesArr = [
       {
-            id: 1,
+            id: '104',
             size: 104
       },
       {
-            id: 2,
+            id: '105',
             size: 105
       },
       {
-            id: 3,
+            id: '106',
             size: 106
       },
       {
-            id: 4,
+            id: '107',
             size: 107
       },
       {
-            id: 5,
+            id: '108',
             size: 108
       },
       {
-            id: 6,
+            id: '109',
             size: 109
       },
       {
-            id: 7,
+            id: '110',
             size: 110
       },
       {
-            id: 8,
+            id: '111',
             size: 111
       },
       {
-            id: 9,
+            id: '112',
             size: 112
       },
       {
-            id: 10,
+            id: '113',
             size: 113
       },
       {
-            id: 11,
+            id: '114',
             size: 114
       },
       {
-            id: 12,
+            id: '115',
             size: 115
       },
 ];
@@ -124,26 +124,26 @@ export const arrTitleFilter = [
             id: 1,
             content: 'Tất cả quần áo nam',
       },
-      {
-            id: 2,
-            content: 'Jackets',
-      },
-      {
-            id: 3,
-            content: 'Áo nỉ và Bộ đồ thể thao',
-      },
-      {
-            id: 4,
-            content: 'Áo Phông & Áo Polo',
-      },
-      {
-            id: 5,
-            content: 'Áo hoodie & Áo khoác',
-      },
-      {
-            id: 6,
-            content: 'Quần',
-      },
+      // {
+      //       id: 2,
+      //       content: 'Jackets',
+      // },
+      // {
+      //       id: 3,
+      //       content: 'Áo nỉ và Bộ đồ thể thao',
+      // },
+      // {
+      //       id: 4,
+      //       content: 'Áo Phông & Áo Polo',
+      // },
+      // {
+      //       id: 5,
+      //       content: 'Áo hoodie & Áo khoác',
+      // },
+      // {
+      //       id: 6,
+      //       content: 'Quần',
+      // },
 ]
 
 export const arrTitleSortBy = [
@@ -161,89 +161,86 @@ export const arrTitleSortBy = [
 
 export const arrSize = [
       {
-            id: 99,
-            content: '99',
+            id: '104',
+            size: 104
       },
       {
-            id: 31,
-            content: '31',
+            id: '105',
+            size: 105
       },
       {
-            id: 24,
-            content: '24',
+            id: '106',
+            size: 106
       },
       {
-            id: 64,
-            content: '64',
+            id: '107',
+            size: 107
       },
       {
-            id: 74,
-            content: '74',
+            id: '108',
+            size: 108
       },
       {
-            id: 88,
-            content: '88',
+            id: '109',
+            size: 109
       },
       {
-            id: 36,
-            content: '36',
+            id: '110',
+            size: 110
       },
       {
-            id: 3,
-            content: '3',
+            id: '111',
+            size: 111
       },
       {
-            id: 12,
-            content: '12',
+            id: '112',
+            size: 112
       },
       {
-            id: 170,
-            content: '170',
+            id: '113',
+            size: 113
       },
       {
-            id: 176,
-            content: '176',
+            id: '114',
+            size: 114
       },
       {
-            id: 40,
-            content: '40',
+            id: '115',
+            size: 115
       },
-]
+];
 
 export const arrCatProduct = [
       {
             id: 'material 1',
             content: 'material 1',
-            quantity: 13,
+
       },
       {
             id: "material 2",
             content: 'material 2',
-            quantity: 4,
       },
       {
             id: 'material 3',
             content: 'material 3',
-            quantity: 90,
+
       },
       {
             id: "material 4",
             content: 'material 4',
-            quantity: 8,
       },
       {
             id: 'material 5',
             content: 'material 5',
-            quantity: 53,
+
       },
       {
             id: 'material 7',
             content: 'material 7',
-            quantity: 23,
+
       },
       {
             id: 'material 8',
             content: 'material 8',
-            quantity: 3,
       },
 ]

@@ -30,7 +30,7 @@ const HeaderTitle = () => {
 
 const LoginSection = () => {
   return (
-    <Link underline="none" href="#" variant="body2">
+    <Link underline="none" href="/login" variant="body2">
       đăng nhập
     </Link>
   );

@@ -6,6 +6,7 @@ export let productSchema = yup.object().shape({
       ,
       price: yup.number('Please fill price').required('Fill is required').positive('Price must be bigger than 0').integer('Price must be an integer').typeError('Fill is required')
       ,
+      quantity: yup.number().required('Fill is required').positive('Quantity must be bigger than 0').integer('Quantity must be an integer').typeError('Fill is required')
 });
 
 export let userSchema = yup.object().shape({
