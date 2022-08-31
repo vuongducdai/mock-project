@@ -4,7 +4,7 @@ import { default as React } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
-import axiosClient from '../api/axios-client';
+import { postLogin } from '../api/requestMethod';
 import Google from '../components/auth/Google';
 import MainLayout from '../components/layout/main';
 import { useAuth } from '../hooks/useAuth';
@@ -17,30 +17,36 @@ const schema = yup.object({
 
 const LoginForm = () => {
 	const router = useRouter();
-	const { data, login, getUser, getCart } = useAuth();
+	const { data, login, logout, getUser, getCart } = useAuth();
 	const { user } = useSelector(state => state.userSlice);
 	const dispatch = useDispatch();
+
+	// async function handleLoginClick({ name, password }) {
+	// 	console.log(name, password);
+	// 	try {
+	// 		axiosClient.post('/login', { name, password }).then(res => {
+	// 			dispatch(updateUserFromLogin(res.data));
+	// 			console.log(res.data);
+	// 		});
+
+	// 		console.log('redirect to index');
+	// 	} catch (error) {
+	// 		console.log('failed to login', error);
+	// 	}
+	// }
 
 	async function handleLoginClick({ name, password }) {
 		console.log(name, password);
 		try {
-			axiosClient.post('/login', { name, password }).then(res => {
-				dispatch(updateUserFromLogin(res.data));
-				console.log(res.data);
-			});
-
-			console.log('redirect to index');
+			const res = await postLogin({ name, password });
+			dispatch(updateUserFromLogin(res.data));
 		} catch (error) {
 			console.log('failed to login', error);
 		}
 	}
 
-	async function handleLogoutClick() {
-		try {
-			await logout();
-		} catch (error) {
-			console.log('failed to logout', error);
-		}
+	function handleLogoutClick() {
+		dispatch(logout());
 	}
 
 	async function handleGetUser() {
@@ -75,7 +81,7 @@ const LoginForm = () => {
 		<div>
 			<form
 				onSubmit={handleSubmit(handleLoginClick)}
-				className='flex flex-col	'>
+				className='flex flex-col'>
 				<input
 					type='text'
 					{...register('name')}
@@ -127,9 +133,7 @@ const FacebookGoogleLogin = () => {
 				<button className='border'>FACEBOOK</button>
 			</div>
 			<div>
-				<button className='border'>
-					<Google />
-				</button>
+				<Google />
 			</div>
 		</div>
 	);

@@ -3,7 +3,9 @@ import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import { Badge, Box, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useCart } from '../../api/cart';
+import { getUser } from '../../redux/admin/userSlice';
 import calculateQuantityCart from '../../utils/calculateQuantityCart';
 import BlackButton from '../BlackButton';
 import { ProductColumn } from './ProductColumn';
@@ -19,7 +21,7 @@ const EmptyCart = () => {
 const HasItemCart = ({ productList }) => {
 	const router = useRouter();
 	const handleClick = () => {
-		router.push('/cart/');
+		router.push('/cart');
 	};
 
 	return (
@@ -53,7 +55,8 @@ const ShoppingCartFlyout = ({ productList }) => {
 
 export const ShoppingCartIcon = () => {
 	const [openCart, setOpenCart] = useState(false);
-	const { data } = useCart(7);
+	const user = useSelector(getUser);
+	const { data } = useCart(user?._id);
 	const productList = data?.products;
 
 	const handleClick = () => {

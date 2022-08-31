@@ -3,8 +3,11 @@ import publicRequest, { BASE_URL, fetcher } from '../requestMethod';
 
 export function useCart(id) {
 	const { data, error, isValidating } = useSWR(
-		`${BASE_URL}/cart/find/${id}`,
+		id ? `${BASE_URL}/cart/find/${id}` : null,
 		fetcher,
+		{
+			revalidateOnFocus: false,
+		},
 	);
 
 	return {
