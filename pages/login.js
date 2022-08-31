@@ -1,11 +1,15 @@
+import React, { useEffect } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useRouter } from "next/router";
-
 import MainLayout from "../components/layout/main";
 import { useAuth } from "../hooks/useAuth";
+import { Stack } from "@mui/material";
+import Google from "../components/auth/Google";
+import { useSelector } from "react-redux";
 
 const schema = yup.object({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
@@ -113,7 +117,9 @@ const FacebookGoogleLogin = () => {
         <button className="border">FACEBOOK</button>
       </div>
       <div>
-        <button className="border">GOOGLE</button>
+        <button className="border">
+          <Google />
+        </button>
       </div>
     </div>
   );

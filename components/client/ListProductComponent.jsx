@@ -8,7 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import { useDispatch, useSelector } from 'react-redux';
 import "swiper/css";
 import "swiper/css/pagination";
-import { arrCatProduct, arrColor, arrSize, arrTitleFilter, arrTitleSortBy, sizesArr } from '../../constants/data';
+import { arrCatProduct, arrColor, arrSize, arrTitleFilter, arrTitleSortBy, sizes } from '../../constants/data';
 import ProductCard from '../ProductCard';
 import ItemDrawer from './ItemDrawer';
 
@@ -142,9 +142,9 @@ export default function ListProductComponent({ arrProduct }) {
     const renderSizeList = () => {
         return (
             <div className='flex flex-wrap'>
-                {sizesArr.map((size) => (
+                {sizes.map((size) => (
                     <div
-                        onClick={() => setSizeActive(size.id)}
+                        onClick={() => setSizeActive(+size.id)}
                         className={`${sizeActive === size.id
                             ? 'border-black'
                             : ''}

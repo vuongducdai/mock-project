@@ -34,7 +34,7 @@ export const colors = [
       },
 ]
 
-export const sizesArr = [
+export const sizes = [
       {
             id: '104',
             size: 104
@@ -158,57 +158,6 @@ export const arrTitleSortBy = [
             content: 'GIÁ (CAO - THẤP)',
       },
 ]
-
-export const arrSize = [
-      {
-            id: '104',
-            size: 104
-      },
-      {
-            id: '105',
-            size: 105
-      },
-      {
-            id: '106',
-            size: 106
-      },
-      {
-            id: '107',
-            size: 107
-      },
-      {
-            id: '108',
-            size: 108
-      },
-      {
-            id: '109',
-            size: 109
-      },
-      {
-            id: '110',
-            size: 110
-      },
-      {
-            id: '111',
-            size: 111
-      },
-      {
-            id: '112',
-            size: 112
-      },
-      {
-            id: '113',
-            size: 113
-      },
-      {
-            id: '114',
-            size: 114
-      },
-      {
-            id: '115',
-            size: 115
-      },
-];
 
 export const arrCatProduct = [
       {

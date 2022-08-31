@@ -4,8 +4,10 @@ import { resolveHref } from "next/dist/shared/lib/router/router";
 import { useState } from "react";
 import axiosClient from "./axios-client";
 
-// const BASE_URL = "https://ecommercevoyager.herokuapp.com/";
-const BASE_URL = "http://localhost:8000";
+export const BASE_URL = "https://ecommercevoyager.herokuapp.com/api";
+// const BASE_URL = 'http://localhost:8000';
+// const BASE_URL = "https://ecommercevoyager.herokuapp.com/api/";
+// const BASE_URL = 'http://localhost:8000/api';
 
 let user;
 if (typeof window !== "undefined") {
@@ -40,7 +42,7 @@ export const postLogin = (form) =>
 
 // Users
 export const getUsers = () =>
-  userRequest.get("/api/user").then((res) => console.log(res));
+  userRequest.get("/user").then((res) => console.log(res));
 export const patchUser = (data) =>
   publicRequest.patch(`/user/${data.id}`, data.form);
 export const deleteUser = (id) => publicRequest.delete(`/user/${id}`);
