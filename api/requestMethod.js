@@ -1,4 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
+import Cookies from "cookies";
+import { resolveHref } from "next/dist/shared/lib/router/router";
+import { useState } from "react";
+import axiosClient from "./axios-client";
 
 export const BASE_URL = 'https://ecommercevoyager.herokuapp.com/api';
 // const BASE_URL = 'http://localhost:8000';
@@ -23,9 +27,14 @@ const currentUser = user && JSON.parse(user).currentUser;
 const TOKEN = currentUser?.accessToken;
 
 export const userRequest = axios.create({
+  baseURL: BASE_URL,
+  header: { token: `Bearer ${TOKEN}` },
+=======
+export const userRequest = axios.create({
 	baseURL: BASE_URL,
 	header: { token: `Bearer ${TOKEN}` },
 	withCredentials: true,
+>>>>>>> dev
 });
 
 // Products

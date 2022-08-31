@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useRouter } from "next/router";
+import { default as React } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import * as yup from "yup";
+import axiosClient from "../api/axios-client";
+import Google from "../components/auth/Google";
 import MainLayout from "../components/layout/main";
 import { useAuth } from "../hooks/useAuth";
-import { Stack } from "@mui/material";
-import Google from "../components/auth/Google";
-import { useSelector } from "react-redux";
+import { updateUserFromLogin } from "../redux/admin/userSlice";
 
 const schema = yup.object({
       name: yup.string().required("Vui lòng nhập tên của bạn"),
@@ -15,16 +16,20 @@ const schema = yup.object({
 });
 
 const LoginForm = () => {
-
-      const { login } = useAuth({
-            revalidateOnMount: false,
-      });
-      // GOOGLE REDIRECT
+  const router = useRouter();
+  const { data, login, getUser, getCart } = useAuth();
+  const { user } = useSelector((state) => state.userSlice);
+  const dispatch = useDispatch();
 
       async function handleLoginClick({ name, password }) {
             console.log(name, password);
             try {
-                  await login(name, password);
+                  axiosClient.post("/login", { name, password }).then((res) => {
+        dispatch(updateUserFromLogin(res.data));
+        console.log(res.data);
+      });
+
+      console.log("redirect to index");
             } catch (error) {
                   console.log("failed to login", error);
             }
@@ -42,7 +47,15 @@ const LoginForm = () => {
             try {
                   await getUser();
             } catch (error) {
-                  console.log("failed to get User");
+                  console.log("failed to get User", error);
+    }
+  }
+
+  async function handleGetCart() {
+    try {
+      await getCart();
+    } catch (error) {
+      console.log("failed to get cart", error);
             }
       }
 
@@ -94,24 +107,26 @@ const LoginForm = () => {
 
                   <button onClick={handleGetUser}>Get User</button>
 
-                  {/* <p>Profile: {JSON.stringify(profile || {}, null, 4)}</p> */}
+                  <button onClick={handleGetCart}>Get Cart</button>
+
+      <p>Profile: {JSON.stringify(user || {}, null, 4)}</p>
             </div>
       );
 };
 
 const FacebookGoogleLogin = () => {
-      return (
-            <div className="flex flex-col">
-                  <div>
-                        <button className="border">FACEBOOK</button>
-                  </div>
-                  <div>
-                        <button className="border">
-                              <Google />
-                        </button>
-                  </div>
-            </div>
-      );
+  return (
+    <div className="flex flex-col">
+      <div>
+        <button className="border">FACEBOOK</button>
+      </div>
+      <div>
+        <button className="border">
+          <Google />
+        </button>
+      </div>
+    </div>
+  );
 };
 
 const LoginSection = () => {
