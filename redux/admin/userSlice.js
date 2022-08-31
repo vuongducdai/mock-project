@@ -40,8 +40,11 @@ const initialState = {
 const userSlice = createSlice({
       name: "user",
       initialState,
-      reducers:{
-            googleLogin(state,action) {
+      reducers: {
+            googleLogin(state, action) {
+                  state.user = action.payload
+            },
+            facebookLogin(state, action) {
                   state.user = action.payload
             },
       },
@@ -92,5 +95,5 @@ const userSlice = createSlice({
             });
       },
 });
-export const {googleLogin} = userSlice.actions
+export const { googleLogin, facebookLogin } = userSlice.actions
 export default userSlice.reducer;

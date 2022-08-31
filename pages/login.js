@@ -7,6 +7,7 @@ import MainLayout from "../components/layout/main";
 import { useAuth } from "../hooks/useAuth";
 import { Stack } from "@mui/material";
 import Google from "../components/auth/Google";
+import Facebook from "../components/auth/Facebook";
 
 const schema = yup.object({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
@@ -100,11 +101,13 @@ const FacebookGoogleLogin = () => {
   return (
     <div className="flex flex-col">
       <div>
-        <button className="border">FACEBOOK</button>
+        <button className="border">
+          <Facebook />
+        </button>
       </div>
       <div>
         <button className="border">
-          <Google/>
+          <Google />
         </button>
       </div>
     </div>
