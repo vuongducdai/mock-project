@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import GoogleLogin from "react-google-login";
-import { signIn, signOut, useSession } from "next-auth/react";
+
 import { useDispatch, useSelector } from "react-redux";
 import {googleLogin} from '../../redux/admin/userSlice'
 const Google = () => {
