@@ -3,9 +3,9 @@ import Cookies from "cookies";
 import { resolveHref } from "next/dist/shared/lib/router/router";
 import { useState } from "react";
 
-// export const BASE_URL = "https://ecommercevoyager.herokuapp.com/api";
+export const BASE_URL = "https://ecommercevoyager.herokuapp.com/api";
 // const BASE_URL = "https://ecommercevoyager.herokuapp.com/api/";
-const BASE_URL = 'http://localhost:8000/api';
+// const BASE_URL = 'http://localhost:8000/api';
 
 const publicRequest = axios.create({
       baseURL: BASE_URL,

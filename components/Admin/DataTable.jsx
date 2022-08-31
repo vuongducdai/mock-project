@@ -45,8 +45,8 @@ const DataTable = ({ type, datas }) => {
       }, [datas, query]);
 
       const handleAdd = () => {
-            dispatch(setAdd());
             dispatch(clearFormData());
+            dispatch(setAdd());
             dispatch(openToolbar());
       }
 
