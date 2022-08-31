@@ -79,11 +79,11 @@ const DataTable = ({ type, datas }) => {
 
       // create dynamic table
       const createTableRows = (objs) => {
-            return objs?.map((obj, index) => {
+            return objs?.map((obj) => {
                   return (
                         <TableRow
                               className="last:border-b-2"
-                              key={index}
+                              key={obj._id}
                               sx={{ "td, th": { border: 0 } }}
                         >
                               {addTableRow(obj)}
@@ -121,7 +121,7 @@ const DataTable = ({ type, datas }) => {
 
       const isImg = (item) => {
             return item.includes("data") ? (
-                  <Image alt='img' src={item} width={40} height={40} />
+                  <Image key={item} alt='img' src={item} width={40} height={40} />
             ) : (
                   item
             );
