@@ -22,6 +22,7 @@ export default function handler(req, res) {
     const access_token = cookies.get("access_token");
     if (access_token) {
       req.headers.Authorization = `Bearer ${access_token}`;
+      console.log("successfully get access token");
     }
 
     // Step 2: remove cookie from header
@@ -32,9 +33,10 @@ export default function handler(req, res) {
     // /api/students
     // https://js-post-api.herokuapp.com/api/students
     proxy.web(req, res, {
-      target: "https://js-post-api.herokuapp.com/",
+      target: "https://ecommercevoyager.herokuapp.com/",
       // both has the same path api/students so just need to edit origin
       changeOrigin: true,
+      ignorePath: true,
       // proxy will handle the response, send directly to client
       // so we don't need res.status(200).json({ name: 'Math all post here' })
       selfHandleResponse: false,

@@ -5,24 +5,22 @@ import * as yup from "yup";
 
 import MainLayout from "../components/layout/main";
 import { useAuth } from "../hooks/useAuth";
+import { Stack } from "@mui/material";
 
 const schema = yup.object({
-  email: yup
-    .string()
-    .email("Vui lòng nhập một địa chỉ email hợp lệ")
-    .required("Vui lòng nhập một địa chỉ email hợp lệ"),
+  name: yup.string().required("Vui lòng nhập tên của bạn"),
   password: yup.string().required("Vui lòng nhập mật khẩu"),
 });
 
 const LoginForm = () => {
-  const { profile, login, logout } = useAuth({
+  const { login } = useAuth({
     revalidateOnMount: false,
   });
 
-  async function handleLoginClick({ email, password }) {
-    console.log(email, password);
+  async function handleLoginClick({ name, password }) {
+    console.log(name, password);
     try {
-      await login(email, password);
+      await login(name, password);
     } catch (error) {
       console.log("failed to login", error);
     }
@@ -33,6 +31,14 @@ const LoginForm = () => {
       await logout();
     } catch (error) {
       console.log("failed to logout", error);
+    }
+  }
+
+  async function handleGetUser() {
+    try {
+      await getUser();
+    } catch (error) {
+      console.log("failed to get User");
     }
   }
 
@@ -52,14 +58,14 @@ const LoginForm = () => {
     <div>
       <form onSubmit={handleSubmit(handleLoginClick)} className="flex flex-col	">
         <input
-          type="email"
-          {...register("email")}
-          placeholder="Email"
+          type="text"
+          {...register("name")}
+          placeholder="Name"
           style={{
             border: errors.email ? "1px solid red" : "1px solid #ccd0d5",
           }}
         />
-        {errors?.email && <small>{errors.email?.message}</small>}
+        {errors?.name && <small>{errors.name?.message}</small>}
 
         <input
           type="password"
@@ -82,7 +88,9 @@ const LoginForm = () => {
       {/* <button onClick={handleLoginClick}>Login</button> */}
       <button onClick={handleLogoutClick}>Logout</button>
 
-      <p>Profile: {JSON.stringify(profile || {}, null, 4)}</p>
+      <button onClick={handleGetUser}>Get User</button>
+
+      {/* <p>Profile: {JSON.stringify(profile || {}, null, 4)}</p> */}
     </div>
   );
 };
@@ -102,7 +110,7 @@ const FacebookGoogleLogin = () => {
 
 const LoginSection = () => {
   return (
-    <Stack className="flex justify-center items-start">
+    <div className="flex justify-center items-start">
       <div>
         <span className="text-5xl font-semibold">ĐĂNG NHẬP</span>
         <p>Bạn quên mật khẩu?</p>
@@ -110,7 +118,7 @@ const LoginSection = () => {
         <p>HOẶC</p>
         <FacebookGoogleLogin />
       </div>
-    </Stack>
+    </div>
   );
 };
 

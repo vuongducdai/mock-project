@@ -1,26 +1,27 @@
 import useSWR from "swr";
 import { authAPI } from "../api/auth-api";
 import axiosClient from "../api/axios-client";
+import { postLogin } from "../api/requestMethod";
 
 export function useAuth(option) {
-  const {
-    data: profile,
-    error,
-    mutate,
-  } = useSWR("/profile", (url) => axiosClient.get(url), {
-    dedupingInterval: 60 * 1000,
-    revalidateOnFocus: false,
-    ...option,
-  });
+  // const { data, error, mutate } = useSWR(
+  //   "/profile",
+  //   (url) => axiosClient.get(url),
+  //   {
+  //     dedupingInterval: 60 * 1000,
+  //     revalidateOnFocus: false,
+  //     ...option,
+  //   }
+  // );
 
-  async function login(username, password) {
-    await authAPI.login({
-      name: username,
+  async function login(name, password) {
+    await postLogin({
+      name: name,
       password: password,
     });
 
     //re-trigger request
-    await mutate();
+    // await mutate();
   }
 
   async function logout() {
@@ -29,9 +30,9 @@ export function useAuth(option) {
   }
 
   return {
-    profile,
-    error,
+    // profile,
+    // error,
     login,
-    logout,
+    // logout,
   };
 }
