@@ -1,6 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
 import {
-	Alert,
 	Box,
 	Container,
 	FormControl,
@@ -9,50 +8,85 @@ import {
 	MenuItem,
 	Paper,
 	Select,
-	Snackbar,
 	Typography,
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { removeFromCart } from '../../redux/client/cartSlice';
+import { useSWRConfig } from 'swr';
+import { useCart } from '../../api/cart';
+import {
+	BASE_URL,
+	deleteCart,
+	deleteExistProductCart,
+	updateExistProductCart,
+} from '../../api/requestMethod';
 import formatNumber from '../../utils/formatNumber';
+import mapColorData from '../../utils/mapColorData';
 import StyledDialog from '../StyledDialog';
 import StyledSelect from './StyledSelect';
 const ProductCart = ({
-	product: { id, name, color, img, material, price, size },
+	product: { _id, name, color, img, cat, price, quantityOrder },
+	cartId,
+	handleOpenNotify,
+	handleSetTitle,
 }) => {
-	const dispatch = useDispatch();
+	const { data } = useCart(7);
+	const { mutate } = useSWRConfig();
 	//Hooks for add cart successfully dialog
 	const [open, setOpen] = useState(false);
-	const [quantity, setQuantity] = useState(1);
 
-	const [openNotify, setOpenNotify] = React.useState(false);
+	const renderSizes = [...Array(10).keys()].map((item, index) => (
+		<MenuItem key={index + 1} value={index + 1}>
+			{index + 1}
+		</MenuItem>
+	));
+
 	const handleOpenDialog = () => {
 		setOpen(true);
 	};
 	const handleCloseDialog = () => {
 		setOpen(false);
 	};
-	const handleCloseNotify = () => {
-		setOpenNotify(false);
-	};
 	const handleChangeQuantity = e => {
-		setQuantity(e.target.value);
+		if (data) {
+			mutate(
+				`${BASE_URL}/cart/find/7`,
+				updateExistProductCart(data, cartId, _id, {
+					quantityOrder: Number(e.target.value),
+				}),
+				{
+					revalidate: false,
+				},
+			);
+			handleSetTitle('Số lượng đã được cập nhật');
+			handleOpenNotify();
+			setOpen(false);
+		}
 	};
 	const handleDeleteCart = id => {
-		dispatch(removeFromCart(id));
-		setOpenNotify(true);
-		setOpen(false);
+		if (data) {
+			const products = data.products.filter(item => item._id !== id);
+			if (products.length === 0) {
+				mutate(`${BASE_URL}/cart/find/7`, deleteCart(cartId), {
+					revalidate: false,
+				});
+				return;
+			}
+			mutate(
+				`${BASE_URL}/cart/find/7`,
+				deleteExistProductCart(data, cartId, _id),
+				{
+					revalidate: false,
+				},
+			);
+			handleSetTitle('Sản phẩm đã được xóa khỏi giỏ hàng');
+			handleOpenNotify();
+			setOpen(false);
+		}
 	};
 
-	const renderSizes = [...Array(10).keys()].map((_, index) => (
-		<MenuItem key={index + 1} value={index + 1}>
-			{index + 1}
-		</MenuItem>
-	));
 	return (
 		<Container maxWidth={false} disableGutters>
 			<Paper variant='outlined' square className='relative'>
@@ -72,7 +106,7 @@ const ProductCart = ({
 								width: '100%',
 								height: '100%',
 							}}>
-							<Link href={`/products/${id}`}>
+							<Link href={`/products/${_id}`}>
 								<a>
 									<Image
 										src={img}
@@ -94,7 +128,9 @@ const ProductCart = ({
 									sx={{
 										textTransform: 'uppercase',
 									}}>
-									<Link href={`/products/${id}`}>{name}</Link>
+									<Link href={`/products/${_id}`}>
+										{name}
+									</Link>
 								</Typography>
 								<Typography className='font-medium'>
 									{formatNumber(price)}
@@ -104,7 +140,13 @@ const ProductCart = ({
 								sx={{
 									textTransform: 'uppercase',
 								}}>
-								{color}
+								{mapColorData(color)}
+							</Typography>
+							<Typography
+								sx={{
+									textTransform: 'uppercase',
+								}}>
+								{cat}
 							</Typography>
 							<Typography
 								sx={{
@@ -121,7 +163,7 @@ const ProductCart = ({
 								<Select
 									labelId='demo-customized-select-label'
 									id='demo-customized-select'
-									value={quantity}
+									value={Number(quantityOrder)}
 									onChange={handleChangeQuantity}
 									input={<StyledSelect />}
 									MenuProps={{
@@ -153,24 +195,8 @@ const ProductCart = ({
 				isDelete={true}
 				hasContent={false}
 				onClose={handleCloseDialog}
-				onDelete={() => handleDeleteCart(id)}
+				onDelete={() => handleDeleteCart(_id)}
 			/>
-			<Snackbar
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'right',
-				}}
-				open={openNotify}
-				autoHideDuration={3000}
-				onClose={handleCloseNotify}>
-				<Alert
-					onClose={handleCloseNotify}
-					variant='filled'
-					severity='success'
-					sx={{ width: '100%' }}>
-					Xoá sản phẩm thành công
-				</Alert>
-			</Snackbar>
 		</Container>
 	);
 };

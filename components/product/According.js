@@ -84,7 +84,7 @@ const StyledAccordionSummary = styled(MuiAccordionSummary)(({ theme }) => ({
 	},
 }));
 
-export default function According() {
+export default function According({ img }) {
 	const renderGuides = guides.map(({ id, icon, title }, index) => (
 		<Grid
 			item
@@ -156,7 +156,7 @@ export default function According() {
 						</Grid>
 						<Grid item xs={12} md my='auto'>
 							<Image
-								src='http://loremflickr.com/640/480/city'
+								src={img}
 								alt='pro'
 								layout='responsive'
 								width='100%'
