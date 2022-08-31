@@ -2,9 +2,10 @@ import axios from "axios";
 import Cookies from "cookies";
 import { resolveHref } from "next/dist/shared/lib/router/router";
 import { useState } from "react";
+import axiosClient from "./axios-client";
 
-const BASE_URL = "https://ecommercevoyager.herokuapp.com/";
-// const BASE_URL = 'http://localhost:8000';
+// const BASE_URL = "https://ecommercevoyager.herokuapp.com/";
+const BASE_URL = "http://localhost:8000";
 
 let user;
 if (typeof window !== "undefined") {
@@ -35,21 +36,11 @@ export const deleteProduct = (id) => publicRequest.delete(`/product/${id}`);
 export const postRegister = (form) =>
   publicRequest.post("/auth/register", form);
 export const postLogin = (form) =>
-  publicRequest
-    .post(`api/auth/login`, form)
-    .then((res) => {
-      // const cookies = new Cookies(res.request, res);
-      // const access_token = cookies.get("access_token");
-      // if (access_token) {
-      //   console.log("successfully get access token", access_token);
-      // }
-      console.log(res);
-    })
-    .catch((error) => console.log(error));
+  axiosClient.post(`/login`, form).then((res) => console.log(res.data));
 
 // Users
 export const getUsers = () =>
-  userRequest.get("/user").then((res) => console.log(res));
+  userRequest.get("/api/user").then((res) => console.log(res));
 export const patchUser = (data) =>
   publicRequest.patch(`/user/${data.id}`, data.form);
 export const deleteUser = (id) => publicRequest.delete(`/user/${id}`);

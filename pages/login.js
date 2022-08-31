@@ -1,11 +1,11 @@
-import React from "react";
-import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import React from "react";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { useRouter } from "next/router";
 
 import MainLayout from "../components/layout/main";
 import { useAuth } from "../hooks/useAuth";
-import { Stack } from "@mui/material";
 
 const schema = yup.object({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
@@ -13,14 +13,15 @@ const schema = yup.object({
 });
 
 const LoginForm = () => {
-  const { login } = useAuth({
-    revalidateOnMount: false,
-  });
+  const router = useRouter();
+  const { data, login, getUser, getCart } = useAuth();
 
   async function handleLoginClick({ name, password }) {
     console.log(name, password);
     try {
       await login(name, password);
+      console.log("redirect to index");
+      router.push("/");
     } catch (error) {
       console.log("failed to login", error);
     }
@@ -38,7 +39,15 @@ const LoginForm = () => {
     try {
       await getUser();
     } catch (error) {
-      console.log("failed to get User");
+      console.log("failed to get User", error);
+    }
+  }
+
+  async function handleGetCart() {
+    try {
+      await getCart();
+    } catch (error) {
+      console.log("failed to get cart", error);
     }
   }
 
@@ -89,6 +98,8 @@ const LoginForm = () => {
       <button onClick={handleLogoutClick}>Logout</button>
 
       <button onClick={handleGetUser}>Get User</button>
+
+      <button onClick={handleGetCart}>Get Cart</button>
 
       {/* <p>Profile: {JSON.stringify(profile || {}, null, 4)}</p> */}
     </div>
