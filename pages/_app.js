@@ -3,11 +3,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import EmptyLayout from "../components/layout/empty";
 import { persistor, store } from "../redux/store";
 import "../styles/globals.css";
-
 import { CacheProvider } from "@emotion/react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
-import Head from "next/head";
 import PropTypes from "prop-types";
 import * as React from "react";
 import createEmotionCache from "../utils/createEmotionCache";
@@ -17,34 +15,30 @@ import theme from "../utils/theme";
 const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+      const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-  const Layout = Component.Layout ?? EmptyLayout;
+      const Layout = Component.Layout ?? EmptyLayout;
 
-  return (
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
+      return (
+            <CacheProvider value={emotionCache}>
+                  <ThemeProvider theme={theme}>
+                        <CssBaseline />
 
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. Make sure persistent style for all type
-            of browsers*/}
-        <CssBaseline />
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </PersistGate>
-        </Provider>
-      </ThemeProvider>
-    </CacheProvider>
-  );
+                        <Provider store={store}>
+                              <PersistGate loading={null} persistor={persistor}>
+                                    <Layout>
+                                          <Component {...pageProps} />
+                                    </Layout>
+                              </PersistGate>
+                        </Provider>
+
+                  </ThemeProvider>
+            </CacheProvider>
+      );
 }
 
 MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  emotionCache: PropTypes.object,
-  pageProps: PropTypes.object.isRequired,
+      Component: PropTypes.elementType.isRequired,
+      emotionCache: PropTypes.object,
+      pageProps: PropTypes.object.isRequired,
 };

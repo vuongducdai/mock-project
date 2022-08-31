@@ -24,7 +24,7 @@ const toolbarSlice = createSlice({
                   state.formData = action.payload
             },
             clearFormData: (state, action) => {
-                  state.formData = {};
+                  state.formData = { isAdmin: false, size: '', color: '', cat: '' };
             }
       },
 });
