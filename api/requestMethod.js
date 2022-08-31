@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 
-const BASE_URL = "https://ecommercevoyager.herokuapp.com/";
-// const BASE_URL = 'http://localhost:8000';
+// const BASE_URL = "https://ecommercevoyager.herokuapp.com/api/";
+const BASE_URL = 'http://localhost:8000/api';
 
 let user;
 if (typeof window !== 'undefined') {
@@ -14,11 +14,6 @@ const TOKEN = currentUser?.accessToken;
 
 const publicRequest = axios.create({
       baseURL: BASE_URL,
-});
-
-export const userRequest = axios.create({
-      baseURL: BASE_URL,
-      header: { token: `Bearer ${TOKEN}` },
 });
 
 // Products
