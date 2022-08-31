@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const BASE_URL = "https://ecommercevoyager.herokuapp.com/";
+export const BASE_URL = "https://ecommercevoyager.herokuapp.com/api";
 // const BASE_URL = 'http://localhost:8000';
 
 let user;
@@ -23,6 +23,7 @@ export const userRequest = axios.create({
 
 // Products
 export const getProducts = () => publicRequest.get('/product')
+export const getProductsPage = (page) => publicRequest.get(`/product/pages?page=${page}`)
 export const getProduct = (id) => publicRequest.get(`/product/${id}`)
 
 export const postProduct = (form) => publicRequest.post('/product', form)
