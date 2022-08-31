@@ -9,16 +9,14 @@ import 'swiper/css/pagination';
 import {
 	arrCatProduct,
 	arrColor,
-	arrSize,
 	arrTitleFilter,
 	arrTitleSortBy,
+	sizes,
 } from '../../constants/data';
 import ProductCard from '../ProductCard';
 import ItemDrawer from './ItemDrawer';
 
 export default function ListProductComponent({ arrProduct }) {
-	console.log('pagination 5', arrProduct);
-
 	const [result, setResult] = useState();
 
 	const [titleActive, setTitleActive] = useState(1);
@@ -89,7 +87,7 @@ export default function ListProductComponent({ arrProduct }) {
 	};
 
 	const handleFilterAll = () => {
-		const final = arrProduct.filter(item => {
+		const final = arrProduct?.filter(item => {
 			const booleanResult =
 				(sizeActive !== 0 ? item.size === sizeActive : true) &&
 				(checkedColor.length !== 0
@@ -112,7 +110,7 @@ export default function ListProductComponent({ arrProduct }) {
 
 	useEffect(() => {
 		setResult([...arrProduct]);
-	}, []);
+	}, [arrProduct]);
 
 	const renderTitleFilter = () => {
 		return arrTitleFilter.map(title => (
@@ -152,15 +150,15 @@ export default function ListProductComponent({ arrProduct }) {
 	const renderSizeList = () => {
 		return (
 			<div className='flex flex-wrap'>
-				{arrSize.map(size => (
+				{sizes.map(size => (
 					<div
-						onClick={() => setSizeActive(size.id)}
+						onClick={() => setSizeActive(+size.id)}
 						className={`${
 							sizeActive === size.id ? 'border-black' : ''
 						}
                            text-center py-4 w-28 border cursor-pointer hover:border-black`}
 						key={size.id}>
-						{size.content}
+						{size.size}
 					</div>
 				))}
 			</div>

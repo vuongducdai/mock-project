@@ -55,3 +55,28 @@
             transform: translateX(-100px);
       }
 }
+
+.react-multiple-carousel__arrow--right {
+      right: calc(0.5% + 1px) !important;
+      overflow: visible !important;
+      bottom: 63% !important;
+}
+.react-multiple-carousel__arrow--left {
+      left: calc(0.5% + 1px) !important;
+      overflow: visible !important;
+      bottom: 63% !important;
+}
+
+.react-multiple-carousel__arrow {
+      overflow: auto !important;
+}
+.react-multiple-carousel__arrow {
+      background-color: #fff !important;
+      border-radius: 1px !important;
+      width: 50px !important;
+      height: 25px !important;
+}
+.react-multiple-carousel__arrow:hover {
+      background-color: #fff !important;
+    
+}

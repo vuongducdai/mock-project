@@ -1,3 +1,6 @@
+import { Container } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import Head from 'next/head';
 import React, { useState } from 'react';
 import 'react-multi-carousel/lib/styles.css';
@@ -5,18 +8,25 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import useSWR from 'swr';
 import { BASE_URL, fetcher } from '../api/requestMethod';
+import { BannerCarousel } from '../components/client/BannerCarousel';
 import ListProductComponent from '../components/client/ListProductComponent';
 import LoadingProduct from '../components/client/LoadingProduct';
-import PaginationData from '../components/client/Pagination';
+import Slider from '../components/client/Slider';
 import MainLayout from '../components/layout/main';
 
 export default function Home(props) {
 	const [page, setPage] = useState(1);
 
-	const { data, isValidating } = useSWR(`${BASE_URL}/product`, fetcher);
+	const { data, isValidating } = useSWR(
+		`${BASE_URL}/product/pages?page=${page}`,
+		fetcher,
+		{
+			dedupingInterval: 15000,
+		},
+	);
 
-	const handlePagination = number => {
-		setPage(number);
+	const handlePagination = (event, value) => {
+		setPage(value);
 	};
 
 	return (
@@ -29,37 +39,60 @@ export default function Home(props) {
 				/>
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			{/* <BannerCarousel /> */}
-			{/* <Slider arrProduct={props.listProduct.slice(0, 8)} /> */}
+			<BannerCarousel />
 			{isValidating ? (
 				<LoadingProduct />
 			) : (
-				<ListProductComponent arrProduct={data} />
+				<>{data && <Slider arrProduct={data?.data.slice(0, 8)} />}</>
 			)}
 			{isValidating ? (
 				<LoadingProduct />
 			) : (
-				<PaginationData
-					totalProduct={data?.length}
-					handlePagination={handlePagination}
-				/>
+				<>{data && <ListProductComponent arrProduct={data?.data} />}</>
+			)}
+			{isValidating ? (
+				<LoadingProduct />
+			) : (
+				<>
+					{data && (
+						<Container>
+							<div className=' mb-4 flex flex-row justify-center'>
+								<div className='flex justify-between items-center'>
+									<div className='w-26 mx-4'>
+										<Stack>
+											<Pagination
+												page={page}
+												onChange={handlePagination}
+												count={Math.ceil(
+													data?.data.length / 10,
+												)}
+												variant='outlined'
+												color='secondary'
+											/>
+										</Stack>
+									</div>
+								</div>
+							</div>
+						</Container>
+					)}
+				</>
 			)}
 		</>
 	);
+
+	// const handleClickFacebook = () => {
+	//   console.log("clicked")
+	// }
+
+	// const handleResponeFacebook = (res) => {
+	//   console.log("res face", res);
+	// }
+
+	// const FaceBook = () => {
+	//   return (
+	//     <ReactFacebookLogin appId="756969712084319" autoLoad={true} fields='name, email, picture' onClick={handleClickFacebook} callback={handleResponeFacebook} />
+	//   )
+	// }
 }
-
-// export async function getServerSideProps(page) {
-//   const res = await axios.get(
-//     `https://63030a4dc6dda4f287c1d8d4.mockapi.io/product?page=${page}&limit=10`
-//   );
-//   const data = res.data;
-
-//   return {
-//     props: {
-//       listProduct: data.products,
-//       count: data.count,
-//     },
-//   };
-// }
 
 Home.Layout = MainLayout;
