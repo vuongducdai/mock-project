@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { useRouter } from "next/router";
+import { default as React } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import * as yup from "yup";
+import axiosClient from "../api/axios-client";
+import Google from "../components/auth/Google";
 import MainLayout from "../components/layout/main";
 import { useAuth } from "../hooks/useAuth";
-import { Stack } from "@mui/material";
-import Google from "../components/auth/Google";
-import { useSelector } from "react-redux";
+import { updateUserFromLogin } from "../redux/admin/userSlice";
 
 const schema = yup.object({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
@@ -19,13 +18,18 @@ const schema = yup.object({
 const LoginForm = () => {
   const router = useRouter();
   const { data, login, getUser, getCart } = useAuth();
+  const { user } = useSelector((state) => state.userSlice);
+  const dispatch = useDispatch();
 
   async function handleLoginClick({ name, password }) {
     console.log(name, password);
     try {
-      await login(name, password);
+      axiosClient.post("/login", { name, password }).then((res) => {
+        dispatch(updateUserFromLogin(res.data));
+        console.log(res.data);
+      });
+
       console.log("redirect to index");
-      router.push("/");
     } catch (error) {
       console.log("failed to login", error);
     }
@@ -105,7 +109,7 @@ const LoginForm = () => {
 
       <button onClick={handleGetCart}>Get Cart</button>
 
-      {/* <p>Profile: {JSON.stringify(profile || {}, null, 4)}</p> */}
+      <p>Profile: {JSON.stringify(user || {}, null, 4)}</p>
     </div>
   );
 };

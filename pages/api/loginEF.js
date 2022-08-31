@@ -28,19 +28,31 @@ export default function handler(req, res) {
     // don't send cookies to API server
     req.headers.cookie = "";
 
-    req.url = "api/auth/login";
+    const handleLoginResponse = (proxyRes, req, res) => {
+      let body = "";
+
+      proxy.on("proxyRes", function (proxyRes, req, res) {
+        var body = [];
+        proxyRes.on("data", function (chunk) {
+          body.push(chunk);
+        });
+        proxyRes.on("end", function () {
+          body = Buffer.concat(body).toString();
+          console.log("res from proxied server:", body);
+          res.end("my response to cli");
+        });
+      });
+    };
 
     proxy.web(req, res, {
       target: TARGET_URL,
       // both has the same path api/students so just need to edit origin
       changeOrigin: true,
       // in login case, we want to handle the response.
-      selfHandleResponse: false,
+      selfHandleResponse: true,
     });
 
-    proxy.once("proxyRes", () => {
-      resolve(true);
-    });
+    proxy.once("proxyRes", handleLoginResponse);
 
     //res.status(200).json({ name: 'Math all post here' })
   });

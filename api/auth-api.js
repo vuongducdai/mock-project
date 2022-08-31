@@ -1,8 +1,13 @@
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserFromLogin } from "../redux/admin/userSlice";
 import axiosClient from "./axios-client";
 
 export const authAPI = {
   login(payload) {
     return axiosClient.post("/login", payload).then((res) => {
+      // const dispatch = useDispatch();
+      // dispatch(updateUserFromLogin(res.data));
+
       console.log(res.data);
     });
   },
@@ -12,7 +17,12 @@ export const authAPI = {
   },
 
   getUser() {
-    return axiosClient.get("/user").then((res) => console.log(res.data));
+    return axiosClient
+      .get("/user")
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => console.log("Error while login", error));
   },
 
   logout() {
