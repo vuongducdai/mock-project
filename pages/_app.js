@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 import * as React from "react";
 import createEmotionCache from "../utils/createEmotionCache";
 import theme from "../utils/theme";
-import { SessionProvider } from "next-auth/react";
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
