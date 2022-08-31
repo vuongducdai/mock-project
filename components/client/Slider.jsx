@@ -9,7 +9,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import ProductCard from '../ProductCard';
 
-
 export default function Slider({ arrProduct }) {
 	const CustomDot = ({ onMove, index, onClick, active }) => {
 		return (
@@ -22,10 +21,18 @@ export default function Slider({ arrProduct }) {
 	};
 
 	const CustomLeftArrow = ({ onClick }) => (
-		<WestTwoToneIcon fontSize="small" onClick={() => onClick()} className="text-center react-multiple-carousel__arrow react-multiple-carousel__arrow--left" />
+		<WestTwoToneIcon
+			fontSize='small'
+			onClick={() => onClick()}
+			className='text-center react-multiple-carousel__arrow react-multiple-carousel__arrow--left'
+		/>
 	);
 	const CustomRightArrow = ({ onClick }) => (
-		<EastTwoToneIcon fontSize="small" onClick={() => onClick()} className="text-center react-multiple-carousel__arrow react-multiple-carousel__arrow--right" />
+		<EastTwoToneIcon
+			fontSize='small'
+			onClick={() => onClick()}
+			className='text-center react-multiple-carousel__arrow react-multiple-carousel__arrow--right'
+		/>
 	);
 
 	const responsive = {
@@ -64,8 +71,8 @@ export default function Slider({ arrProduct }) {
 				transitionDuration={500}
 				containerClass='carousel-container'
 				removeArrowOnDeviceType={['tablet', 'mobile']}>
-				{arrProduct.map((item) => {
-					return <ProductCard key={item.id} item={item} />;
+				{arrProduct.map(item => {
+					return <ProductCard key={item._id} item={item} />;
 				})}
 			</Carousel>
 		);
@@ -83,26 +90,29 @@ export default function Slider({ arrProduct }) {
 			<Box className='flex border-y-2 mb-4'>
 				<span
 					onClick={() => handleSetListActive(1)}
-					className={`p-2 cursor-pointer text-neutral-500 ${listActive === 1
-						? 'border-b-2 border-b-black text-black'
-						: ''
-						} hover:border-b-2 border-b-black`}>
+					className={`p-2 cursor-pointer text-neutral-500 ${
+						listActive === 1
+							? 'border-b-2 border-b-black text-black'
+							: ''
+					} hover:border-b-2 border-b-black`}>
 					Hàng mới về
 				</span>
 				<span
 					onClick={() => handleSetListActive(2)}
-					className={`p-2 cursor-pointer text-neutral-500 ${listActive === 2
-						? 'border-b-2 border-b-black text-black'
-						: ''
-						} hover:border-b-2 border-b-black`}>
+					className={`p-2 cursor-pointer text-neutral-500 ${
+						listActive === 2
+							? 'border-b-2 border-b-black text-black'
+							: ''
+					} hover:border-b-2 border-b-black`}>
 					Tinh hoa adidas
 				</span>
 				<span
 					onClick={() => handleSetListActive(3)}
-					className={`p-2 cursor-pointer text-neutral-500 ${listActive === 3
-						? 'border-b-2 border-b-black ext-black'
-						: ''
-						} hover:border-b-2 border-b-black`}>
+					className={`p-2 cursor-pointer text-neutral-500 ${
+						listActive === 3
+							? 'border-b-2 border-b-black ext-black'
+							: ''
+					} hover:border-b-2 border-b-black`}>
 					Sắp có
 				</span>
 			</Box>

@@ -56,7 +56,7 @@ export default function Home(props) {
 				<>
 					{data && (
 						<Container>
-							<div className=' mb-4 flex flex-row justify-center'>
+							<div className='mb-4 flex flex-row justify-center'>
 								<div className='flex justify-between items-center'>
 									<div className='w-26 mx-4'>
 										<Stack>
