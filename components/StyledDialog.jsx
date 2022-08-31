@@ -8,6 +8,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
+import formatNumber from '../utils/formatNumber';
+import mapColorData from '../utils/mapColorData';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 	'& .MuiDialogContent-root': {
@@ -83,16 +85,14 @@ const StyledDialog = ({
 									height='111px'
 								/>
 							</div>
-							<div className='m-[5px] border-r'>
+							<div className='grow m-[5px]'>
 								<p>{name}</p>
-								<p>{price}</p>
-								<p>{color}</p>
+								<p>{formatNumber(price)}</p>
+								<p className='uppercase'>
+									{mapColorData(color)}
+								</p>
+								<p>1 sản phẩm</p>
 							</div>
-						</div>
-						<div className='basis-0 grow m-[5px]'>
-							<div>Giỏ hàng của bạn</div>
-							<div>{count} mặt hàng</div>
-							<div>Tổng Giá Trị Sản Phẩm:</div>
 						</div>
 					</div>
 				</DialogContent>
@@ -122,8 +122,8 @@ const StyledDialog = ({
 						</Button>
 					</>
 				) : (
-					<Button autoFocus onClick={onClose}>
-						Save changes
+					<Button autoFocus variant='contained' onClick={onClose}>
+						OKE
 					</Button>
 				)}
 			</DialogActions>

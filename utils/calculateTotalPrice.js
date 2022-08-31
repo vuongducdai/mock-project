@@ -1,6 +1,7 @@
 export default function calculateTotalPrice(cart) {
 	if (!Array.isArray(cart)) return 0;
-	return cart.reduce((acc, item) => {
-		return acc + +item.quantity * +item.price;
+	const totalPrice = cart.reduce((acc, item) => {
+		return acc + Number(item.quantityOrder) * Number(item.price);
 	}, 0);
+	return totalPrice;
 }
