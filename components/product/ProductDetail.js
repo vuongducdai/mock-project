@@ -12,7 +12,14 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { mutate } from 'swr';
+import { useCart } from '../../api/cart';
+import {
+	BASE_URL,
+	createCart,
+	updateCart,
+	updateExistProductCart,
+} from '../../api/requestMethod';
 import formatNumber from '../../utils/formatNumber';
 import mapColorData from '../../utils/mapColorData';
 import BlackButton from '../BlackButton';
@@ -21,37 +28,72 @@ import According from './According';
 import { BreadCrumb } from './StyledBreadcrumb';
 
 const ProductDetail = ({ productProps }) => {
-	const { name, img, price, color, size, quantity, material, id } =
-		productProps;
-	const dispatch = useDispatch();
-	const { count } = useSelector(state => state.cartSlice);
-
+	const { name, img, price, color, size, quantity, cat, _id } = productProps;
+	const { data } = useCart(7);
 	//Hooks for add cart successfully dialog
 	const [open, setOpen] = React.useState(false);
+	const [isAdding, setIsAdding] = React.useState(false);
 
 	const handleClickOpenDialog = () => {
 		setOpen(true);
 	};
 	const handleCloseDialog = () => {
 		setOpen(false);
+		setIsAdding(false);
 	};
 
 	const handleClick = () => {
-		const data = {
+		//Open add cart successfully dialog
+		setOpen(true);
+		setIsAdding(true);
+
+		const productOrder = {
+			productId: _id,
 			name,
 			price,
 			color,
 			size,
 			quantity,
-			material,
+			quantityOrder: 1,
+			cat,
 			img,
 		};
-		console.log(data);
+		let products;
+		if (!data || !data?.products) {
+			products = [productOrder];
+			const newCart = {
+				userId: 7,
+				products,
+			};
+			mutate(`${BASE_URL}/cart/find/7`, createCart(newCart));
+		} else {
+			let isExist = false;
+			const filterProduct = data?.products.map(product => {
+				if (product._id === _id) {
+					isExist = true;
+					return productOrder;
+				}
+				return product;
+			});
 
-		//Open add cart successfully dialog
-		setOpen(true);
+			if (!isExist) {
+				products = [...filterProduct, productOrder];
+
+				mutate(
+					`${BASE_URL}/cart/find/7`,
+					updateCart(products, data._id),
+				);
+			} else {
+				mutate(
+					`${BASE_URL}/cart/find/7`,
+					updateExistProductCart(data, data._id, _id),
+					{
+						revalidate: false,
+					},
+				);
+			}
+		}
 	};
-
 	return (
 		<div>
 			<Container fixed maxWidth={false} disableGutters={true}>
@@ -129,6 +171,13 @@ const ProductDetail = ({ productProps }) => {
 									</Typography>
 								</Box>
 								<Box mt={2}>
+									<Typography
+										color='text.primary'
+										sx={{
+											textTransform: 'uppercase',
+										}}>
+										{cat}
+									</Typography>
 									<Breadcrumbs aria-label='breadcrumb'>
 										<Typography
 											color='text.primary'
@@ -137,8 +186,6 @@ const ProductDetail = ({ productProps }) => {
 											}}>
 											{mapColorData(color)}
 										</Typography>
-										{/* <Typography color="text.primary">Purple Rush</Typography>
-                  <Typography color="text.primary">Sky Rush</Typography> */}
 									</Breadcrumbs>
 								</Box>
 								{/* <Box mt={4}>
@@ -155,17 +202,19 @@ const ProductDetail = ({ productProps }) => {
 									</Stack>
 								</Box> */}
 								<Box mt={3}>
-									<BlackButton
-										title='Thêm vào giỏ hàng'
-										onClick={handleClick}
-										className='w-4/5'
-									/>
-									<BlackButton
-										title='Thêm vào giỏ hàng test'
-										onClick={handleClick}
-										className='w-4/5'
-										isLoading={true}
-									/>
+									{isAdding ? (
+										<BlackButton
+											title='	ĐANG THÊM ...'
+											className='w-4/5'
+											isLoading={true}
+										/>
+									) : (
+										<BlackButton
+											title='Thêm vào giỏ hàng'
+											onClick={handleClick}
+											className='w-4/5'
+										/>
+									)}
 								</Box>
 								<Box
 									mt={6}

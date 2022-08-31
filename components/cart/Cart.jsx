@@ -1,17 +1,20 @@
 import AddIcon from '@mui/icons-material/Add';
 import {
+	Alert,
 	Divider,
 	Grid,
 	InputAdornment,
 	Paper,
+	Snackbar,
 	Stack,
 	Typography,
 } from '@mui/material';
 import { Container } from '@mui/system';
 import Image from 'next/image';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 // import { useSelector } from 'react-redux';
 import { useCart } from '../../api/cart';
+import calculateQuantityCart from '../../utils/calculateQuantityCart';
 import calculateTotalPrice from '../../utils/calculateTotalPrice';
 import formatNumber from '../../utils/formatNumber';
 import BlackButton from '../BlackButton';
@@ -20,16 +23,37 @@ import ProductCart from './ProductCart';
 import CssTextField from './StyledTextField';
 
 const Cart = () => {
+	const [title, setTitle] = useState('');
+	const [openNotify, setOpenNotify] = useState(false);
 	const { data, isValidating } = useCart(7);
 	const products = data?.products;
 	const totalPrice = useMemo(() => {
 		if (products) return calculateTotalPrice(products);
 	}, [products]);
 	const quantityOrder = products?.length;
+
+	const handleSetTitle = title => {
+		setTitle(title);
+	};
+
+	const handleCloseNotify = () => {
+		setOpenNotify(false);
+	};
+
+	const handleOpenNotify = () => {
+		setOpenNotify(true);
+	};
+
 	const renderCart =
 		products &&
 		products.map(item => (
-			<ProductCart key={item._id} product={item} cartId={data._id} />
+			<ProductCart
+				key={item._id}
+				product={item}
+				cartId={data._id}
+				handleOpenNotify={handleOpenNotify}
+				handleSetTitle={handleSetTitle}
+			/>
 		));
 
 	return (
@@ -72,8 +96,11 @@ const Cart = () => {
 											alignItems='flex-start'
 											spacing={1}>
 											<Typography gutterBottom>
-												TỔNG CỘNG ({products.length} sản
-												phẩm)
+												TỔNG CỘNG (
+												{calculateQuantityCart(
+													products,
+												)}{' '}
+												sản phẩm)
 											</Typography>
 											<Typography
 												gutterBottom
@@ -158,7 +185,10 @@ const Cart = () => {
 												justifyContent='space-between'
 												alignItems='center'>
 												<Typography gutterBottom>
-													{products.length} SẢN PHẨM
+													{calculateQuantityCart(
+														products,
+													)}{' '}
+													SẢN PHẨM
 												</Typography>
 												<Typography gutterBottom>
 													{formatNumber(totalPrice)}
@@ -235,6 +265,22 @@ const Cart = () => {
 						)}
 					</Grid>
 				</Grid>
+				<Snackbar
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'right',
+					}}
+					open={openNotify}
+					autoHideDuration={3000}
+					onClose={handleCloseNotify}>
+					<Alert
+						onClose={handleCloseNotify}
+						variant='filled'
+						severity='success'
+						sx={{ width: '100%' }}>
+						{title}
+					</Alert>
+				</Snackbar>
 			</Container>
 		</>
 	);

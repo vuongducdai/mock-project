@@ -4,7 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import useSWR from 'swr';
-import { fetcher, SERVER_URL } from '../api/requestMethod';
+import { BASE_URL, fetcher } from '../api/requestMethod';
 import ListProductComponent from '../components/client/ListProductComponent';
 import LoadingProduct from '../components/client/LoadingProduct';
 import PaginationData from '../components/client/Pagination';
@@ -13,7 +13,7 @@ import MainLayout from '../components/layout/main';
 export default function Home(props) {
 	const [page, setPage] = useState(1);
 
-	const { data, isValidating } = useSWR(`${SERVER_URL}/product`, fetcher);
+	const { data, isValidating } = useSWR(`${BASE_URL}/product`, fetcher);
 
 	const handlePagination = number => {
 		setPage(number);

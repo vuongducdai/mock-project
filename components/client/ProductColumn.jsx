@@ -33,18 +33,16 @@ const ProductCard = ({ id, img, name, price, quantityOrder }) => {
 };
 
 export const ProductColumn = ({ productList }) => {
-	const productListJSX = productList
-		.slice(0, 4)
-		.map((item, index) => (
-			<ProductCard
-				id={item.id}
-				key={item.name + index}
-				img={item.img}
-				name={item.name}
-				price={item.price}
-				quantityOrder={item.quantityOrder}
-			/>
-		));
+	const productListJSX = productList.map((item, index) => (
+		<ProductCard
+			id={item._id}
+			key={item.name + index}
+			img={item.img}
+			name={item.name}
+			price={item.price}
+			quantityOrder={item.quantityOrder}
+		/>
+	));
 	return (
 		<Stack p={'5px'}>
 			<Typography variant='h6' align='left'>

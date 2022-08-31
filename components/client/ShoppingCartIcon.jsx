@@ -4,6 +4,7 @@ import { Badge, Box, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useCart } from '../../api/cart';
+import calculateQuantityCart from '../../utils/calculateQuantityCart';
 import BlackButton from '../BlackButton';
 import { ProductColumn } from './ProductColumn';
 
@@ -41,7 +42,7 @@ const ShoppingCartFlyout = ({ productList }) => {
 			px={'30px'}
 			py={'20px'}
 			className='drop-shadow-xl'>
-			{productList.length !== 0 ? (
+			{productList && productList.length !== 0 ? (
 				<HasItemCart productList={productList} />
 			) : (
 				<EmptyCart />
@@ -52,9 +53,7 @@ const ShoppingCartFlyout = ({ productList }) => {
 
 export const ShoppingCartIcon = () => {
 	const [openCart, setOpenCart] = useState(false);
-	// const productList = useSelector(getCartList);
 	const { data } = useCart(7);
-
 	const productList = data?.products;
 
 	const handleClick = () => {
@@ -77,8 +76,8 @@ export const ShoppingCartIcon = () => {
 				<ClickAwayListener onClickAway={handleClickAway}>
 					<Box>
 						<Badge
-							badgeContent={productList?.length}
-							max={10}
+							badgeContent={calculateQuantityCart(productList)}
+							max={50}
 							color='primary'>
 							<ShoppingBagOutlinedIcon onClick={handleClick} />
 						</Badge>

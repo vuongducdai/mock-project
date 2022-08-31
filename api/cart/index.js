@@ -1,17 +1,9 @@
 import useSWR from 'swr';
-import publicRequest, {
-	fetcher,
-	serverRequest,
-	SERVER_URL,
-} from '../requestMethod';
-
-const getCartList = userId => {
-	return publicRequest.get(`cart/find/${userId}`);
-};
+import publicRequest, { BASE_URL, fetcher } from '../requestMethod';
 
 export function useCart(id) {
 	const { data, error, isValidating } = useSWR(
-		`${SERVER_URL}/cart/find/${id}`,
+		`${BASE_URL}/cart/find/${id}`,
 		fetcher,
 	);
 
@@ -22,15 +14,24 @@ export function useCart(id) {
 		isValidating,
 	};
 }
-export async function removeItemCart(data, products, cartId) {
-	await serverRequest.patch(`/cart/${cartId}`, products);
+const getCartList = userId => {
+	return publicRequest.get(`cart/find/${userId}`);
+};
 
-	return { ...data, products };
-}
+// export async function createCart(data) {
+// 	await serverRequest.post(`/cart`);
 
-export async function deleteCart(cartId) {
-	await serverRequest.delete(`/cart/${cartId}`);
-	return undefined;
-}
+// 	return data;
+// }
+// export async function updateCart(data, products, cartId) {
+// 	await serverRequest.patch(`/cart/${cartId}`, products);
+
+// 	return { ...data, products };
+// }
+
+// export async function deleteCart(cartId) {
+// 	await serverRequest.delete(`/cart/${cartId}`);
+// 	return undefined;
+// }
 
 export default { getCartList };

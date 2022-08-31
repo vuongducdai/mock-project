@@ -17,6 +17,8 @@ import ProductCard from '../ProductCard';
 import ItemDrawer from './ItemDrawer';
 
 export default function ListProductComponent({ arrProduct }) {
+	console.log('pagination 5', arrProduct);
+
 	const [result, setResult] = useState();
 
 	const [titleActive, setTitleActive] = useState(1);
@@ -172,15 +174,14 @@ export default function ListProductComponent({ arrProduct }) {
 					<div
 						key={cat._id}
 						onClick={() => {
-							handleCheckCat(cat._id);
+							handleCheckCat(cat.id);
 						}}
 						className='p-2 cursor-pointer'>
 						<Checkbox
-							checked={checkedCat.includes(cat._id)}
+							checked={checkedCat.includes(cat.id)}
 							sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
 						/>
-						{cat.name}
-						{/* ({ cat.quantity }) */}
+						{cat.content} ({cat.quantity})
 					</div>
 				))}
 			</div>
