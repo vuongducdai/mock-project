@@ -40,6 +40,11 @@ const initialState = {
 const userSlice = createSlice({
       name: "user",
       initialState,
+      reducers:{
+            googleLogin(state,action) {
+                  state.user = action.payload
+            },
+      },
       extraReducers: (builder) => {
             // GET USER LIST
             builder.addCase(getUsersList.pending, (state, action) => {
@@ -87,5 +92,5 @@ const userSlice = createSlice({
             });
       },
 });
-
+export const {googleLogin} = userSlice.actions
 export default userSlice.reducer;

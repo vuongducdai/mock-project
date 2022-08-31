@@ -1,12 +1,12 @@
 import React from "react";
-import Facebook from '../../../components/auth/Facebook'
+import Facebook from "../../../components/auth/Facebook";
+import Google from "../../../components/auth/Google";
 
 const Login = () => {
- 
-
   return (
     <div>
-      <Facebook/>
+      <Google />
+      <Facebook />
     </div>
   );
 };
