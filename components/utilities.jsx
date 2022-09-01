@@ -12,6 +12,19 @@ import { Controller } from "react-hook-form";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
+import CheckIcon from "@mui/icons-material/Check";
+import { Box } from "@mui/system";
+
+export const CheckedIconTypography = ({ text }) => {
+  return (
+    <Stack direction="row">
+      <Box paddingLeft="15px" paddingRight="5px">
+        <CheckIcon />
+      </Box>
+      <Typography>{text}</Typography>
+    </Stack>
+  );
+};
 
 export const WhiteButton = styled(Button)({
   borderColor: "#000000",

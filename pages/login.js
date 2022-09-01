@@ -13,10 +13,12 @@ import { updateUserFromLogin } from "../redux/admin/userSlice";
 import BlackButton from "../components/BlackButton";
 
 import {
+  CheckedIconTypography,
   FacebookButton,
   InputField,
   PasswordInputField,
 } from "../components/utilities";
+import Image from "next/image";
 
 const schema = yup.object({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
@@ -141,27 +143,44 @@ const LoginSection = () => {
 };
 
 const SignUpSection = () => {
+  const signUpText = [
+    "Miễn phí giao hàng",
+    "Voucher giảm giá 15% cho lần mua hàng tiếp theo",
+    "Truy cập các sản phẩm và đợt giảm giá Dành Riêng Cho Hội Viên",
+    "Ưu đãi và khuyến mãi đặc biệt",
+  ];
+
+  const signUpTextJSX = signUpText.map((item, index) => (
+    <CheckedIconTypography text={item} key={item + index} />
+  ));
+
   return (
-    <div>
-      <span className="text-5xl font-semibold">TẠO MỘT TÀI KHOẢN</span>
-      <p>
-        Thật dễ dàng tạo một tài khoản. Hãy nhập địa chỉ email của bạn và điền
-        vào mẫu trên trang tiếp theo và tận hưởng những lợi ích của việc sở hữu
-        một tài khoản.
-      </p>
-      <ul>
-        <li>Tổng quan đơn giản về thông tin cá nhân của bạn</li>
-        <li>Thanh toán nhanh hơn</li>
-        <li>
-          Một lần đăng nhập chung duy nhất để tương tác với các sản phẩm và dịch
-          vụ của adidas
-        </li>
-        <li>Ưu đãi và khuyến mãi độc quyền</li>
-        <li>Các sản phẩm mới nhất</li>
-        <li>Các bộ sưu tập giới hạn và bộ sưu tập theo mùa mới</li>
-        <li>Các sự kiện sắp tới</li>
-      </ul>
-    </div>
+    <Stack>
+      <Typography variant="h3" fontWeight={"semi-bold"} paddingBottom="5px">
+        GIA NHẬP ADICLUB. NHẬN THƯỞNG NGAY HÔM NAY.
+      </Typography>
+      <Typography>
+        Là một hội viên adiClub, bạn sẽ được hưởng lợi với những gì bạn yêu
+        thích khi làm điều mình thích. Đăng ký ngay hôm nay và hưởng quyền lợi
+        từ Hạng 1:
+      </Typography>
+      <Stack paddingY="10px">{signUpTextJSX}</Stack>
+      <Typography>
+        Tham gia ngay để bắt đầu tích điểm, thăng hạng và mở khoá thêm phần
+        thưởng và quyền lợi từ adiClub.
+      </Typography>
+      <Box paddingY="10px">
+        <BlackButton title="GIA NHẬP CÂU LẠC BỘ" />
+      </Box>
+      <Stack width="100%" height="200px" position="relative">
+        <Typography>Test </Typography>
+        <Image
+          src="https://www.adidas.com.vn/glass/react/a2fa20f/assets/img/adiClub-account-register.jpeg"
+          alt="sign up image"
+          layout="fill"
+        />
+      </Stack>
+    </Stack>
   );
 };
 
