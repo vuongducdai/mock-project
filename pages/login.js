@@ -1,15 +1,110 @@
+import { ClassNames } from "@emotion/react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  Box,
+  Link,
+  makeStyles,
+  Stack,
+  styled,
+  TextField,
+  Typography,
+} from "@mui/material";
+// import withStyles from "@mui/styles";
 import { useRouter } from "next/router";
-import { default as React } from "react";
-import { useForm } from "react-hook-form";
+import { default as React, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
-import axiosClient from "../api/axios-client";
-import { postLogin } from "../api/requestMethod";
 import Google from "../components/auth/Google";
 import MainLayout from "../components/layout/main";
 import { useAuth } from "../hooks/useAuth";
 import { updateUserFromLogin } from "../redux/admin/userSlice";
+
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
+const StyledTextField = styled(TextField)({
+  "& .MuiFormHelperText-root.Mui-error": {
+    color: "red",
+  },
+
+  "& .Mui-error": {
+    color: "black",
+  },
+  "& .MuiOutlinedInput-root.Mui-error": {
+    "& fieldset": {
+      borderColor: "rgb(118,118,119)",
+      borderBottomColor: "red",
+      borderBottomWidth: "2px",
+    },
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "rgb(118,118,119)",
+      borderRadius: "0",
+    },
+    "&:hover fieldset": {
+      borderColor: "black",
+    },
+  },
+  "& .MuiOutlinedInput-root.Mui-focused": {
+    "& fieldset": {
+      borderWidth: "1px",
+    },
+  },
+});
+
+const InputField = ({ control, errors, name }) => {
+  return (
+    <Controller
+      render={({ field }) => (
+        <StyledTextField
+          id="outlined-username-input"
+          label="User name"
+          type="text"
+          error={errors?.name}
+          helperText={errors.name?.message ? errors.name?.message : " "}
+          {...field}
+          sx={{ marginTop: "5px", marginBottom: "20px" }}
+        />
+      )}
+      name={name}
+      control={control}
+    />
+  );
+};
+
+const PasswordInputField = ({ control, errors }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+
+  return (
+    <Stack>
+      <Stack direction="row" justifyContent="flex-end">
+        {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+        <Typography onClick={handleClickShowPassword} marginLeft="5px">
+          {showPassword ? "HIDE" : "SHOW"}
+        </Typography>
+      </Stack>
+      <Controller
+        render={({ field }) => (
+          <StyledTextField
+            id="outlined-password-input"
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            error={errors?.password}
+            helperText={
+              errors.password?.message ? errors.password?.message : " "
+            }
+            {...field}
+          />
+        )}
+        name="password"
+        control={control}
+      />
+    </Stack>
+  );
+};
 
 const schema = yup.object({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
@@ -21,20 +116,6 @@ const LoginForm = () => {
   const { data, login, logout, getUser, getCart } = useAuth();
   const { user } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
-
-  // async function handleLoginClick({ name, password }) {
-  // 	console.log(name, password);
-  // 	try {
-  // 		axiosClient.post('/login', { name, password }).then(res => {
-  // 			dispatch(updateUserFromLogin(res.data));
-  // 			console.log(res.data);
-  // 		});
-
-  // 		console.log('redirect to index');
-  // 	} catch (error) {
-  // 		console.log('failed to login', error);
-  // 	}
-  // }
 
   async function handleLoginClick({ name, password }) {
     console.log(name, password);
@@ -73,6 +154,7 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm({
     defaultValues: {
       email: "",
@@ -81,28 +163,15 @@ const LoginForm = () => {
     resolver: yupResolver(schema),
   });
 
+  console.log("Errors", errors);
+
   return (
     <div>
       <form onSubmit={handleSubmit(handleLoginClick)} className="flex flex-col">
-        <input
-          type="text"
-          {...register("name")}
-          placeholder="Name"
-          style={{
-            border: errors.email ? "1px solid red" : "1px solid #ccd0d5",
-          }}
-        />
-        {errors?.name && <small>{errors.name?.message}</small>}
-
-        <input
-          type="password"
-          {...register("password")}
-          placeholder="Password"
-          style={{
-            border: errors.password ? "1px solid red" : "1px solid #ccd0d5",
-          }}
-        />
-        {errors?.password && <small>{errors.password?.message}</small>}
+        <Stack>
+          <InputField control={control} errors={errors} name="name" />
+          <PasswordInputField control={control} errors={errors} />
+        </Stack>
 
         <div>
           <input type="checkbox" id="keepLogin" name="keepLogin" />
@@ -139,15 +208,22 @@ const FacebookGoogleLogin = () => {
 
 const LoginSection = () => {
   return (
-    <div className="flex justify-center items-start">
-      <div>
-        <span className="text-5xl font-semibold">ĐĂNG NHẬP</span>
-        <p>Bạn quên mật khẩu?</p>
-        <LoginForm />
-        <p>HOẶC</p>
+    <Stack justifyContent="center" alignItems="flex-start">
+      <Box width="100%" paddingX={"10px"}>
+        <Typography variant="h3" fontWeight={"bold"}>
+          ĐĂNG NHẬP
+        </Typography>
+        <Link color={"text.primary"} href="#" variant="body1">
+          Bạn quên mật khẩu?
+        </Link>
+        <Box marginTop={"10px"}>
+          <LoginForm />
+        </Box>
+
+        <Typography variant="body1">HOẶC</Typography>
         <FacebookGoogleLogin />
-      </div>
-    </div>
+      </Box>
+    </Stack>
   );
 };
 
@@ -178,16 +254,22 @@ const SignUpSection = () => {
 
 const LoginPage = () => {
   return (
-    <div className="mt-28 flex justify-center items-center  ">
-      <div className="flex justify-center items-center w-[65%]">
-        <div className="basis-0 grow">
+    <Stack justfityContent="center" alignItems="center">
+      <Stack
+        justifyContent="center"
+        alignItems="flex-start"
+        direction="row"
+        width="65%"
+      >
+        <Box flexBasis={0} flexGrow={1}>
           <LoginSection />
-        </div>
-        <div className="basis-0 grow">
+        </Box>
+
+        <Box flexBasis={0} flexGrow={1}>
           <SignUpSection />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Stack>
+    </Stack>
   );
 };
 
