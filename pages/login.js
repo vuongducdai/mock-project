@@ -1,11 +1,10 @@
-import { ClassNames } from "@emotion/react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import {
   Box,
   Button,
   createTheme,
   Link,
-  makeStyles,
   Stack,
   styled,
   TextField,
@@ -18,7 +17,7 @@ import { default as React, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
-import Google from "../components/auth/Google";
+import GoogleButton from "../components/auth/Google";
 import MainLayout from "../components/layout/main";
 import { useAuth } from "../hooks/useAuth";
 import { updateUserFromLogin } from "../redux/admin/userSlice";
@@ -26,7 +25,18 @@ import { updateUserFromLogin } from "../redux/admin/userSlice";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-import { black, white, purple } from "@mui/material/colors";
+import { black, purple, white } from "@mui/material/colors";
+import BlackButton from "../components/BlackButton";
+
+export const WhiteButton = styled(Button)({
+  borderColor: "#000000",
+  color: "#000000",
+  ":hover": {
+    color: "rgb(100 116 139)",
+    borderColor: "#000000",
+    backgroundColor: "#ffffff",
+  },
+});
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   cursor: "pointer",
@@ -229,7 +239,7 @@ const LoginForm = () => {
   console.log("Errors", errors);
 
   return (
-    <div>
+    <Box>
       <form onSubmit={handleSubmit(handleLoginClick)} className="flex flex-col">
         <Stack>
           <InputField
@@ -244,37 +254,45 @@ const LoginForm = () => {
             placeholder="Mật khẩu *"
           />
         </Stack>
-
-        <div>
-          <input type="checkbox" id="keepLogin" name="keepLogin" />
-          <label htmlFor="keepLogin">Giữ đăng nhập cho tôi</label>
-        </div>
-        <button type="submit" onSubmit={handleLoginClick}>
-          Submit
-        </button>
+        <Box marginY="10px">
+          <BlackButton
+            onSubmit={handleLoginClick}
+            title="ĐĂNG NHẬP"
+            className="w-[auto]"
+          />
+        </Box>
       </form>
-      {/* <button onClick={handleLoginClick}>Login</button> */}
-      <button onClick={handleLogoutClick}>Logout</button>
+    </Box>
+  );
+};
 
-      <button onClick={handleGetUser}>Get User</button>
-
-      <button onClick={handleGetCart}>Get Cart</button>
-
-      <p>Profile: {JSON.stringify(user || {}, null, 4)}</p>
-    </div>
+const FacebookButton = () => {
+  return (
+    <WhiteButton variant="outlined" sx={{ borderRadius: "0", width: "50%" }}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        width="100%"
+        paddingY="10px"
+        paddingX="5px"
+      >
+        <Typography fontWeight="medium">FACEBOOK</Typography>
+        <FacebookIcon />
+      </Stack>
+    </WhiteButton>
   );
 };
 
 const FacebookGoogleLogin = () => {
   return (
-    <div className="flex flex-col">
-      <div>
-        <button className="border">FACEBOOK</button>
-      </div>
-      <div>
-        <Google />
-      </div>
-    </div>
+    <Stack>
+      <Box marginY="5px">
+        <FacebookButton />
+      </Box>
+      <Box marginY="5px">
+        <GoogleButton />
+      </Box>
+    </Stack>
   );
 };
 
@@ -288,10 +306,12 @@ const LoginSection = () => {
         <Link color={"text.primary"} href="#" variant="body1">
           Bạn quên mật khẩu?
         </Link>
-        <Box marginTop={"10px"}>
+        <Box marginTop={"15px"}>
           <LoginForm />
         </Box>
-        <Typography variant="body1">HOẶC</Typography>
+        <Typography variant="body1" paddingY="10px">
+          HOẶC
+        </Typography>
         <FacebookGoogleLogin />
       </Box>
     </Stack>
@@ -325,7 +345,7 @@ const SignUpSection = () => {
 
 const LoginPage = () => {
   return (
-    <Stack justfityContent="center" alignItems="center">
+    <Stack justfityContent="center" alignItems="center" marginBottom="15px">
       <Stack
         justifyContent="center"
         alignItems="flex-start"
