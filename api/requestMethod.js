@@ -1,17 +1,11 @@
 import axios from "axios";
 
 // export const BASE_URL = 'https://ecommercevoyager.herokuapp.com/api';
-// const BASE_URL = 'http://localhost:8000';
 const BASE_URL = "https://ecommercevoyager.herokuapp.com/api/";
 // const BASE_URL = 'http://localhost:8000/api';
 
 export const fetcher = url => publicRequest.get(url).then(res => res.data);
 
-// const BASE_URL = 'https://ecommercevoyager.herokuapp.com/api';
-// const publicRequest = axios.create({
-// 	baseURL: BASE_URL,
-// });
-// export const BASE_URL = 'http://localhost:8000/api';
 const publicRequest = axios.create({
       baseURL: BASE_URL,
 });
