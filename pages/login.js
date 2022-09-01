@@ -2,11 +2,14 @@ import { ClassNames } from "@emotion/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
+  Button,
+  createTheme,
   Link,
   makeStyles,
   Stack,
   styled,
   TextField,
+  ThemeProvider,
   Typography,
 } from "@mui/material";
 // import withStyles from "@mui/styles";
@@ -23,16 +26,76 @@ import { updateUserFromLogin } from "../redux/admin/userSlice";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-const StyledTextField = styled(TextField)({
-  "& .MuiFormHelperText-root.Mui-error": {
-    color: "red",
-  },
+import { black, white, purple } from "@mui/material/colors";
 
-  "& .Mui-error": {
-    color: "black",
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  cursor: "pointer",
+  color: "#000000",
+  backgroundColor: "#ffffff",
+  fontWeight: "500",
+  textDecoration: "underline",
+  padding: "0",
+  margin: "0",
+  borderRadius: "0",
+  transition: theme.transitions.create(["background-color", "transform"], {
+    duration: theme.transitions.duration.complex,
+  }),
+  // background-color: theme.background.blur,
+  ":hover": {
+    color: "#ffffff",
+    backgroundColor: "#000000",
   },
+  ":focus": {
+    color: "#ffffff",
+    backgroundColor: "#000000",
+  },
+}));
+
+const theme = createTheme({
+  background: {
+    hover: black,
+    blur: white,
+  },
+  textColor: {
+    hover: white,
+    blur: purple,
+  },
+  transitions: {
+    duration: {
+      shortest: 150,
+      shorter: 200,
+      short: 250,
+      // most basic recommended timing
+      standard: 300,
+      // this is to be used in complex animations
+      complex: 375,
+      // recommended when something is entering screen
+      enteringScreen: 225,
+      // recommended when something is leaving screen
+      leavingScreen: 195,
+    },
+  },
+});
+
+const ClickableTypography = (props) => {
+  return (
+    <ThemeProvider theme={theme}>
+      <StyledTypography {...props} />
+    </ThemeProvider>
+  );
+};
+
+const StyledTextField = styled(TextField)({
+  // "& .Mui-error": {
+  //   color: "rgb(118,118,119)",
+  // },
+  // "& .MuiFormHelperText-root.Mui-error": {
+  //   color: "red",
+  // },
+
   "& .MuiOutlinedInput-root.Mui-error": {
     "& fieldset": {
+      color: "rgb(118,118,119)",
       borderColor: "rgb(118,118,119)",
       borderBottomColor: "red",
       borderBottomWidth: "2px",
@@ -54,18 +117,18 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const InputField = ({ control, errors, name }) => {
+const InputField = ({ control, errors, name, placeholder, sx }) => {
   return (
     <Controller
       render={({ field }) => (
         <StyledTextField
           id="outlined-username-input"
-          label="User name"
+          label={placeholder}
           type="text"
           error={errors?.name}
           helperText={errors.name?.message ? errors.name?.message : " "}
           {...field}
-          sx={{ marginTop: "5px", marginBottom: "20px" }}
+          sx={{ sx }}
         />
       )}
       name={name}
@@ -74,23 +137,23 @@ const InputField = ({ control, errors, name }) => {
   );
 };
 
-const PasswordInputField = ({ control, errors }) => {
+const PasswordInputField = ({ control, errors, placeholder, option }) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   return (
-    <Stack>
+    <Stack {...option}>
       <Stack direction="row" justifyContent="flex-end">
         {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-        <Typography onClick={handleClickShowPassword} marginLeft="5px">
+        <ClickableTypography onClick={handleClickShowPassword} marginLeft="5px">
           {showPassword ? "HIDE" : "SHOW"}
-        </Typography>
+        </ClickableTypography>
       </Stack>
       <Controller
         render={({ field }) => (
           <StyledTextField
             id="outlined-password-input"
-            label="Password"
+            label={placeholder}
             type={showPassword ? "text" : "password"}
             error={errors?.password}
             helperText={
@@ -169,8 +232,17 @@ const LoginForm = () => {
     <div>
       <form onSubmit={handleSubmit(handleLoginClick)} className="flex flex-col">
         <Stack>
-          <InputField control={control} errors={errors} name="name" />
-          <PasswordInputField control={control} errors={errors} />
+          <InputField
+            control={control}
+            errors={errors}
+            name="name"
+            placeholder="Tên đăng nhập *"
+          />
+          <PasswordInputField
+            control={control}
+            errors={errors}
+            placeholder="Mật khẩu *"
+          />
         </Stack>
 
         <div>
@@ -209,8 +281,8 @@ const FacebookGoogleLogin = () => {
 const LoginSection = () => {
   return (
     <Stack justifyContent="center" alignItems="flex-start">
-      <Box width="100%" paddingX={"10px"}>
-        <Typography variant="h3" fontWeight={"bold"}>
+      <Box width="100%" paddingRight={"70px"}>
+        <Typography variant="h3" fontWeight={"semi-bold"} paddingBottom="5px">
           ĐĂNG NHẬP
         </Typography>
         <Link color={"text.primary"} href="#" variant="body1">
@@ -219,7 +291,6 @@ const LoginSection = () => {
         <Box marginTop={"10px"}>
           <LoginForm />
         </Box>
-
         <Typography variant="body1">HOẶC</Typography>
         <FacebookGoogleLogin />
       </Box>
