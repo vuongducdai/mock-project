@@ -1,14 +1,12 @@
-import Link from "next/link";
-import React from "react";
-import ReactDOM from "react-dom";
-import GoogleLogin from "react-google-login";
-import { GoogleLogout } from "react-google-login";
+import GoogleIcon from "@mui/icons-material/Google";
+import { Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
+import React from "react";
+import GoogleLogin from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
 import { googleLogin } from "../../redux/admin/userSlice";
-import { Button, Stack, Typography } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
-import { WhiteButton } from "../../pages/login";
+import { WhiteButton } from "../utilities";
+
 const Google = () => {
   const router = useRouter();
   const { user } = useSelector((state) => state.userSlice);
