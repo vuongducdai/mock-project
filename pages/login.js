@@ -19,6 +19,7 @@ import {
   PasswordInputField,
 } from "../components/utilities";
 import Image from "next/image";
+import { Auth } from "../components/auth/Auth";
 
 const schema = yup.object({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
@@ -26,6 +27,8 @@ const schema = yup.object({
 });
 
 const LoginForm = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const router = useRouter();
   const { data, login, logout, getUser, getCart } = useAuth();
   const { user } = useSelector((state) => state.userSlice);
@@ -34,11 +37,13 @@ const LoginForm = () => {
   async function handleLoginClick({ name, password }) {
     console.log(name, password);
     try {
+      setIsLoading(true);
       const res = await login({ name, password });
       // const res = await axiosClient.post("/login", { name, password });
       // const res = await postLogin({ name, password });
       console.log(res);
       dispatch(updateUserFromLogin(res.data));
+      router.push("/");
     } catch (error) {
       console.log("failed to login", error);
     }
@@ -100,6 +105,7 @@ const LoginForm = () => {
             onSubmit={handleLoginClick}
             title="ĐĂNG NHẬP"
             className="w-[auto]"
+            isLoading={isLoading}
           />
         </Box>
       </form>
@@ -186,25 +192,28 @@ const SignUpSection = () => {
 
 const LoginPage = () => {
   return (
-    <Stack justfityContent="center" alignItems="center" marginBottom="15px">
-      <Stack
-        justifyContent="center"
-        alignItems="flex-start"
-        direction="row"
-        width="65%"
-      >
-        <Box flexBasis={0} flexGrow={1}>
-          <LoginSection />
-        </Box>
+    <Auth>
+      <Stack justfityContent="center" alignItems="center" marginBottom="15px">
+        <Stack
+          justifyContent="center"
+          alignItems="flex-start"
+          direction="row"
+          width="65%"
+        >
+          <Box flexBasis={0} flexGrow={1}>
+            <LoginSection />
+          </Box>
 
-        <Box flexBasis={0} flexGrow={1}>
-          <SignUpSection />
-        </Box>
+          <Box flexBasis={0} flexGrow={1}>
+            <SignUpSection />
+          </Box>
+        </Stack>
       </Stack>
-    </Stack>
+    </Auth>
   );
 };
 
 LoginPage.Layout = MainLayout;
+LoginPage.isPublic = false;
 
 export default LoginPage;
