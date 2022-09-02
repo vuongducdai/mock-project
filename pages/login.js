@@ -222,7 +222,7 @@ const SignUpSection = () => {
 const LoginPage = () => {
   return (
     <Auth>
-      <Stack justifyContent="center" alignItems="center" marginBottom="15px">
+      <Stack justifyContent="center" alignItems="center" marginY="15px">
         <Stack
           justifyContent="center"
           alignItems="flex-start"

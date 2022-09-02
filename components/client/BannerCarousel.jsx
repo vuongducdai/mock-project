@@ -20,7 +20,11 @@ const CarouselCard = ({ imageURL, title, description }) => {
       <Box width="100%" paddingTop="44%">
         <Image src={imageURL} alt="title" layout="fill" />
       </Box>
-      <Box position="absolute" className="text-left max-w-[33%]">
+      <Box
+        position="absolute"
+        paddingLeft="30px"
+        className="text-left max-w-[33%]"
+      >
         <Typography variant="h2">{title} </Typography>
         <Box paddingY="20px">
           <Typography variant="subtitle1">{description}</Typography>

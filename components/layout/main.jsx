@@ -7,7 +7,7 @@ export default function MainLayout({ children }) {
   return (
     <Stack>
       <Header />
-      <Box flexGrow={1} mt={15}>
+      <Box flexGrow={1} mt={13.5}>
         {children}
       </Box>
       <Footer />
