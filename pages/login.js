@@ -1,37 +1,72 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Link, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/material";
 // import withStyles from "@mui/styles";
 import { useRouter } from "next/router";
-import { default as React } from "react";
+import { default as React, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import GoogleButton from "../components/auth/Google";
+import BlackButton from "../components/BlackButton";
 import MainLayout from "../components/layout/main";
 import { useAuth } from "../hooks/useAuth";
 import { updateUserFromLogin } from "../redux/admin/userSlice";
-import BlackButton from "../components/BlackButton";
 
+import Image from "next/image";
+import { Auth } from "../components/auth/Auth";
 import {
   CheckedIconTypography,
   FacebookButton,
   InputField,
   PasswordInputField,
 } from "../components/utilities";
-import Image from "next/image";
-import { Auth } from "../components/auth/Auth";
 
 const schema = yup.object({
   name: yup.string().required("Vui lòng nhập tên của bạn"),
   password: yup.string().required("Vui lòng nhập mật khẩu"),
 });
 
+const LoginDialog = ({ isLoggedIn, open, handleClose }) => {
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"Thông báo"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {isLoggedIn
+            ? "Đăng nhập thành công"
+            : "Sai tên đăng nhập hoặc mật khẩu"}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Đóng</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
 const LoginForm = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [isLoggedin, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
-  const { data, login, logout, getUser, getCart } = useAuth();
-  const { user } = useSelector((state) => state.userSlice);
+  const { login } = useAuth();
   const dispatch = useDispatch();
 
   async function handleLoginClick({ name, password }) {
@@ -43,31 +78,20 @@ const LoginForm = () => {
       // const res = await postLogin({ name, password });
       console.log(res);
       dispatch(updateUserFromLogin(res.data));
+      setOpenDialog(true);
+      setIsLoggedIn(true);
       router.push("/");
     } catch (error) {
       console.log("failed to login", error);
+      setOpenDialog(true);
+      setIsLoggedIn(false);
     }
   }
 
-  function handleLogoutClick() {
-    dispatch(logout());
-  }
-
-  async function handleGetUser() {
-    try {
-      await getUser();
-    } catch (error) {
-      console.log("failed to get User", error);
-    }
-  }
-
-  async function handleGetCart() {
-    try {
-      await getCart();
-    } catch (error) {
-      console.log("failed to get cart", error);
-    }
-  }
+  const handleClose = () => {
+    setOpenDialog(false);
+    setIsLoading(false);
+  };
 
   const {
     register,
@@ -76,7 +100,7 @@ const LoginForm = () => {
     control,
   } = useForm({
     defaultValues: {
-      email: "",
+      name: "",
       password: "",
     },
     resolver: yupResolver(schema),
@@ -109,6 +133,11 @@ const LoginForm = () => {
           />
         </Box>
       </form>
+      <LoginDialog
+        isLoggedIn={isLoggedin}
+        open={openDialog}
+        handleClose={handleClose}
+      />
     </Box>
   );
 };
@@ -193,7 +222,7 @@ const SignUpSection = () => {
 const LoginPage = () => {
   return (
     <Auth>
-      <Stack justfityContent="center" alignItems="center" marginBottom="15px">
+      <Stack justifyContent="center" alignItems="center" marginBottom="15px">
         <Stack
           justifyContent="center"
           alignItems="flex-start"

@@ -134,6 +134,7 @@ export const InputField = ({ control, errors, name, placeholder, sx }) => {
         <StyledTextField
           id="outlined-username-input"
           label={placeholder}
+          autoComplete="username"
           type="text"
           error={errors?.name}
           helperText={errors.name?.message ? errors.name?.message : " "}
@@ -171,6 +172,7 @@ export const PasswordInputField = ({
             label={placeholder}
             type={showPassword ? "text" : "password"}
             error={errors?.password}
+            autoComplete="current-password"
             helperText={
               errors.password?.message ? errors.password?.message : " "
             }
