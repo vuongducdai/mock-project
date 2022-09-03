@@ -66,6 +66,6 @@ export const postLogin = form => publicRequest.post(`api/auth/login`, form)
 
 
 // Users
-export const getUsers = () => userRequest.get('/user');
+export const getUsers = () => publicRequest.get('/user');
 export const patchUser = data => publicRequest.patch(`/user/${data.id}`, data.form);
 export const deleteUser = id => publicRequest.delete(`/user/${id}`);

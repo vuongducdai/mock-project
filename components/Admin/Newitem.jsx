@@ -29,7 +29,6 @@ const Newitem = ({ isOpen, type, isEdit }) => {
       const [cat, setCat] = useState("material 1");
       const [isAdmin, setIsAdmin] = useState(false);
       const dispatch = useDispatch();
-      console.log(formData)
 
       const {
             register: userRegister,
