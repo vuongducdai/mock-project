@@ -12,8 +12,10 @@ import {
 import { Container } from '@mui/system';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 // import { useSelector } from 'react-redux';
 import { useCart } from '../../api/cart';
+import { getUser } from '../../redux/admin/userSlice';
 import calculateQuantityCart from '../../utils/calculateQuantityCart';
 import calculateTotalPrice from '../../utils/calculateTotalPrice';
 import formatNumber from '../../utils/formatNumber';
@@ -25,7 +27,8 @@ import CssTextField from './StyledTextField';
 const Cart = () => {
 	const [title, setTitle] = useState('');
 	const [openNotify, setOpenNotify] = useState(false);
-	const { data, isValidating } = useCart(7);
+	const user = useSelector(getUser);
+	const { data, isValidating } = useCart(user?._id);
 	const products = data?.products;
 	const totalPrice = useMemo(() => {
 		if (products) return calculateTotalPrice(products);

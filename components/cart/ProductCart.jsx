@@ -14,6 +14,7 @@ import { Stack } from '@mui/system';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useSWRConfig } from 'swr';
 import { useCart } from '../../api/cart';
 import {
@@ -22,8 +23,10 @@ import {
 	deleteExistProductCart,
 	updateExistProductCart,
 } from '../../api/requestMethod';
+import { getUser } from '../../redux/admin/userSlice';
 import formatNumber from '../../utils/formatNumber';
 import mapColorData from '../../utils/mapColorData';
+import LoadingScreen from '../product/LoadingScreen';
 import StyledDialog from '../StyledDialog';
 import StyledSelect from './StyledSelect';
 const ProductCart = ({
@@ -32,11 +35,12 @@ const ProductCart = ({
 	handleOpenNotify,
 	handleSetTitle,
 }) => {
-	const { data } = useCart(7);
+	const user = useSelector(getUser);
+	const { data } = useCart(user?._id);
 	const { mutate } = useSWRConfig();
 	//Hooks for add cart successfully dialog
 	const [open, setOpen] = useState(false);
-
+	const [openLoading, setIsOpenLoading] = useState(false);
 	const renderSizes = [...Array(10).keys()].map((item, index) => (
 		<MenuItem key={index + 1} value={index + 1}>
 			{index + 1}
@@ -49,10 +53,11 @@ const ProductCart = ({
 	const handleCloseDialog = () => {
 		setOpen(false);
 	};
-	const handleChangeQuantity = e => {
+	const handleChangeQuantity = async e => {
 		if (data) {
-			mutate(
-				`${BASE_URL}/cart/find/7`,
+			setIsOpenLoading(true);
+			await mutate(
+				`${BASE_URL}/cart/find/${user._id ? user._id : 7}`,
 				updateExistProductCart(data, cartId, _id, {
 					quantityOrder: Number(e.target.value),
 				}),
@@ -60,27 +65,35 @@ const ProductCart = ({
 					revalidate: false,
 				},
 			);
+			setIsOpenLoading(false);
 			handleSetTitle('Số lượng đã được cập nhật');
 			handleOpenNotify();
 			setOpen(false);
 		}
 	};
-	const handleDeleteCart = id => {
+	const handleDeleteCart = async id => {
 		if (data) {
+			setIsOpenLoading(true);
 			const products = data.products.filter(item => item._id !== id);
 			if (products.length === 0) {
-				mutate(`${BASE_URL}/cart/find/7`, deleteCart(cartId), {
-					revalidate: false,
-				});
+				await mutate(
+					`${BASE_URL}/cart/find/${user._id ? user._id : 7}`,
+					deleteCart(cartId),
+					{
+						revalidate: false,
+					},
+				);
+				setIsOpenLoading(false);
 				return;
 			}
-			mutate(
-				`${BASE_URL}/cart/find/7`,
+			await mutate(
+				`${BASE_URL}/cart/find/${user._id ? user._id : 7}`,
 				deleteExistProductCart(data, cartId, _id),
 				{
 					revalidate: false,
 				},
 			);
+			setIsOpenLoading(false);
 			handleSetTitle('Sản phẩm đã được xóa khỏi giỏ hàng');
 			handleOpenNotify();
 			setOpen(false);
@@ -197,6 +210,8 @@ const ProductCart = ({
 				onClose={handleCloseDialog}
 				onDelete={() => handleDeleteCart(_id)}
 			/>
+
+			<LoadingScreen open={openLoading} />
 		</Container>
 	);
 };

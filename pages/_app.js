@@ -15,30 +15,28 @@ import theme from "../utils/theme";
 const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
-      const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-      const Layout = Component.Layout ?? EmptyLayout;
+  const Layout = Component.Layout ?? EmptyLayout;
 
-      return (
-            <CacheProvider value={emotionCache}>
-                  <ThemeProvider theme={theme}>
-                        <CssBaseline />
-
-                        <Provider store={store}>
-                              <PersistGate loading={null} persistor={persistor}>
-                                    <Layout>
-                                          <Component {...pageProps} />
-                                    </Layout>
-                              </PersistGate>
-                        </Provider>
-
-                  </ThemeProvider>
-            </CacheProvider>
-      );
+  return (
+    <CacheProvider value={emotionCache}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </PersistGate>
+        </Provider>
+      </ThemeProvider>
+    </CacheProvider>
+  );
 }
 
 MyApp.propTypes = {
-      Component: PropTypes.elementType.isRequired,
-      emotionCache: PropTypes.object,
-      pageProps: PropTypes.object.isRequired,
+  Component: PropTypes.elementType.isRequired,
+  emotionCache: PropTypes.object,
+  pageProps: PropTypes.object.isRequired,
 };

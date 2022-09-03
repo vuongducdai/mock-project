@@ -4,12 +4,8 @@ import axiosClient from "./axios-client";
 
 export const authAPI = {
   login(payload) {
-    return axiosClient.post("/login", payload).then((res) => {
-      // const dispatch = useDispatch();
-      // dispatch(updateUserFromLogin(res.data));
-
-      console.log(res.data);
-    });
+    console.log(" in authAPI", payload);
+    return axiosClient.post("/login", payload);
   },
 
   getProfile() {

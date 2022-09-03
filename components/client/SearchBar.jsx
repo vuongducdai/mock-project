@@ -1,8 +1,9 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, IconButton, InputBase, Stack, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getProductList } from "../../redux/admin/productSlice";
+import { BASE_URL, fetcher } from "../../api/requestMethod";
+
+import useSWR from "swr";
 import { ProductColumn } from "./ProductColumn";
 
 export const SearchField = ({ onSubmitSearch, onFocus, onBlur }) => {
@@ -73,17 +74,16 @@ const SearchResult = ({ productList }) => {
 };
 
 export default function SearchBar() {
-  const { products } = useSelector((state) => state.productSlice);
-  const dispatch = useDispatch();
-
   const [openSearchResult, setOpenSearchResult] = useState(false);
   const [searchResult, setSearchResult] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isFocus, setIsFocus] = useState(true);
 
-  useEffect(() => {
-    dispatch(getProductList());
-  }, []);
+  const { data: products } = useSWR(`${BASE_URL}/product`, fetcher, {
+    dedupingInterval: 15000,
+  });
+
+  console.log(products);
 
   const handleSubmitSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
@@ -94,13 +94,20 @@ export default function SearchBar() {
   };
 
   const handleBlur = () => {
+    console.log("blur");
+    setTimeout(4000);
     setIsFocus(false);
+  };
+
+  const handleClick = () => {
+    console.log("clicked");
+    setIsFocus(true);
   };
 
   useEffect(() => {
     let result = [];
-    if (products.products !== undefined) {
-      result = products.products.filter((item) => {
+    if (products !== undefined) {
+      result = products.filter((item) => {
         return item.name.toLowerCase().includes(searchTerm);
       });
 
@@ -108,13 +115,13 @@ export default function SearchBar() {
         setOpenSearchResult(false);
       } else if (result.length !== 0) {
         setOpenSearchResult(true);
-        setSearchResult(result);
+        setSearchResult(result.slice(0, 4));
       }
     }
   }, [searchTerm, products]);
 
   return (
-    <Box position="relative">
+    <Box position="relative" onClick={handleClick}>
       <SearchField
         onSubmitSearch={handleSubmitSearch}
         onFocus={handleFocus}

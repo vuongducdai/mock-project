@@ -1,6 +1,4 @@
-import useSWR from "swr";
 import { authAPI } from "../api/auth-api";
-import axiosClient from "../api/axios-client";
 
 export function useAuth(option) {
   // const { data, error, mutate } = useSWR(
@@ -13,11 +11,12 @@ export function useAuth(option) {
   //   }
   // );
 
-  async function login(name, password) {
-    await authAPI.login({
-      name: name,
-      password: password,
+  async function login({ name, password }) {
+    const res = await authAPI.login({
+      name,
+      password,
     });
+    return res;
 
     //re-trigger request
     // await mutate();
@@ -43,6 +42,6 @@ export function useAuth(option) {
     login,
     getUser,
     getCart,
-    // logout,
+    logout,
   };
 }
