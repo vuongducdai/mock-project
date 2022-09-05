@@ -9,6 +9,7 @@ export const Auth = ({ children }) => {
   const router = useRouter();
   console.log(user);
   if (user !== null || user !== undefined) {
+    console.log("Already login in with: ", user);
     router.push("/");
     return <LoadingPage />;
   }
