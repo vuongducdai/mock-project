@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { mutate } from 'swr';
 import { useCart } from '../../api/cart';
 import {
@@ -20,16 +21,18 @@ import {
 	updateCart,
 	updateExistProductCart,
 } from '../../api/requestMethod';
+import { getUser } from '../../redux/admin/userSlice';
 import formatNumber from '../../utils/formatNumber';
 import mapColorData from '../../utils/mapColorData';
 import BlackButton from '../BlackButton';
-import StyledDialog from '../StyledDialog';
 import According from './According';
+import LoadingScreen from './LoadingScreen';
 import { BreadCrumb } from './StyledBreadcrumb';
 
 const ProductDetail = ({ productProps }) => {
 	const { name, img, price, color, size, quantity, cat, _id } = productProps;
-	const { data } = useCart(7);
+	const user = useSelector(getUser);
+	const { data } = useCart(user?._id);
 	//Hooks for add cart successfully dialog
 	const [open, setOpen] = React.useState(false);
 	const [isAdding, setIsAdding] = React.useState(false);
@@ -42,7 +45,7 @@ const ProductDetail = ({ productProps }) => {
 		setIsAdding(false);
 	};
 
-	const handleClick = () => {
+	const handleClick = async () => {
 		//Open add cart successfully dialog
 		setOpen(true);
 		setIsAdding(true);
@@ -62,10 +65,14 @@ const ProductDetail = ({ productProps }) => {
 		if (!data || !data?.products) {
 			products = [productOrder];
 			const newCart = {
-				userId: 7,
+				userId: user._id || 7,
 				products,
 			};
-			mutate(`${BASE_URL}/cart/find/7`, createCart(newCart));
+			await mutate(
+				`${BASE_URL}/cart/find/${user._id ? user._id : 7}`,
+				createCart(newCart),
+			);
+			setIsAdding(false);
 		} else {
 			let isExist = false;
 			const filterProduct = data?.products.map(product => {
@@ -79,18 +86,20 @@ const ProductDetail = ({ productProps }) => {
 			if (!isExist) {
 				products = [...filterProduct, productOrder];
 
-				mutate(
-					`${BASE_URL}/cart/find/7`,
+				await mutate(
+					`${BASE_URL}/cart/find/${user._id ? user._id : 7}`,
 					updateCart(products, data._id),
 				);
+				setIsAdding(false);
 			} else {
-				mutate(
-					`${BASE_URL}/cart/find/7`,
+				await mutate(
+					`${BASE_URL}/cart/find/${user._id ? user._id : 7}`,
 					updateExistProductCart(data, data._id, _id),
 					{
 						revalidate: false,
 					},
 				);
+				setIsAdding(false);
 			}
 		}
 	};
@@ -265,7 +274,8 @@ const ProductDetail = ({ productProps }) => {
 				</Grid>
 				{/* </Box> */}
 			</Container>
-			<StyledDialog
+			<LoadingScreen open={isAdding} />
+			{/* <StyledDialog
 				open={open}
 				onClose={handleCloseDialog}
 				img={img}
@@ -274,7 +284,7 @@ const ProductDetail = ({ productProps }) => {
 				name={name}
 				title='ĐÃ THÊM VÀO GIỎ HÀNG CỦA BẠN THÀNH CÔNG!'
 				hasContent
-			/>
+			/> */}
 		</div>
 	);
 };

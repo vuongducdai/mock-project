@@ -4,24 +4,28 @@ import Link from "next/link";
 import formatNumber from "../../utils/formatNumber";
 
 const ProductCard = ({ id, img, name, price, quantityOrder }) => {
+  console.log(id);
   return (
     <Link href={`/products/${id}`}>
-      <Stack direction="row" m={"5px"} className={"cursor-pointer"}>
-        <Box pr={1}>
-          <Image src={img} alt={name} width={90} height={90} layout="fixed" />
-        </Box>
-        <Box>
-          <Box width={150}>
-            <Typography noWrap align="left">
-              {name}
+      <a>
+        <Stack direction="row" m={"5px"} className={"cursor-pointer"}>
+          <Box pr={1}>
+            <Image src={img} alt={name} width={90} height={90} layout="fixed" />
+          </Box>
+          <Box>
+            <Box width={150}>
+              <Typography noWrap align="left">
+                {name}
+              </Typography>
+            </Box>
+            <Typography align="left">{formatNumber(price)}</Typography>
+            <Typography align="left" color={`text.secondary`}>
+              {quantityOrder} sản phẩm
             </Typography>
           </Box>
-          <Typography align="left">{formatNumber(price)}</Typography>
-          <Typography align="left" color={`text.secondary`}>
-            {quantityOrder} sản phẩm
-          </Typography>
-        </Box>
-      </Stack>
+          {console.log(`/products/${id}`)}
+        </Stack>
+      </a>
     </Link>
   );
 };

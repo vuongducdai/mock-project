@@ -7,13 +7,18 @@ import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { clearFormData, closeToolbar } from "../../redux/admin/toolbarSlice";
-const Sidebar = ({ setOpen }) => {
-      const dispatch = useDispatch()
+import SideBarLink from "./SideBarLink";
+import { useRouter } from "next/router";
+
+const Sidebar = () => {
+      const dispatch = useDispatch();
+      const router = useRouter();
+      const path = router.pathname;
 
       const handleChangePage = () => {
             dispatch(closeToolbar());
             dispatch(clearFormData());
-      }
+      };
 
       return (
             <div className="flex">
@@ -23,41 +28,22 @@ const Sidebar = ({ setOpen }) => {
                         </div>
 
                         <div className="flex flex-col gap-8">
-                              <Link href="/admin">
-                                    <div onClick={handleChangePage} className="flex items-center gap-4 pl-12 cursor-pointer">
-                                          <div>
-                                                <DashboardIcon />
-                                          </div>
-                                          <span>Dashboard</span>
-                                    </div>
-                              </Link>
+                              <SideBarLink href="/admin" handleChangePage={handleChangePage} name='Dashboard' path={path}>
+                                    <DashboardIcon />
+                              </SideBarLink>
 
-                              <Link href="/admin/product">
-                                    <div onClick={handleChangePage} className="flex items-center gap-4 pl-12 cursor-pointer">
-                                          <div>
-                                                <LocalOfferIcon />
-                                          </div>
-                                          <span>Products</span>
-                                    </div>
-                              </Link>
+                              <SideBarLink href="/admin/product" handleChangePage={handleChangePage} name='Products' path={path}>
+                                    <LocalOfferIcon />
+                              </SideBarLink>
 
-                              <Link href="/admin/user">
-                                    <div onClick={handleChangePage} className="flex items-center gap-4 pl-12 cursor-pointer">
-                                          <div>
-                                                <PersonIcon />
-                                          </div>
-                                          <span>Users</span>
-                                    </div>
-                              </Link>
+                              <SideBarLink href="/admin/user" handleChangePage={handleChangePage} name='Users' path={path}>
+                                    <PersonIcon />
+                              </SideBarLink>
 
-                              <Link href="/admin/order">
-                                    <div onClick={handleChangePage} className="flex items-center gap-4 pl-12 cursor-pointer">
-                                          <div>
-                                                <ShoppingCartIcon />
-                                          </div>
-                                          <span>Orders</span>
-                                    </div>
-                              </Link>
+                              <SideBarLink href="/admin/order" handleChangePage={handleChangePage} name='Orders' path={path}>
+                                    <ShoppingCartIcon />
+                              </SideBarLink>
+
                         </div>
                   </div>
             </div>

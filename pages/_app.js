@@ -23,7 +23,6 @@ export default function MyApp(props) {
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <Layout>

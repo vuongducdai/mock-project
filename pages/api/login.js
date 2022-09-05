@@ -4,7 +4,7 @@ import httpProxy from "http-proxy";
 
 import { useRouter } from "next/router";
 
-const TARGET_URL = "http://192.168.0.114:8000/";
+const TARGET_URL = "https://ecommercevoyager.herokuapp.com/";
 
 // Step 4: in case of you want to stream body, turn off bodyParser
 // bodyParser is automatically enabled. If you want to consume the body
@@ -19,6 +19,7 @@ export const config = {
 const proxy = httpProxy.createProxyServer();
 
 export default function handler(req, res) {
+  console.log("In API Login");
   if (req.method !== "POST") {
     return res.status(404).json({ message: "method not supported" });
   }

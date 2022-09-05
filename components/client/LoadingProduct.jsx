@@ -1,7 +1,7 @@
 import { Box, CircularProgress } from "@mui/material";
 import React from "react";
 
-const LoadingProduct = () => {
+const LoadingPage = () => {
   return (
     <div className="flex justify-center items-center w-[100%] h-[500px]">
       <CircularProgress />
@@ -9,4 +9,4 @@ const LoadingProduct = () => {
   );
 };
 
-export default LoadingProduct;
+export default LoadingPage;
