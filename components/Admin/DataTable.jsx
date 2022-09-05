@@ -21,6 +21,8 @@ import { deleteOneUser } from "../../redux/admin/userSlice";
 const DataTable = ({ type, datas }) => {
       const [query, setQuery] = useState("");
       const [searchResult, setSearchResult] = useState(datas);
+      const [openModal, setOpenModal] = useState(false);
+      const [currentId, setCurrentId] = useState("");
       const [searchData, setSearchData] = useState([]);
       const [columns, setColumns] = useState([]);
       const [columnsToHide, setColumnsToHide] = useState(["_id", "createdAt", '__v', 'updatedAt', 'password']);
@@ -56,11 +58,16 @@ const DataTable = ({ type, datas }) => {
             dispatch(openToolbar());
       }
 
-      const handleDelete = (id) => {
+      const handleOpenModal = (id) => {
+            setCurrentId(id);
+            setOpenModal(true);
+      }
+
+      const handleDelete = () => {
             if (type === 'product') {
-                  dispatch(deleteOneProduct(id));
+                  dispatch(deleteOneProduct(currentId));
             } else {
-                  dispatch(deleteOneUser(id))
+                  dispatch(deleteOneUser(currentId))
             }
       }
       // create dynamic columns from import data:
@@ -103,7 +110,7 @@ const DataTable = ({ type, datas }) => {
                                           Edit
                                     </Button>
                                     <Button
-                                          onClick={() => handleDelete(obj._id)}
+                                          onClick={() => handleOpenModal(obj._id)}
                                           variant="contained"
                                           sx={{
                                                 color: "warning.main",
@@ -174,8 +181,6 @@ const DataTable = ({ type, datas }) => {
             });
       };
 
-
-
       const handleSearch = (e) => {
             setQuery(e);
       };
@@ -185,12 +190,14 @@ const DataTable = ({ type, datas }) => {
             setPage(newPage);
             console.log(page)
       };
+
       const handleChangeRowsPerPage = (event) => {
             setRowsPerPage(parseInt(event.target.value, 10));
             setPage(0);
             console.log(rowsPerPage)
 
       };
+
       const emptyRows =
             page > 0 ? Math.max(0, (1 + page) * rowsPerPage - createTableRows(datas).length) : 0;
 
@@ -252,6 +259,17 @@ const DataTable = ({ type, datas }) => {
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
                   />
+                  {openModal &&
+                        <div className="inset-0 bg-modal z-20 flex-center fixed ">
+                              <div className="h-40 bg-white w-86 px-4 py-6 rounded-lg scale-up-center">
+                                    <h3 className="text-xl font-base">Are you sure to delete this item?</h3>
+                                    <div className="flex items-center justify-between py-4 w-full mt-6">
+                                          <button className="px-8 py-2 border-none rounded-md bg-green-500 text-white w-24" onClick={handleDelete}>Yes</button>
+                                          <button className="px-8 py-2 border-none rounded-md bg-red-500 text-white w-24" onClick={() => setOpenModal(false)}>No</button>
+                                    </div>
+                              </div>
+                        </div>}
+
             </Box>
       );
 };

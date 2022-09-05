@@ -10,6 +10,7 @@ module.exports = {
 				primary: '#eeaeca',
 				secondary: '#94bbe9',
 				another: 'rgb(238 174 202)',
+                        modal: 'rgba(0, 0, 0, 0.7)',
 				fb: '#f7f7f9',
 				'blue-pastel': '#213352',
 				'blue-dark': '#1e20ff',
