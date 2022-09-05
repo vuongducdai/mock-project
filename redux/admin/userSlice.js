@@ -1,7 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { deleteUser, getUsers, patchUser, postLogin, postRegister } from "../../api/requestMethod";
 
-
+const initialState = {
+      users: [],
+      user: null,
+      loading: false,
+};
 export const loginUser = createAsyncThunk(
       "admin/loginUser", async (form) => {
             const res = await postLogin(form);
@@ -30,23 +34,32 @@ export const deleteOneUser = createAsyncThunk(
             const res = await deleteUser(id);
             return res.data;
       });
+export const googleLogin = createAsyncThunk(
+      'auth/googleLogin',
+      async (user) => {
+            // localStorage.setItem('user',JSON.stringify(user))
+            return user
+      }
+);
 
-const initialState = {
-      users: [],
-      user: null,
-      loading: false,
-};
+export const facebookLogin = createAsyncThunk(
+      'auth/facebookLogin',
+      async (user) => {
+            return user
+      }
+);
+
+
+
 
 const userSlice = createSlice({
       name: "user",
       initialState,
       reducers: {
-            googleLogin(state, action) {
-                  state.user = action.payload
-            },
-            facebookLogin(state, action) {
-                  state.user = action.payload
-            },
+            logout(state) {
+                  state.user = null
+
+            }
       },
       extraReducers: (builder) => {
             // GET USER LIST
@@ -93,7 +106,17 @@ const userSlice = createSlice({
                   state.users = state.users.filter(user => user._id !== action.payload);
                   state.loading = false;
             });
+
+            // GOOGLE LOGIN
+            builder.addCase(googleLogin.fulfilled, (state, action) => {
+                  state.user = action.payload
+            });
+
+            // FACEBOOK LOGIN
+            builder.addCase(facebookLogin.fulfilled, (state, action) => {
+                  state.user = action.payload
+            });
       },
 });
-export const { googleLogin, facebookLogin } = userSlice.actions
+export const { logout } = userSlice.actions
 export default userSlice.reducer;

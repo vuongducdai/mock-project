@@ -31,7 +31,7 @@ export default function ListProductComponent({ arrProduct }) {
 
     const handleSortByPrice = (id) => {
         setSortByActive(id);
-        if (result.length > 0) {
+        if (result?.length > 0) {
             if (id === 1) {
                 setResult(result.sort((a, b) => {
                     return a.price - b.price
@@ -86,9 +86,9 @@ export default function ListProductComponent({ arrProduct }) {
             const booleanResult =
                 (sizeActive !== 0 ? item.size === sizeActive : true)
                 &&
-                (checkedColor.length !== 0 ? checkedColor.includes(+item.color) : true)
+                (checkedColor?.length !== 0 ? checkedColor.includes(+item.color) : true)
                 &&
-                (checkedCat.length !== 0 ? checkedCat.includes(item.material.toString().toLowerCase()) : true)
+                (checkedCat?.length !== 0 ? checkedCat.includes(item.material.toString().toLowerCase()) : true)
             return (booleanResult)
         })
         console.log('final result', final);

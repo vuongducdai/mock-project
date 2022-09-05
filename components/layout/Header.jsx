@@ -2,11 +2,13 @@ import { Box, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import { useScrollDirection } from "../../hooks/useSCrollDirection";
 import SearchBar from "../client/SearchBar";
 import { ShoppingCartIcon } from "../client/ShoppingCartIcon";
 
+import { logout } from "../../redux/admin/userSlice";
 const HeaderTitle = () => {
   return (
     <Stack
@@ -28,13 +30,20 @@ const HeaderTitle = () => {
   );
 };
 
-const LoginSection = () => {
+const LoginSection = ({ user }) => {
   return (
-    <Link underline="none" href="/login" variant="body2">
-      đăng nhập
-    </Link>
+    <>
+      <Link underline="none" href="/login" variant="body2">
+        <a>Dang Nhap</a>
+      </Link>
+    </>
   );
 };
+const LogoutSection = ({user,click}) => {
+  return (
+    <button onClick={click}>Dang Xuat</button>
+  )
+}
 
 const LogoIcon = () => {
   return (
@@ -55,7 +64,14 @@ const LogoIcon = () => {
 };
 
 export const Header = () => {
+  const { user } = useSelector((state) => state.userSlice);
+  const router = useRouter();
   const scrollDirection = useScrollDirection();
+  const dispatch = useDispatch();
+  const logout1 = () => {
+    dispatch(logout());
+  };
+  const pathname = router.pathname;
 
   return (
     <Box
@@ -73,9 +89,15 @@ export const Header = () => {
       >
         <LogoIcon />
         <Stack>
-          <Box textAlign={"right"}>
-            <LoginSection />
-          </Box>
+          {pathname !== "/login" && (
+            <Box textAlign={"right"}>
+              {!user ? (
+                <LoginSection user={user} />
+              ) : (
+                <LogoutSection user={user} click={logout1}/>
+              )}
+            </Box>
+          )}
           <Stack justifyContent="center" direction="row">
             <SearchBar />
             <ShoppingCartIcon />
