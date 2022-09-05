@@ -148,9 +148,9 @@ const FacebookGoogleLogin = () => {
       <Box marginY="5px">
         <FacebookButton />
       </Box>
-      {/* <Box marginY="5px">
+      <Box marginY="5px">
         <GoogleButton />
-      </Box> */}
+      </Box>
     </Stack>
   );
 };
