@@ -5,8 +5,9 @@ This is a mini Adidas e-commerce site using `NextJS`, `Tailwind CSS`, `MUI`, `re
 ```mermaid
 graph RL;
     dev-->main;
-    admin/feature_name-->dev;
-    client/feature_name-->dev;
+    feature_name/admin-->dev;
+    feature_name/client-->dev;
+    hotfix-->main;
     document-->main;
 ```
 
