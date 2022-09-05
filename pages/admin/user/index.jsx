@@ -7,24 +7,20 @@ import Layout from "../../../components/Admin/Layout";
 import Loading from "../../../components/Admin/Loading";
 
 const Product = () => {
-      const { users, loading } = useSelector((state) => state.userSlice);
-      const router = useRouter();
-      const path = router.pathname.split('/')[2]
-      const dispatch = useDispatch();
-      console.log(users)
+  const { users, loading } = useSelector((state) => state.userSlice);
+  const router = useRouter();
+  const path = router.pathname.split("/")[2];
+  const dispatch = useDispatch();
 
-      useEffect(() => {
-            dispatch(getUsersList());
-      }, [dispatch]);
+  useEffect(() => {
+    dispatch(getUsersList());
+  }, [dispatch]);
 
-      return (
-            <Layout type={path}>
-                  {loading
-                        ? <Loading />
-                        : <DataTable datas={users} type={path} />
-                  }
-            </Layout>
-      );
+  return (
+    <Layout type={path}>
+      {loading ? <Loading /> : <DataTable datas={users} type={path} />}
+    </Layout>
+  );
 };
 
 export default Product;

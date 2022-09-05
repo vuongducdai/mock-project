@@ -7,9 +7,7 @@ import LoadingPage from "../client/LoadingProduct";
 export const Auth = ({ children }) => {
   const { user } = useSelector((state) => state.userSlice);
   const router = useRouter();
-  console.log(user);
   if (user !== null) {
-    console.log("Already login in with: ", user);
     router.push("/");
     return <LoadingPage />;
   }

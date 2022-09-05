@@ -4,7 +4,6 @@ import axiosClient from "./axios-client";
 
 export const authAPI = {
   login(payload) {
-    console.log(" in authAPI", payload);
     return axiosClient.post("/login", payload);
   },
 

@@ -23,7 +23,6 @@ export default function handler(req, res) {
     const access_token = cookies.get("access_token");
     if (access_token) {
       req.headers.Authorization = `Bearer ${access_token}`;
-      console.log("successfully get access token", access_token);
     }
 
     // Step 2: remove cookie from header

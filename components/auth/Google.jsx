@@ -17,9 +17,8 @@ const Google = () => {
     const token = response.tokenId;
     try {
       dispatch(googleLogin(result));
-      console.log(response);
       router.push("/");
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (

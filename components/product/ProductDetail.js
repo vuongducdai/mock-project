@@ -46,7 +46,6 @@ const ProductDetail = ({ productProps }) => {
   };
 
   const handleClick = async () => {
-    console.log("in Handle Click the");
     //Open add cart successfully dialog
     setOpen(true);
     setIsAdding(true);

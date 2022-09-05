@@ -70,19 +70,16 @@ const LoginForm = () => {
   const dispatch = useDispatch();
 
   async function handleLoginClick({ name, password }) {
-    console.log(name, password);
     try {
       setIsLoading(true);
       const res = await login({ name, password });
       // const res = await axiosClient.post("/login", { name, password });
       // const res = await postLogin({ name, password });
-      console.log(res);
       dispatch(updateUserFromLogin(res.data));
       setOpenDialog(true);
       setIsLoggedIn(true);
       router.push("/");
     } catch (error) {
-      console.log("failed to login", error);
       setOpenDialog(true);
       setIsLoggedIn(false);
     }
@@ -105,8 +102,6 @@ const LoginForm = () => {
     },
     resolver: yupResolver(schema),
   });
-
-  console.log("Errors", errors);
 
   return (
     <Box>

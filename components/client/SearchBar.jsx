@@ -83,8 +83,6 @@ export default function SearchBar() {
     dedupingInterval: 15000,
   });
 
-  console.log(products);
-
   const handleSubmitSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
   };
@@ -94,13 +92,11 @@ export default function SearchBar() {
   };
 
   const handleBlur = () => {
-    console.log("blur");
     setTimeout(4000);
     setIsFocus(false);
   };
 
   const handleClick = () => {
-    console.log("clicked");
     setIsFocus(true);
   };
 
