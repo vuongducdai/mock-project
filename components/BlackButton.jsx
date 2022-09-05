@@ -4,7 +4,7 @@ import React from "react";
 const BlackButton = ({
   title,
   className,
-  onClick,
+  onClick = () => null,
   isLoading = false,
   handleSubmit,
 }) => {
@@ -16,18 +16,18 @@ const BlackButton = ({
         className,
       ]}`;
 
-  const handleClick =
-    handleSubmit === undefined
-      ? !isLoading
-        ? () => onClick()
-        : () => null
-      : undefined;
+  // const handleClick =
+  //   handleSubmit === undefined
+  //     ? !isLoading
+  //       ?
+  //       : () => null
+  //     : undefined;
 
   return (
     <>
       <button
         className={beforeAfterButtonStyle}
-        onClick={handleClick}
+        onClick={() => onClick()}
         onSubmit={handleSubmit}
       >
         {!isLoading ? (
