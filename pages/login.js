@@ -163,10 +163,10 @@ const LoginSection = () => {
         <Box marginTop={"15px"}>
           <LoginForm />
         </Box>
-        <Typography variant="body1" paddingY="10px">
+        {/* <Typography variant="body1" paddingY="10px">
           HOẶC
         </Typography>
-        <FacebookGoogleLogin />
+        <FacebookGoogleLogin /> */}
       </Box>
     </Stack>
   );
