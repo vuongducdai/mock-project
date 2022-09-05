@@ -76,3 +76,4 @@ export const getUsers = () => publicRequest.get("/user");
 export const patchUser = (data) =>
   publicRequest.patch(`/user/${data.id}`, data.form);
 export const deleteUser = (id) => publicRequest.delete(`/user/${id}`);
+export default publicRequest;
