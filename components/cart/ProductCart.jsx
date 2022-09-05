@@ -13,16 +13,100 @@ import {
 import { Stack } from '@mui/system';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useSWRConfig } from 'swr';
+import { useCart } from '../../api/cart';
+import {
+	BASE_URL,
+	deleteCart,
+	deleteExistProductCart,
+	updateExistProductCart,
+} from '../../api/requestMethod';
+import { getUser } from '../../redux/admin/userSlice';
 import formatNumber from '../../utils/formatNumber';
+import mapColorData from '../../utils/mapColorData';
+import LoadingScreen from '../product/LoadingScreen';
+import StyledDialog from '../StyledDialog';
 import StyledSelect from './StyledSelect';
-const ProductCart = () => {
+const ProductCart = ({
+	product: { _id, name, color, img, cat, price, quantityOrder },
+	cartId,
+	handleOpenNotify,
+	handleSetTitle,
+}) => {
+	const user = useSelector(getUser);
+	const { data } = useCart(user?._id);
+	const { mutate } = useSWRConfig();
+	//Hooks for add cart successfully dialog
+	const [open, setOpen] = useState(false);
+	const [openLoading, setIsOpenLoading] = useState(false);
+	const renderSizes = [...Array(10).keys()].map((item, index) => (
+		<MenuItem key={index + 1} value={index + 1}>
+			{index + 1}
+		</MenuItem>
+	));
+
+	const handleOpenDialog = () => {
+		setOpen(true);
+	};
+	const handleCloseDialog = () => {
+		setOpen(false);
+	};
+	const handleChangeQuantity = async e => {
+		if (data) {
+			setIsOpenLoading(true);
+			await mutate(
+				`${BASE_URL}/cart/find/${user._id ? user._id : 7}`,
+				updateExistProductCart(data, cartId, _id, {
+					quantityOrder: Number(e.target.value),
+				}),
+				{
+					revalidate: false,
+				},
+			);
+			setIsOpenLoading(false);
+			handleSetTitle('Số lượng đã được cập nhật');
+			handleOpenNotify();
+			setOpen(false);
+		}
+	};
+	const handleDeleteCart = async id => {
+		if (data) {
+			setIsOpenLoading(true);
+			const products = data.products.filter(item => item._id !== id);
+			if (products.length === 0) {
+				await mutate(
+					`${BASE_URL}/cart/find/${user._id ? user._id : 7}`,
+					deleteCart(cartId),
+					{
+						revalidate: false,
+					},
+				);
+				setIsOpenLoading(false);
+				return;
+			}
+			await mutate(
+				`${BASE_URL}/cart/find/${user._id ? user._id : 7}`,
+				deleteExistProductCart(data, cartId, _id),
+				{
+					revalidate: false,
+				},
+			);
+			setIsOpenLoading(false);
+			handleSetTitle('Sản phẩm đã được xóa khỏi giỏ hàng');
+			handleOpenNotify();
+			setOpen(false);
+		}
+	};
+
 	return (
 		<Container maxWidth={false} disableGutters>
 			<Paper variant='outlined' square className='relative'>
 				<IconButton
+					onClick={handleOpenDialog}
 					aria-label='delete'
-					className='absolute	right-1 top-1 z-10'>
+					sx={{ position: 'absolute', top: 1, right: 1, zIndex: 10 }}>
 					<CloseIcon />
 				</IconButton>
 				<Grid container spacing={0}>
@@ -35,13 +119,17 @@ const ProductCart = () => {
 								width: '100%',
 								height: '100%',
 							}}>
-							<Image
-								src='https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/fde4287a315a464d915bad25006ec160_9366/%C3%A1o-thun-ba-l%C3%A1-essentials-adicolor-loungewear.jpg'
-								layout='responsive'
-								width={250}
-								height={250}
-								alt='image item'
-							/>
+							<Link href={`/products/${_id}`}>
+								<a>
+									<Image
+										src={img}
+										width={240}
+										height={240}
+										layout='responsive'
+										alt='image item'
+									/>
+								</a>
+							</Link>
 						</Box>
 					</Grid>
 					<Grid item xs={7} md={8} p={2} pr={6}>
@@ -49,19 +137,36 @@ const ProductCart = () => {
 							<Stack
 								direction='row'
 								justifyContent='space-between'>
-								<Typography>
-									<Link href={`/products/${1}`}>
-										GIÀY STAN SMITH
+								<Typography
+									sx={{
+										textTransform: 'uppercase',
+									}}>
+									<Link href={`/products/${_id}`}>
+										{name}
 									</Link>
 								</Typography>
 								<Typography className='font-medium'>
-									{formatNumber(1050000)}
+									{formatNumber(price)}
 								</Typography>
 							</Stack>
-							<Typography>
-								BLISS / BLISS / SOLAR YELLOW
+							<Typography
+								sx={{
+									textTransform: 'uppercase',
+								}}>
+								{mapColorData(color)}
 							</Typography>
-							<Typography>KÍCH CỠ: 10.5 UK</Typography>
+							<Typography
+								sx={{
+									textTransform: 'uppercase',
+								}}>
+								{cat}
+							</Typography>
+							<Typography
+								sx={{
+									textTransform: 'uppercase',
+								}}>
+								KÍCH CỠ: 10.5 UK
+							</Typography>
 							<Typography className='font-medium'>
 								Mặt hàng có sẵn mới nhất
 							</Typography>
@@ -71,8 +176,8 @@ const ProductCart = () => {
 								<Select
 									labelId='demo-customized-select-label'
 									id='demo-customized-select'
-									value={10}
-									onChange={() => {}}
+									value={Number(quantityOrder)}
+									onChange={handleChangeQuantity}
 									input={<StyledSelect />}
 									MenuProps={{
 										sx: {
@@ -89,38 +194,24 @@ const ProductCart = () => {
 											},
 										},
 									}}>
-									<MenuItem value={10}>10</MenuItem>
-									<MenuItem value={20}>20</MenuItem>
-									<MenuItem value={30}>30</MenuItem>
+									{renderSizes}
 								</Select>
 							</FormControl>
-							{/* <FormControl sx={{ m: 1 }} variant='standard'>
-								<Select
-									labelId='demo-customized-select-label'
-									id='demo-customized-select'
-									value={10}
-									onChange={() => {}}
-									MenuProps={{
-										sx: {
-											'&& .MuiMenuItem-root.Mui-selected':
-												{
-													backgroundColor: '#eceff1',
-												},
-										},
-									}}
-									input={<StyledSelect />}>
-									<MenuItem value=''>
-										<em>None</em>
-									</MenuItem>
-									<MenuItem value={10}>Ten</MenuItem>
-									<MenuItem value={20}>Twenty</MenuItem>
-									<MenuItem value={30}>Thirty</MenuItem>
-								</Select>
-							</FormControl> */}
 						</Stack>
 					</Grid>
 				</Grid>
 			</Paper>
+			<StyledDialog
+				open={open}
+				setOpen={handleOpenDialog}
+				title='Bạn có muốn xoá sản phẩm này ra khỏi giỏ hàng?'
+				isDelete={true}
+				hasContent={false}
+				onClose={handleCloseDialog}
+				onDelete={() => handleDeleteCart(_id)}
+			/>
+
+			<LoadingScreen open={openLoading} />
 		</Container>
 	);
 };

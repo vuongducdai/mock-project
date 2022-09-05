@@ -13,16 +13,33 @@ import storage from "redux-persist/lib/storage";
 
 import productSlice from "./admin/productSlice";
 import userSlice from "./admin/userSlice";
+import toolbarSlice from "./admin/toolbarSlice";
+import adminCartSlice from "./admin/adminCartSlice";
+
+import cartSlice from "./client/cartSlice";
+import clientProductSlice from "./client/productSlice";
+
 const rootReducer = combineReducers({
-  productSlice, 
+  productSlice,
   userSlice,
+  adminCartSlice,
+  cartSlice,
+  clientProductSlice,
+  toolbarSlice,
 });
 
 //  Handle user login when reloading page
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["productSlice",'userSlice'],
+  whitelist: ["cartSlice", "userSlice"],
+  blacklist: [
+    "productSlice",
+    "toolbarSlice",
+    "adminCartSlice",
+    "clientProductSlice",
+    // "userSlice",
+  ],
 };
 
 const presistedReducer = persistReducer(persistConfig, rootReducer);

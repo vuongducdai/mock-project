@@ -1,59 +1,30 @@
 import { Container } from "@mui/material";
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import React from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import React, { useEffect, useState } from 'react';
 import "react-multi-carousel/lib/styles.css";
 import "swiper/css";
 import "swiper/css/pagination";
 
 
-
-export default function Pagination({ totalProduct }) {
-    const [age, setAge] = React.useState(1);
+export default function PaginationData({ totalProduct, handlePagination }) {
     const totalPage = Math.ceil(totalProduct / 10);
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
+    const [page, setPage] = useState(1);
 
-    const renderItemPage = () => {
-        const list = []
-        for (let i = 1; i <= totalPage; i++) {
-            list.push(<MenuItem key={i} className='text-center' value={i}>{i}</MenuItem>)
-        }
-        return list
-    }
+    const handleChangePage = (event, value) => {
+        setPage(value);
+        handlePagination(value);
+    };
     return (
         <Container >
-            <div className=' mb-4 flex flex-row justify-between'>
-                <div
-                    className="h-6 underline hover:bg-black hover:text-zinc-50 hover:no-underline">
-                    PREVIOUS
-                </div>
+            <div className=' mb-4 flex flex-row justify-center'>
                 <div className="flex justify-between items-center">
-                    <span>Page</span>
                     <div className='w-26 mx-4'>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Page</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={age}
-                                label="Age"
-                                onChange={handleChange}
-                                className='text-center'
-                            >
-                                {renderItemPage()}
-                            </Select>
-                        </FormControl>
+                        <Stack>
+                            <Pagination page={page} onChange={handleChangePage} count={totalPage} variant="outlined" color="secondary" />
+                        </Stack>
                     </div>
-                    <span>of {totalPage}</span>
-                </div>
-                <div
-                    className="h-6 underline hover:bg-black hover:text-zinc-50 hover:no-underline">
-                    NEXT
                 </div>
             </div>
         </Container>
