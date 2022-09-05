@@ -81,7 +81,6 @@ export default function Home(props) {
 
 export async function getServerSideProps() {
   const res = await getProducts();
-  console.log("res", res)
   const data = res.data
   return {
     props: {
