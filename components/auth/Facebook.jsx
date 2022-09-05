@@ -26,7 +26,7 @@ export default function Facebook() {
     return (
 
         <ReactFacebookLogin
-
+            onFailure={() => alert('tht bai')}
             version="3.1"
             appId="487831592788394"
             autoLoad={false}
