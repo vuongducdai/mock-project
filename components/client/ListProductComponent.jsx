@@ -100,7 +100,6 @@ export default function ListProductComponent({ arrProduct }) {
 					: true);
 			return booleanResult;
 		});
-		console.log('final result', final);
 		setResult(final);
 	};
 

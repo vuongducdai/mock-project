@@ -8,15 +8,14 @@ export default function Facebook() {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const handleClickFacebook = () => {
-        console.log("clicked")
-    }
-
     const handleResponeFacebook = (res) => {
-        const { name, email, picture, accessToken } = res;
+        const { id, ...rest } = res;
+        const info = {
+            _id: id,
+            ...rest
+        }
         try {
-            console.log("res face", res.status);
-            dispatch(facebookLogin(res));
+            dispatch(facebookLogin(info));
             router.push("/");
         }
         catch (error) {
@@ -27,14 +26,13 @@ export default function Facebook() {
     return (
 
         <ReactFacebookLogin
-            className='bg-red-800'
-            version="3.1"
-            appId="756969712084319"
-            autoLoad={true}
-            fields='name, email, picture'
-            onClick={handleClickFacebook}
-            callback={handleResponeFacebook}
 
+            version="3.1"
+            appId="487831592788394"
+            autoLoad={false}
+            fields='name, email, picture'
+            callback={handleResponeFacebook}
+            sx={{ border: 1 }}
         />
     )
 }

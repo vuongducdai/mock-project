@@ -40,17 +40,18 @@ export const WhiteButton = styled(Button)({
 export const FacebookButton = () => {
   return (
 
-    <Stack
-      sx={{ border: 1 }}
-      direction="row"
-      width="65%"
-      paddingY="10px"
-      paddingX="10px"
-    >
-      <Facebook />
-      <FacebookIcon />
-    </Stack>
 
+    // <Stack
+    //   sx={{ border: 1 }}
+    //   direction="row"
+    //   width="50%"
+    //   alignItems="center"
+    //   paddingY="10px"
+    //   paddingX="10px"
+    // >
+    <Facebook />
+
+    // </Stack>
   );
 };
 

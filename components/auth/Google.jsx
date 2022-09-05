@@ -33,7 +33,7 @@ const Google = () => {
             disabled={renderProps.disabled}
             // className="w-[200px] border-solid"
             variant="outlined"
-            sx={{ borderRadius: "0", width: "65%" }}
+            sx={{ borderRadius: "0", width: "50%" }}
           >
             <Stack
               direction="row"
