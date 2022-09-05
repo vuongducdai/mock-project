@@ -17,7 +17,7 @@ const BlackButton = ({
       ]}`;
 
   const handleClick =
-    handleSubmit !== undefined
+    handleSubmit === undefined
       ? !isLoading
         ? () => onClick()
         : () => null
