@@ -11,7 +11,6 @@ const Admin = () => {
                   <div className="flex flex-col w-full">
                         <Navbar />
                         <div className="w-full h-full bg-fb">
-                              <span>Something</span>
                               <div className="w-full h-full bg-fb p-8">
                                     <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
                               </div>

@@ -1,17 +1,11 @@
 import axios from 'axios';
 
 // export const BASE_URL = 'https://ecommercevoyager.herokuapp.com/api';
-// const BASE_URL = 'http://localhost:8000';
-export const BASE_URL = 'https://ecommercevoyager.herokuapp.com/api';
+const BASE_URL = "https://ecommercevoyager.herokuapp.com/api/";
 // const BASE_URL = 'http://localhost:8000/api';
 
 export const fetcher = url => publicRequest.get(url).then(res => res.data);
 
-// const BASE_URL = 'https://ecommercevoyager.herokuapp.com/api';
-// const publicRequest = axios.create({
-// 	baseURL: BASE_URL,
-// });
-// export const BASE_URL = 'http://localhost:8000/api';
 const publicRequest = axios.create({
 	baseURL: BASE_URL,
 });
@@ -77,7 +71,6 @@ export const postRegister = form => publicRequest.post('/auth/register', form);
 export const postLogin = form => publicRequest.post(`/auth/login`, form);
 
 // Users
-export const getUsers = () => userRequest.get('/user');
-export const patchUser = data =>
-	publicRequest.patch(`/user/${data.id}`, data.form);
+export const getUsers = () => publicRequest.get('/user');
+export const patchUser = data => publicRequest.patch(`/user/${data.id}`, data.form);
 export const deleteUser = id => publicRequest.delete(`/user/${id}`);
