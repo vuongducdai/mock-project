@@ -1,13 +1,13 @@
-import React from 'react';
-import Cart from '../../components/cart/Cart.jsx';
-import MainLayout from '../../components/layout/main';
+import React from "react";
+import Cart from "../../components/cart/Cart.jsx";
+import MainLayout from "../../components/layout/main";
 
 const CartPage = () => {
-	return (
-		<>
-			<Cart />
-		</>
-	);
+  return (
+    <>
+      <Cart />
+    </>
+  );
 };
 
 // export async function getServerSideProps() {
