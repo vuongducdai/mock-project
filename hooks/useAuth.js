@@ -1,24 +1,22 @@
-import useSWR from "swr";
 import { authAPI } from "../api/auth-api";
-import axiosClient from "../api/axios-client";
-import { postLogin } from "../api/requestMethod";
 
 export function useAuth(option) {
   // const { data, error, mutate } = useSWR(
-  //   "/profile",
+  //   "cart/find/7",
   //   (url) => axiosClient.get(url),
   //   {
-  //     dedupingInterval: 60 * 1000,
+  //     dedupingInterval: 2000,
   //     revalidateOnFocus: false,
   //     ...option,
   //   }
   // );
 
-  async function login(name, password) {
-    await postLogin({
-      name: name,
-      password: password,
+  async function login({ name, password }) {
+    const res = await authAPI.login({
+      name,
+      password,
     });
+    return res;
 
     //re-trigger request
     // await mutate();
@@ -29,10 +27,21 @@ export function useAuth(option) {
     await mutate({}, false);
   }
 
+  async function getUser() {
+    await authAPI.getUser();
+  }
+
+  async function getCart() {
+    await authAPI.getCart();
+  }
+
   return {
     // profile,
+    // data,
     // error,
     login,
-    // logout,
+    getUser,
+    getCart,
+    logout,
   };
 }

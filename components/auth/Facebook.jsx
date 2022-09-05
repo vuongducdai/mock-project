@@ -25,6 +25,16 @@ export default function Facebook() {
     }
 
     return (
-        <ReactFacebookLogin version="3.1" appId="756969712084319" autoLoad={true} fields='name, email, picture' onClick={handleClickFacebook} callback={handleResponeFacebook} />
+
+        <ReactFacebookLogin
+            className='bg-red-800'
+            version="3.1"
+            appId="756969712084319"
+            autoLoad={true}
+            fields='name, email, picture'
+            onClick={handleClickFacebook}
+            callback={handleResponeFacebook}
+
+        />
     )
 }

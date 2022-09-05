@@ -2,7 +2,6 @@
 import Cookies from "cookies";
 import httpProxy from "http-proxy";
 
-const BASE_URL = "http://192.168.0.114:8000/";
 // Step 4: in case of you want to stream body, turn off bodyParser
 // bodyParser is automatically enabled. If you want to consume the body
 // as a Stream or with raw-body, you can set this to false.
@@ -34,7 +33,7 @@ export default function handler(req, res) {
     // /api/students
     // https://js-post-api.herokuapp.com/api/students
     proxy.web(req, res, {
-      target: BASE_URL,
+      target: "http://localhost:8000",
       // both has the same path api/students so just need to edit origin
       changeOrigin: true,
       // proxy will handle the response, send directly to client

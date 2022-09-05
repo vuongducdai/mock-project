@@ -1,14 +1,20 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, ButtonBase, Stack, Typography } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { useRouter } from "next/router";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useScrollDirection } from "../../hooks/useSCrollDirection";
 import SearchBar from "../client/SearchBar";
 import { ShoppingCartIcon } from "../client/ShoppingCartIcon";
 
 import { logout } from "../../redux/admin/userSlice";
+
 const HeaderTitle = () => {
   return (
     <Stack
@@ -30,20 +36,71 @@ const HeaderTitle = () => {
   );
 };
 
-const LoginSection = ({ user }) => {
+const LoginSection = () => {
   return (
     <>
       <Link underline="none" href="/login" variant="body2">
-        <a>Dang Nhap</a>
+        <a>đăng nhập</a>
       </Link>
     </>
   );
 };
-const LogoutSection = ({user,click}) => {
+
+const LogoutDialog = ({ open, handleClose, handleLogout }) => {
   return (
-    <button onClick={click}>Dang Xuat</button>
-  )
-}
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"Đăng xuất"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          Bạn có muốn đăng xuất
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Không</Button>
+        <Button onClick={handleLogout} autoFocus>
+          Đồng ý
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+const LogoutSection = ({ user }) => {
+  const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setOpen(false);
+  };
+
+  return (
+    <Stack direction="row">
+      <Box paddingX="15px">
+        <Typography>hoan nghênh bạn trở lại {user.name}</Typography>
+      </Box>
+      <ButtonBase onClick={handleClickOpen}>đăng xuất</ButtonBase>
+      <LogoutDialog
+        open={open}
+        handleClose={handleClose}
+        handleLogout={handleLogout}
+      />
+    </Stack>
+  );
+};
 
 const LogoIcon = () => {
   return (
@@ -67,11 +124,6 @@ export const Header = () => {
   const { user } = useSelector((state) => state.userSlice);
   const router = useRouter();
   const scrollDirection = useScrollDirection();
-  const dispatch = useDispatch();
-  const logout1 = () => {
-    dispatch(logout());
-  };
-  const pathname = router.pathname;
 
   return (
     <Box
@@ -89,15 +141,13 @@ export const Header = () => {
       >
         <LogoIcon />
         <Stack>
-          {pathname !== "/login" && (
-            <Box textAlign={"right"}>
-              {!user ? (
-                <LoginSection user={user} />
-              ) : (
-                <LogoutSection user={user} click={logout1}/>
-              )}
-            </Box>
-          )}
+          <Box textAlign={"right"}>
+            {!user ? (
+              <LoginSection user={user} />
+            ) : (
+              <LogoutSection user={user} />
+            )}
+          </Box>
           <Stack justifyContent="center" direction="row">
             <SearchBar />
             <ShoppingCartIcon />
