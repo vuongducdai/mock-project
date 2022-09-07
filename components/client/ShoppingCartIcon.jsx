@@ -1,13 +1,15 @@
 import ClickAwayListener from "@mui/base/ClickAwayListener";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import {
   Badge,
   Box,
   Drawer,
+  IconButton,
   Stack,
   Typography,
-  IconButton,
 } from "@mui/material";
+import { styled } from "@mui/system";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -15,10 +17,7 @@ import { useCart } from "../../api/cart";
 import { getUser } from "../../redux/admin/userSlice";
 import calculateQuantityCart from "../../utils/calculateQuantityCart";
 import BlackButton from "../BlackButton";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ProductColumn } from "./ProductColumn";
-import { styled } from "@mui/system";
 
 const EmptyCart = () => {
   return (

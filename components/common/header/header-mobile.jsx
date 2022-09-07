@@ -1,14 +1,14 @@
+import { SearchBarMobile } from "@/components/client/SearchBar";
+import { ShoppingCartIconMobile } from "@/components/client/ShoppingCartIcon";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { AppBar, Box, Typography } from "@mui/material";
+import { AppBar, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { useScrollDirection } from "../../../hooks/useScrollDirection";
-import { SearchBarMobile } from "../../client/SearchBar";
-import { ShoppingCartIconMobile } from "../../client/ShoppingCartIcon";
 import ReactTextTransition, { presets } from "react-text-transition";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
