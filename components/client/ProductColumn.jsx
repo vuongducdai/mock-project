@@ -3,17 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import formatNumber from "../../utils/formatNumber";
 
-const ProductCard = ({
-  id,
-  img,
-  name,
-  price,
-  quantityOrder,
-  toggleDrawer = null,
-}) => {
+const ProductCard = ({ id, img, name, price, quantityOrder, toggleDrawer }) => {
   return (
     <Link href={`/products/${id}`}>
-      <a onClick={toggleDrawer(false)}>
+      <a onClick={() => toggleDrawer(false)}>
         <Stack direction="row" m={"5px"} className={"cursor-pointer"}>
           <Box pr={1}>
             <Image src={img} alt={name} width={90} height={90} layout="fixed" />
