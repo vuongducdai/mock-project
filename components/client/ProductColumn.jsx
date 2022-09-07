@@ -1,19 +1,25 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, fabClasses, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import formatNumber from "../../utils/formatNumber";
 
-const ProductCard = ({ id, img, name, price, quantityOrder }) => {
-  console.log(id);
+const ProductCard = ({
+  id,
+  img,
+  name,
+  price,
+  quantityOrder,
+  toggleDrawer = null,
+}) => {
   return (
     <Link href={`/products/${id}`}>
-      <a>
+      <a onClick={toggleDrawer(false)}>
         <Stack direction="row" m={"5px"} className={"cursor-pointer"}>
           <Box pr={1}>
             <Image src={img} alt={name} width={90} height={90} layout="fixed" />
           </Box>
           <Box>
-            <Box width={150}>
+            <Box width="150px">
               <Typography noWrap align="left">
                 {name}
               </Typography>
@@ -23,14 +29,17 @@ const ProductCard = ({ id, img, name, price, quantityOrder }) => {
               {quantityOrder} sản phẩm
             </Typography>
           </Box>
-          {console.log(`/products/${id}`)}
         </Stack>
       </a>
     </Link>
   );
 };
 
-export const ProductColumn = ({ productList }) => {
+export const ProductColumn = ({
+  productList,
+  mobile = false,
+  toggleDrawer = null,
+}) => {
   const productListJSX = productList.map((item, index) => (
     <ProductCard
       id={item._id}
@@ -39,13 +48,16 @@ export const ProductColumn = ({ productList }) => {
       name={item.name}
       price={item.price}
       quantityOrder={item.quantityOrder}
+      toggleDrawer={toggleDrawer}
     />
   ));
   return (
     <Stack p={"5px"}>
-      <Typography variant="h6" align="left">
-        SẢN PHẨM
-      </Typography>
+      {!mobile && (
+        <Typography variant="h6" align="left">
+          SẢN PHẨM
+        </Typography>
+      )}
       {productListJSX}
     </Stack>
   );

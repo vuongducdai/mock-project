@@ -1,106 +1,21 @@
-import { Box, Button, ButtonBase, Stack, Typography } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import MenuIcon from "@mui/icons-material/Menu";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+import { Box } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
+import Toolbar from "@mui/material/Toolbar";
+import { Stack } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useScrollDirection } from "../../../hooks/useScrollDirection";
-import SearchBar from "../../../components/client/SearchBar";
-import { ShoppingCartIcon } from "../../../components/client/ShoppingCartIcon";
+import { SearchBarMobile } from "../../client/SearchBar";
+import { ShoppingCartIcon } from "../../client/ShoppingCartIcon";
 
-import { logout } from "../../../redux/admin/userSlice";
-
-const HeaderTitle = () => {
-  return (
-    <Stack
-      direction="row"
-      justifyContent="space-around"
-      alignItems="center"
-      bgcolor="black"
-      height={30}
-      color="white"
-    >
-      <Typography variant="body2">
-        MIỄN PHÍ GIAO HÀNG TRÊN 1.300.000 VNĐ
-      </Typography>
-      <Typography variant="body2">TRẢ HÀNG DỄ DÀNG</Typography>
-      <Typography variant="body2">
-        NAY ĐÃ CÓ THỂ THANH TOÁN VỚI THẺ TÍN DỤNG!
-      </Typography>
-    </Stack>
-  );
-};
-
-const LoginSection = () => {
-  return (
-    <>
-      <Link underline="none" href="/login" variant="body2">
-        <a>đăng nhập</a>
-      </Link>
-    </>
-  );
-};
-
-const LogoutDialog = ({ open, handleClose, handleLogout }) => {
-  return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"Đăng xuất"}</DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Bạn có muốn đăng xuất
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Không</Button>
-        <Button onClick={handleLogout} autoFocus>
-          Đồng ý
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
-
-const LogoutSection = ({ user }) => {
-  const [open, setOpen] = React.useState(false);
-  const dispatch = useDispatch();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
-    setOpen(false);
-  };
-
-  return (
-    <Stack direction="row">
-      <Box paddingX="15px">
-        <Typography>hoan nghênh bạn trở lại {user.name}</Typography>
-      </Box>
-      <ButtonBase onClick={handleClickOpen}>đăng xuất</ButtonBase>
-      <LogoutDialog
-        open={open}
-        handleClose={handleClose}
-        handleLogout={handleLogout}
-      />
-    </Stack>
-  );
-};
+const StyledAppBar = styled("AppBar")(({ theme }) => ({
+  "& .MuiAppBarColorDefault": "#000000",
+}));
 
 const LogoIcon = () => {
   return (
@@ -110,8 +25,8 @@ const LogoIcon = () => {
           <Image
             src="https://www.adidas.com.vn/glass/react/f269eb7/assets/img/icon-adidas-logo.svg"
             alt="adidas logo"
-            width={60}
-            height={60}
+            width={50}
+            height={50}
             className="cursor-pointer relative top-[-17px]"
           />
         </a>
@@ -120,10 +35,16 @@ const LogoIcon = () => {
   );
 };
 
+const Search = (props) => {
+  return <SearchIcon {...props} />;
+};
+
 export const HeaderMobile = () => {
-  const { user } = useSelector((state) => state.userSlice);
-  const router = useRouter();
   const scrollDirection = useScrollDirection();
+  const [open, setOpen] = React.useState(false);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <Box
@@ -133,24 +54,30 @@ export const HeaderMobile = () => {
       } transition-all duration-500 z-[1200] bg-white border-b`}
       display={{ xs: "block", lg: "none" }}
     >
-      <HeaderTitle />
-      <Stack
-        justifyContent="space-between"
-        px={"20px"}
-        pt={"5px"}
-        direction="row"
-      >
-        <LogoIcon />
-        <Stack>
-          <Box textAlign={"right"}>
-            {!user ? (
-              <LoginSection user={user} />
-            ) : (
-              <LogoutSection user={user} />
-            )}
-          </Box>
-        </Stack>
-      </Stack>
+      <StyledAppBar position="static">
+        <Toolbar>
+          <Stack width="100%" direction="row" justifyContent="space-between">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <LogoIcon />
+            <Stack direction="row">
+              <Link href="/login">
+                <PersonOutlineOutlinedIcon />
+              </Link>
+              <Search onClick={handleDrawerOpen} />
+              <ShoppingCartIcon />
+              <SearchBarMobile open={open} setOpen={setOpen} />
+            </Stack>
+          </Stack>
+        </Toolbar>
+      </StyledAppBar>
     </Box>
   );
 };
