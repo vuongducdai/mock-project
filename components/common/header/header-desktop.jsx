@@ -1,4 +1,4 @@
-import { useScrollDirection } from '@/hooks/useSCrollDirection';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Box, Button, ButtonBase, Stack, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
