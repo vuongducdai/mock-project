@@ -74,8 +74,8 @@ export const HeaderMobile = () => {
             <LogoIcon />
             <Stack direction="row">
               <LoginLogo />
-              <ShoppingCartIconMobile />
               <SearchBarMobile />
+              <ShoppingCartIconMobile />
             </Stack>
           </Stack>
         </Toolbar>
