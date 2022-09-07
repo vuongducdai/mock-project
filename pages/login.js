@@ -223,6 +223,9 @@ const LoginPage = () => {
           alignItems="flex-start"
           direction="row"
           width="65%"
+          sx={{
+            flexDirection: { xs: "column", sm: "row" },
+          }}
         >
           <Box flexBasis={0} flexGrow={1}>
             <LoginSection />

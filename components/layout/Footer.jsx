@@ -133,7 +133,14 @@ const AboutUsFooter = () => {
 
   return (
     <Stack justifyContent="center" direction="row">
-      <Stack justifyContent="center" direction="row" maxWidth="1010px">
+      <Stack
+        justifyContent="center"
+        sx={{
+          flexDirection: { xs: "column", sm: "row" },
+          paddingX: { xs: 0, sm: "20%" },
+        }}
+        width="100%"
+      >
         <FooterColumn title={"SẢN PHẨM"} items={productsFooter} />
         <FooterColumn title={"THỂ THAO"} items={sportsFooter} />
         <FooterColumn title={"BỘ SƯU TẬP"} items={bstFooter} />
@@ -147,7 +154,7 @@ const AboutUsFooter = () => {
 
 const SubscribeFooter = () => {
   return (
-    <Box bgcolor={"#ede734"} p={"40px"} minWidth={"960px"}>
+    <Box bgcolor={"#ede734"} p={"40px"}>
       <Stack
         justifyContent="space-between"
         maxWidth={"960px"}
