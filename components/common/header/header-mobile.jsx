@@ -1,5 +1,5 @@
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { AppBar, Box } from "@mui/material";
+import { AppBar, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { Stack } from "@mui/system";
@@ -9,6 +9,7 @@ import React from "react";
 import { useScrollDirection } from "../../../hooks/useScrollDirection";
 import { SearchBarMobile } from "../../client/SearchBar";
 import { ShoppingCartIconMobile } from "../../client/ShoppingCartIcon";
+import ReactTextTransition, { presets } from "react-text-transition";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: "#FFFFFF",
@@ -51,6 +52,38 @@ const LoginLogo = () => {
   );
 };
 
+const HeaderTitle = () => {
+  const texts = [
+    "MIỄN PHÍ GIAO HÀNG TRÊN 1.300.000 VNĐ",
+    "TRẢ HÀNG DỄ DÀNG",
+    "NAY ĐÃ CÓ THỂ THANH TOÁN VỚI THẺ TÍN DỤNG!",
+  ];
+  const [index, setIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const intervalId = setInterval(
+      () => setIndex((index) => index + 1),
+      5000 // every 3 seconds
+    );
+    return () => clearTimeout(intervalId);
+  }, []);
+
+  return (
+    <Stack
+      direction="row"
+      justifyContent="space-around"
+      alignItems="center"
+      bgcolor="black"
+      height={30}
+      color="white"
+    >
+      <ReactTextTransition springConfig={presets.gentle}>
+        {texts[index % texts.length]}
+      </ReactTextTransition>
+    </Stack>
+  );
+};
+
 export const HeaderMobile = () => {
   const scrollDirection = useScrollDirection();
 
@@ -62,6 +95,8 @@ export const HeaderMobile = () => {
       } transition-all duration-500 z-[1200] bg-white border-b`}
       display={{ xs: "block", lg: "none" }}
     >
+      <HeaderTitle />
+
       <StyledAppBar position="static">
         <Toolbar>
           <Stack
