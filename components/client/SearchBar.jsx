@@ -218,13 +218,7 @@ export function SearchBarMobile({ open, setOpen }) {
     setOpen(false);
   };
 
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+  const toggleDrawer = (open) => {
     setOpen(open);
   };
 
@@ -262,7 +256,6 @@ export function SearchBarMobile({ open, setOpen }) {
         variant="persistent"
         anchor="right"
         open={open}
-        onClose={toggleDrawer(false)}
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>

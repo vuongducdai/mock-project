@@ -1,20 +1,23 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box } from "@mui/material";
+import { AppBar, Box } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useScrollDirection } from "../../../hooks/useScrollDirection";
 import { SearchBarMobile } from "../../client/SearchBar";
-import { ShoppingCartIcon } from "../../client/ShoppingCartIcon";
+import {
+  ShoppingCartIcon,
+  ShoppingCartIconMobile,
+} from "../../client/ShoppingCartIcon";
 
-const StyledAppBar = styled("AppBar")(({ theme }) => ({
-  "& .MuiAppBarColorDefault": "#000000",
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  backgroundColor: "#FFFFFF",
 }));
 
 const LogoIcon = () => {
@@ -36,12 +39,12 @@ const LogoIcon = () => {
 };
 
 const Search = (props) => {
-  return <SearchIcon {...props} />;
+  return <SearchIcon color="primary" {...props} />;
 };
 
 export const HeaderMobile = () => {
   const scrollDirection = useScrollDirection();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -69,10 +72,10 @@ export const HeaderMobile = () => {
             <LogoIcon />
             <Stack direction="row">
               <Link href="/login">
-                <PersonOutlineOutlinedIcon />
+                <PersonOutlineOutlinedIcon color="primary" />
               </Link>
               <Search onClick={handleDrawerOpen} />
-              <ShoppingCartIcon />
+              <ShoppingCartIconMobile />
               <SearchBarMobile open={open} setOpen={setOpen} />
             </Stack>
           </Stack>

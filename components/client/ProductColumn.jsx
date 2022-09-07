@@ -3,7 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import formatNumber from "../../utils/formatNumber";
 
-const ProductCard = ({ id, img, name, price, quantityOrder, toggleDrawer }) => {
+const ProductCard = ({
+  id,
+  img,
+  name,
+  price,
+  quantityOrder,
+  toggleDrawer = null,
+}) => {
   return (
     <Link href={`/products/${id}`}>
       <a onClick={() => toggleDrawer(false)}>
