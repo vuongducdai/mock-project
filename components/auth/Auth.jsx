@@ -1,14 +1,14 @@
-import { Box } from "@mui/system";
-import { useRouter } from "next/router";
-import React from "react";
-import { useSelector } from "react-redux";
-import LoadingPage from "../client/LoadingProduct";
+import { Box } from '@mui/system';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import LoadingPage from '../client/LoadingProduct';
 
 export const Auth = ({ children }) => {
   const { user } = useSelector((state) => state.userSlice);
   const router = useRouter();
   if (user !== null) {
-    router.push("/");
+    router.push('/');
     return <LoadingPage />;
   }
 

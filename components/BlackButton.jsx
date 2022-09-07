@@ -1,5 +1,5 @@
-import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
-import React from "react";
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
+import React from 'react';
 
 const BlackButton = ({
   title,

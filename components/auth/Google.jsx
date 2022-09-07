@@ -1,11 +1,10 @@
-import GoogleIcon from "@mui/icons-material/Google";
-import { Stack, Typography } from "@mui/material";
-import { useRouter } from "next/router";
-import React from "react";
-import GoogleLogin from "react-google-login";
-import { useDispatch, useSelector } from "react-redux";
-import { googleLogin } from "../../redux/admin/userSlice";
-import { WhiteButton } from "../utilities";
+import { WhiteButton } from '@/components/utilities';
+import { googleLogin } from '@/redux/admin/userSlice';
+import GoogleIcon from '@mui/icons-material/Google';
+import { Stack, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
+import GoogleLogin from 'react-google-login';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Google = () => {
   const router = useRouter();
@@ -17,7 +16,7 @@ const Google = () => {
     const token = response.tokenId;
     try {
       dispatch(googleLogin(result));
-      router.push("/");
+      router.push('/');
     } catch (error) {}
   };
 
@@ -32,7 +31,7 @@ const Google = () => {
             disabled={renderProps.disabled}
             // className="w-[200px] border-solid"
             variant="outlined"
-            sx={{ borderRadius: "0", width: "50%" }}
+            sx={{ borderRadius: '0', width: '50%' }}
           >
             <Stack
               direction="row"

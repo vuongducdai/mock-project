@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import Image from "next/image";
-import React, { useState } from "react";
-import FileBase64 from "react-file-base64";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { productSchema, userSchema } from "../../yupGlobal";
-import { Box } from "@mui/system";
+import { useEffect } from 'react';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import FileBase64 from 'react-file-base64';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { productSchema, userSchema } from '../../yupGlobal';
+import { Box } from '@mui/system';
 import {
   FormControl,
   FormControlLabel,
@@ -14,19 +14,19 @@ import {
   Radio,
   RadioGroup,
   Select,
-} from "@mui/material";
-import { arrCatProduct, colors, sizes, unk } from "./../../constants/data";
-import { useDispatch, useSelector } from "react-redux";
-import { clearFormData, closeToolbar } from "../../redux/admin/toolbarSlice";
-import { createProduct, updateProduct } from "../../redux/admin/productSlice";
-import { createUser, updateUser } from "../../redux/admin/userSlice";
+} from '@mui/material';
+import { arrCatProduct, colors, sizes, unk } from './../../constants/data';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearFormData, closeToolbar } from '../../redux/admin/toolbarSlice';
+import { createProduct, updateProduct } from '../../redux/admin/productSlice';
+import { createUser, updateUser } from '../../redux/admin/userSlice';
 
 const Newitem = ({ isOpen, type, isEdit }) => {
   const { formData } = useSelector((state) => state.toolbarSlice);
   const [img, setImg] = useState(unk);
-  const [color, setColor] = useState("1");
+  const [color, setColor] = useState('1');
   const [size, setSize] = useState(104);
-  const [cat, setCat] = useState("material 1");
+  const [cat, setCat] = useState('material 1');
   const [isAdmin, setIsAdmin] = useState(false);
   const dispatch = useDispatch();
 
@@ -49,19 +49,19 @@ const Newitem = ({ isOpen, type, isEdit }) => {
   });
 
   useEffect(() => {
-    if (formData && type === "product") {
+    if (formData && type === 'product') {
       setImg(formData.img);
-      productSetValue("name", formData.name);
-      productSetValue("price", formData.price);
-      productSetValue("quantity", formData.quantity);
+      productSetValue('name', formData.name);
+      productSetValue('price', formData.price);
+      productSetValue('quantity', formData.quantity);
       setColor(formData.color);
       setSize(formData.size);
       setCat(formData.cat);
-    } else if (formData && type === "user") {
-      userSetValue("name", formData.name);
-      userSetValue("address", formData.address);
-      userSetValue("phone", formData.phone);
-      userSetValue("email", formData.email);
+    } else if (formData && type === 'user') {
+      userSetValue('name', formData.name);
+      userSetValue('address', formData.address);
+      userSetValue('phone', formData.phone);
+      userSetValue('email', formData.email);
       setIsAdmin(formData.isAdmin);
     }
   }, [formData, isEdit, type]);
@@ -74,8 +74,8 @@ const Newitem = ({ isOpen, type, isEdit }) => {
     checked: color == item,
     onChange: handleChangeColor,
     value: item,
-    name: "color-radio-button-demo",
-    inputProps: { "aria-label": item },
+    name: 'color-radio-button-demo',
+    inputProps: { 'aria-label': item },
   });
 
   const renderColors = () => {
@@ -87,7 +87,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
             {...controlProps(x.id)}
             sx={{
               color: x.color[800],
-              "&.Mui-checked": {
+              '&.Mui-checked': {
                 color: x.color[600],
               },
             }}
@@ -140,7 +140,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
   };
 
   const onSubmit = async (data) => {
-    if (type === "product") {
+    if (type === 'product') {
       const productForm = { ...data, color, size, cat, img };
       if (isEdit && formData) {
         dispatch(updateProduct({ form: productForm, id: formData._id }));
@@ -148,11 +148,11 @@ const Newitem = ({ isOpen, type, isEdit }) => {
       } else {
         dispatch(createProduct(productForm));
       }
-      productSetValue("name", "");
-      productSetValue("price", "");
-      setColor("1");
-      setSize("");
-      setImg("");
+      productSetValue('name', '');
+      productSetValue('price', '');
+      setColor('1');
+      setSize('');
+      setImg('');
     } else {
       const userForm = { ...data, isAdmin };
       if (isEdit && formData) {
@@ -161,10 +161,10 @@ const Newitem = ({ isOpen, type, isEdit }) => {
       } else {
         dispatch(createUser(userForm));
       }
-      userSetValue("name", "");
-      userSetValue("address", "");
-      userSetValue("phone", "");
-      userSetValue("email", "");
+      userSetValue('name', '');
+      userSetValue('address', '');
+      userSetValue('phone', '');
+      userSetValue('email', '');
     }
     dispatch(closeToolbar());
   };
@@ -174,19 +174,19 @@ const Newitem = ({ isOpen, type, isEdit }) => {
       <div className="flex flex-col">
         <div className="flex-center capitalize px-4">
           <h3 className="text-2xl font-semibold text-[#333]">
-            {isEdit ? "Update" : "Add"} {type}
+            {isEdit ? 'Update' : 'Add'} {type}
           </h3>
         </div>
 
         <form
           className="px-4 h-full flex flex-col gap-4"
           onSubmit={
-            type === "product"
+            type === 'product'
               ? productHandleSubmit(onSubmit)
               : userHandleSubmit(onSubmit)
           }
         >
-          {type === "product" && (
+          {type === 'product' && (
             <div className="form__container__filebase64 flex flex-col py-4 border-b border-[#ddd]">
               <FileBase64
                 type="file"
@@ -209,7 +209,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
             </div>
           )}
           <div className="flex flex-col">
-            {type === "product" && (
+            {type === 'product' && (
               <>
                 <span className="text-blue-pastel text-base font-semibold">
                   Product name
@@ -217,7 +217,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                 <div className="px-4 py-2 rounded-3xl bg-fb font-sans font-base">
                   <input
                     className="text-[#333] outline-none bg-fb"
-                    {...productRegister("name")}
+                    {...productRegister('name')}
                     defaultValue=""
                   />
                 </div>
@@ -231,7 +231,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                 <div className="px-4 py-2 rounded-3xl bg-fb font-sans font-base">
                   <input
                     className="text-[#333] outline-none bg-fb"
-                    {...productRegister("price")}
+                    {...productRegister('price')}
                     type="number"
                     defaultValue=""
                   />
@@ -247,7 +247,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                   <input
                     onChange={(e) => setQuantity(e.target.value)}
                     className="text-[#333] outline-none bg-fb"
-                    {...productRegister("quantity")}
+                    {...productRegister('quantity')}
                     type="number"
                     defaultValue={100}
                   />
@@ -275,7 +275,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
               </>
             )}
 
-            {type === "user" && (
+            {type === 'user' && (
               <>
                 <span className="text-blue-pastel text-base font-semibold">
                   Name
@@ -283,7 +283,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                 <div className="px-4 py-2 rounded-3xl bg-fb font-sans font-base">
                   <input
                     className="text-[#333] outline-none bg-fb"
-                    {...userRegister("name")}
+                    {...userRegister('name')}
                     defaultValue=""
                   />
                 </div>
@@ -297,7 +297,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                 <div className="px-4 py-2 rounded-3xl bg-fb font-sans font-base">
                   <input
                     className="text-[#333] outline-none bg-fb"
-                    {...userRegister("password")}
+                    {...userRegister('password')}
                     defaultValue=""
                     type="password"
                   />
@@ -312,7 +312,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                 <div className="px-4 py-2 rounded-3xl bg-fb font-sans font-base">
                   <input
                     className="text-[#333] outline-none bg-fb"
-                    {...userRegister("email")}
+                    {...userRegister('email')}
                     type="text"
                     defaultValue=""
                   />
@@ -327,7 +327,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                 <div className="px-4 py-2 rounded-3xl bg-fb font-sans font-base">
                   <input
                     className="text-[#333] outline-none bg-fb"
-                    {...userRegister("address")}
+                    {...userRegister('address')}
                     type="text"
                     defaultValue=""
                   />
@@ -342,7 +342,7 @@ const Newitem = ({ isOpen, type, isEdit }) => {
                 <div className="px-4 py-2 rounded-3xl bg-fb font-sans font-base">
                   <input
                     className="text-[#333] outline-none bg-fb"
-                    {...userRegister("phone")}
+                    {...userRegister('phone')}
                     type="string"
                     defaultValue=""
                   />

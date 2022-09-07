@@ -1,42 +1,42 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import Search from "./Search";
-import Box from "@mui/material/Box";
-import TablePagination from "@mui/material/TablePagination";
-import ReactFacebookLogin from "react-facebook-login";
-import Image from "next/image";
-import { useDispatch } from "react-redux";
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import Search from './Search';
+import Box from '@mui/material/Box';
+import TablePagination from '@mui/material/TablePagination';
+import ReactFacebookLogin from 'react-facebook-login';
+import Image from 'next/image';
+import { useDispatch } from 'react-redux';
 import {
   clearFormData,
   openToolbar,
   setAdd,
   setEdit,
   setFormData,
-} from "../../redux/admin/toolbarSlice";
-import { deleteOneProduct } from "../../redux/admin/productSlice";
-import { deleteOneUser } from "../../redux/admin/userSlice";
+} from '../../redux/admin/toolbarSlice';
+import { deleteOneProduct } from '../../redux/admin/productSlice';
+import { deleteOneUser } from '../../redux/admin/userSlice';
 
 const DataTable = ({ type, datas }) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [searchResult, setSearchResult] = useState(datas);
   const [openModal, setOpenModal] = useState(false);
-  const [currentId, setCurrentId] = useState("");
+  const [currentId, setCurrentId] = useState('');
   const [searchData, setSearchData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [columnsToHide, setColumnsToHide] = useState([
-    "_id",
-    "createdAt",
-    "__v",
-    "updatedAt",
-    "password",
+    '_id',
+    'createdAt',
+    '__v',
+    'updatedAt',
+    'password',
   ]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -76,7 +76,7 @@ const DataTable = ({ type, datas }) => {
   };
 
   const handleDelete = () => {
-    if (type === "product") {
+    if (type === 'product') {
       dispatch(deleteOneProduct(currentId));
     } else {
       dispatch(deleteOneUser(currentId));
@@ -103,20 +103,20 @@ const DataTable = ({ type, datas }) => {
         <TableRow
           className="last:border-b-2"
           key={obj._id}
-          sx={{ "td, th": { border: 0 } }}
+          sx={{ 'td, th': { border: 0 } }}
         >
           {addTableRow(obj)}
           <TableCell
             align="center"
-            sx={{ display: "flex", justifyContent: "center" }}
+            sx={{ display: 'flex', justifyContent: 'center' }}
           >
             <Button
               onClick={() => handleEdit(obj)}
               variant="contained"
               sx={{
-                color: "success.main",
-                background: "white",
-                "&:hover": { color: "white", background: "green" },
+                color: 'success.main',
+                background: 'white',
+                '&:hover': { color: 'white', background: 'green' },
               }}
             >
               Edit
@@ -125,9 +125,9 @@ const DataTable = ({ type, datas }) => {
               onClick={() => handleOpenModal(obj._id)}
               variant="contained"
               sx={{
-                color: "warning.main",
-                background: "white",
-                "&:hover": { color: "white", background: "red" },
+                color: 'warning.main',
+                background: 'white',
+                '&:hover': { color: 'white', background: 'red' },
               }}
             >
               Delete
@@ -139,7 +139,7 @@ const DataTable = ({ type, datas }) => {
   };
 
   const isImg = (item) => {
-    return item.includes("data") ? (
+    return item.includes('data') ? (
       <Image key={item} alt="img" src={item} width={40} height={40} />
     ) : (
       item
@@ -178,7 +178,7 @@ const DataTable = ({ type, datas }) => {
       .map((val) => val.map((deepVal) => deepVal).filter((deepVal) => deepVal))
       .map((val) => {
         if (val.length < 1) {
-          val = ["-"];
+          val = ['-'];
           return val;
         }
         return val;
@@ -228,10 +228,10 @@ const DataTable = ({ type, datas }) => {
               onClick={handleAdd}
               variant="contained"
               sx={{
-                color: "success.main",
-                background: "white",
+                color: 'success.main',
+                background: 'white',
 
-                "&:hover": { color: "white", background: "green" },
+                '&:hover': { color: 'white', background: 'green' },
               }}
             >
               {`Add ${type}`}
@@ -250,7 +250,7 @@ const DataTable = ({ type, datas }) => {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody sx={{ borderTop: "none", minHeight: 100 }}>
+          <TableBody sx={{ borderTop: 'none', minHeight: 100 }}>
             {datas &&
               createTableRows(searchResult).slice(
                 page * rowsPerPage,
