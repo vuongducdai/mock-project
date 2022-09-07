@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import ReactFacebookLogin from 'react-facebook-login';
 import { useDispatch } from 'react-redux';
-import { facebookLogin } from '../../redux/admin/userSlice';
+import { facebookLogin } from '@/redux/admin/userSlice';
 
 export default function Facebook() {
   const dispatch = useDispatch();
