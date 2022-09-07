@@ -1,19 +1,19 @@
-import { useScrollDirection } from "@/hooks/useScrollDirection";
-import { Box, Button, ButtonBase, Stack, Typography } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import SearchBar from "@/components/client/SearchBar";
-import { ShoppingCartIcon } from "@/components/client/ShoppingCartIcon";
+import { useScrollDirection } from '@/hooks/useSCrollDirection';
+import { Box, Button, ButtonBase, Stack, Typography } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import SearchBar from '@/components/client/SearchBar';
+import { ShoppingCartIcon } from '@/components/client/ShoppingCartIcon';
 
-import { logout } from "@/redux/admin/userSlice";
+import { logout } from '@/redux/admin/userSlice';
 
 const HeaderTitle = () => {
   return (
@@ -54,7 +54,7 @@ const LogoutDialog = ({ open, handleClose, handleLogout }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Đăng xuất"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{'Đăng xuất'}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           Bạn có muốn đăng xuất
@@ -129,20 +129,20 @@ export const HeaderDesktop = () => {
     <Box
       variant="header"
       className={`fixed ${
-        scrollDirection === "down" ? "-top-28 inset-x-0" : "top-0 inset-x-0"
+        scrollDirection === 'down' ? '-top-28 inset-x-0' : 'top-0 inset-x-0'
       } transition-all duration-500 z-[1200] bg-white border-b`}
-      display={{ xs: "none", lg: "block" }}
+      display={{ xs: 'none', lg: 'block' }}
     >
       <HeaderTitle />
       <Stack
         justifyContent="space-between"
-        px={"20px"}
-        pt={"5px"}
+        px={'20px'}
+        pt={'5px'}
         direction="row"
       >
         <LogoIcon />
         <Stack>
-          <Box textAlign={"right"}>
+          <Box textAlign={'right'}>
             {!user ? (
               <LoginSection user={user} />
             ) : (

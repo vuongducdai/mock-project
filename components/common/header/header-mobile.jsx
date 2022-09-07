@@ -1,18 +1,18 @@
-import { SearchBarMobile } from "@/components/client/SearchBar";
-import { ShoppingCartIconMobile } from "@/components/client/ShoppingCartIcon";
-import { useScrollDirection } from "@/hooks/useScrollDirection";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { AppBar, Box } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import Toolbar from "@mui/material/Toolbar";
-import { Stack } from "@mui/system";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import ReactTextTransition, { presets } from "react-text-transition";
+import { SearchBarMobile } from '@/components/client/SearchBar';
+import { ShoppingCartIconMobile } from '@/components/client/ShoppingCartIcon';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import { AppBar, Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import { Stack } from '@mui/system';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import ReactTextTransition, { presets } from 'react-text-transition';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: "#FFFFFF",
+  backgroundColor: '#FFFFFF',
 }));
 
 const LogoIcon = () => {
@@ -54,9 +54,9 @@ const LoginLogo = () => {
 
 const HeaderTitle = () => {
   const texts = [
-    "MIỄN PHÍ GIAO HÀNG TRÊN 1.300.000 VNĐ",
-    "TRẢ HÀNG DỄ DÀNG",
-    "NAY ĐÃ CÓ THỂ THANH TOÁN VỚI THẺ TÍN DỤNG!",
+    'MIỄN PHÍ GIAO HÀNG TRÊN 1.300.000 VNĐ',
+    'TRẢ HÀNG DỄ DÀNG',
+    'NAY ĐÃ CÓ THỂ THANH TOÁN VỚI THẺ TÍN DỤNG!',
   ];
   const [index, setIndex] = React.useState(0);
 
@@ -91,9 +91,9 @@ export const HeaderMobile = () => {
     <Box
       variant="header"
       className={`fixed ${
-        scrollDirection === "down" ? "-top-28 inset-x-0" : "top-0 inset-x-0"
+        scrollDirection === 'down' ? '-top-28 inset-x-0' : 'top-0 inset-x-0'
       } transition-all duration-500 z-[1200] bg-white border-b`}
-      display={{ xs: "block", lg: "none" }}
+      display={{ xs: 'block', lg: 'none' }}
     >
       <HeaderTitle />
 
