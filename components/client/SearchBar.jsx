@@ -200,22 +200,25 @@ const SearchResultMobile = ({ productList, toggleDrawer }) => {
   );
 };
 
-export function SearchBarMobile({ open, setOpen }) {
+export function SearchBarMobile() {
   const [searchResult, setSearchResult] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const drawerWidth = "100%";
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
 
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
   const { data: products } = useSWR(`${BASE_URL}/product`, fetcher, {
     dedupingInterval: 15000,
   });
 
   const handleSubmitSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
   };
 
   const toggleDrawer = (open) => {
@@ -244,6 +247,18 @@ export function SearchBarMobile({ open, setOpen }) {
 
   return (
     <Box position="relative">
+      <Stack
+        width={48}
+        height={48}
+        align="center"
+        justifyContent="center"
+        alignItems="center"
+        className="cursor-pointer"
+      >
+        <Box>
+          <SearchIcon color="primary" onClick={handleDrawerOpen} />;
+        </Box>
+      </Stack>
       <Drawer
         sx={{
           width: drawerWidth,

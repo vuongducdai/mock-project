@@ -38,16 +38,27 @@ const LogoIcon = () => {
   );
 };
 
-const Search = (props) => {
-  return <SearchIcon color="primary" {...props} />;
+const LoginLogo = () => {
+  return (
+    <Stack
+      width={48}
+      height={48}
+      align="center"
+      justifyContent="center"
+      alignItems="center"
+      className="cursor-pointer"
+    >
+      <Box>
+        <Link href="/login">
+          <PersonOutlineOutlinedIcon color="primary" />
+        </Link>
+      </Box>
+    </Stack>
+  );
 };
 
 export const HeaderMobile = () => {
   const scrollDirection = useScrollDirection();
-  const [open, setOpen] = useState(false);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
 
   return (
     <Box
@@ -60,23 +71,11 @@ export const HeaderMobile = () => {
       <StyledAppBar position="static">
         <Toolbar>
           <Stack width="100%" direction="row" justifyContent="space-between">
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
             <LogoIcon />
             <Stack direction="row">
-              <Link href="/login">
-                <PersonOutlineOutlinedIcon color="primary" />
-              </Link>
-              <Search onClick={handleDrawerOpen} />
+              <LoginLogo />
               <ShoppingCartIconMobile />
-              <SearchBarMobile open={open} setOpen={setOpen} />
+              <SearchBarMobile />
             </Stack>
           </Stack>
         </Toolbar>

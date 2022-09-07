@@ -162,6 +162,7 @@ export const ShoppingCartIconMobile = () => {
 
   const toggleDrawer = (open) => {
     setOpenCart(open);
+    console.log(open);
   };
 
   return (
@@ -173,22 +174,20 @@ export const ShoppingCartIconMobile = () => {
       alignItems="center"
       className="cursor-pointer"
     >
-      <Box position="relative">
-        <Box>
-          <Badge
-            badgeContent={calculateQuantityCart(productList)}
-            max={50}
-            color="primary"
-          >
-            <ShoppingBagOutlinedIcon onClick={handleClick} />
-          </Badge>
-          <ShoppingCartDrawer
-            open={openCart}
-            setOpen={setOpenCart}
-            productList={productList}
-            toggleDrawer={toggleDrawer}
-          />
-        </Box>
+      <Box>
+        <Badge
+          badgeContent={calculateQuantityCart(productList)}
+          max={50}
+          color="primary"
+        >
+          <ShoppingBagOutlinedIcon color="primary" onClick={handleClick} />
+        </Badge>
+        <ShoppingCartDrawer
+          open={openCart}
+          setOpen={setOpenCart}
+          productList={productList}
+          toggleDrawer={toggleDrawer}
+        />
       </Box>
     </Stack>
   );
