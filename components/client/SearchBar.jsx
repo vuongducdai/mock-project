@@ -246,19 +246,17 @@ export function SearchBarMobile() {
   }, [searchTerm, products]);
 
   return (
-    <Box position="relative">
-      <Stack
-        width={48}
-        height={48}
-        align="center"
-        justifyContent="center"
-        alignItems="center"
-        className="cursor-pointer"
-      >
-        <Box>
-          <SearchIcon color="primary" onClick={handleDrawerOpen} />;
-        </Box>
-      </Stack>
+    <Stack
+      width={48}
+      height={48}
+      align="center"
+      justifyContent="center"
+      alignItems="center"
+      className="cursor-pointer"
+    >
+      <Box>
+        <SearchIcon color="primary" onClick={handleDrawerOpen} />;
+      </Box>
       <Drawer
         sx={{
           width: drawerWidth,
@@ -287,6 +285,6 @@ export function SearchBarMobile() {
           toggleDrawer={toggleDrawer}
         />
       </Drawer>
-    </Box>
+    </Stack>
   );
 }

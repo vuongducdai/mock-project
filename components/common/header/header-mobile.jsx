@@ -1,20 +1,14 @@
-import MenuIcon from "@mui/icons-material/Menu";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import SearchIcon from "@mui/icons-material/Search";
 import { AppBar, Box } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { useScrollDirection } from "../../../hooks/useScrollDirection";
 import { SearchBarMobile } from "../../client/SearchBar";
-import {
-  ShoppingCartIcon,
-  ShoppingCartIconMobile,
-} from "../../client/ShoppingCartIcon";
+import { ShoppingCartIconMobile } from "../../client/ShoppingCartIcon";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: "#FFFFFF",
@@ -70,7 +64,12 @@ export const HeaderMobile = () => {
     >
       <StyledAppBar position="static">
         <Toolbar>
-          <Stack width="100%" direction="row" justifyContent="space-between">
+          <Stack
+            width="100%"
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <LogoIcon />
             <Stack direction="row">
               <LoginLogo />
