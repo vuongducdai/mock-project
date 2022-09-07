@@ -1,3 +1,4 @@
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { Box, Button, ButtonBase, Stack, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -9,11 +10,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useScrollDirection } from "../../../hooks/useScrollDirection";
-import SearchBar from "../../../components/client/SearchBar";
-import { ShoppingCartIcon } from "../../../components/client/ShoppingCartIcon";
+import SearchBar from "@/components/client/SearchBar";
+import { ShoppingCartIcon } from "@/components/client/ShoppingCartIcon";
 
-import { logout } from "../../../redux/admin/userSlice";
+import { logout } from "@/redux/admin/userSlice";
 
 const HeaderTitle = () => {
   return (
