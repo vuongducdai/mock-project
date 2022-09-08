@@ -1,6 +1,6 @@
 import { SearchBarMobile } from '@/components/client/SearchBar';
 import { ShoppingCartIconMobile } from '@/components/client/ShoppingCartIcon';
-import { useScrollDirection } from '../../../hooks/useScrollDirection.js';
+import { useScrollDirection } from '../../../hooks/useSCrollDirection.js';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { AppBar, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
