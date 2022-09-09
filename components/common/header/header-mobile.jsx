@@ -13,6 +13,7 @@ import ReactTextTransition, { presets } from 'react-text-transition';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: '#FFFFFF',
+  boxShadow: 0,
 }));
 
 const LogoIcon = () => {
@@ -63,18 +64,17 @@ const HeaderTitle = () => {
   React.useEffect(() => {
     const intervalId = setInterval(
       () => setIndex((index) => index + 1),
-      5000 // every 3 seconds
+      1000 // every 3 seconds
     );
     return () => clearTimeout(intervalId);
   }, []);
 
   return (
     <Stack
-      direction="row"
+      direction="column"
       justifyContent="space-around"
       alignItems="center"
       bgcolor="black"
-      height={30}
       color="white"
     >
       <ReactTextTransition springConfig={presets.gentle}>
